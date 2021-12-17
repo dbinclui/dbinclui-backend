@@ -1,4 +1,4 @@
-import { Timestamp } from "mongodb";
+import { Timestamp } from 'mongodb';
 
 export interface Guides{
     title: string,
@@ -6,5 +6,3 @@ export interface Guides{
     createdAt: Timestamp,
     updatedAt: Timestamp
 }
-
-
