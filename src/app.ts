@@ -3,4 +3,6 @@ import configMongoDB from './database/config';
 
 configMongoDB();
 
-export const app = express();
+const app = express();
+
+export default app;
