@@ -1,12 +1,6 @@
 import express from 'express';
-import mongoose from 'mongoose';
+import configMongoDB from './database/config';
+
+configMongoDB();
 
 export const app = express();
-
-mongoose
-  .connect(process.env.MONGO_URL!)
-  .then(() => console.log('Conectado ao MongoDb'))
-  .catch((err) => {
-    console.log('Falha de acesso ao BD:');
-    console.error(err);
-  });
