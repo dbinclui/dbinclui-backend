@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "npx nodemon -r dotenv/config src/index.ts",
-    "start": "node -r dotenv/config dist/index.js",
-    "start:tsc": "ts-node -r dotenv/config src/index.ts",
+    "dev": "npx nodemon src/index.ts",
+    "start": "node dist/index.js",
+    "start:tsc": "ts-node src/index.ts",
     "build": "tsc"
   },
   "repository": {
