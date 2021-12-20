@@ -1,31 +1,35 @@
 import { Guides } from '../entities/guides';
 import { GuidesModel } from '../models/guides';
 
-export async function criar(guide: Guides) {
-  return GuidesModel.create(guide);
+class GuidesRepository {
+  async create(guide: Guides) {
+    return GuidesModel.create(guide);
+  }
+
+  async update(guide: Guides, newGuide: Guides) {
+    return GuidesModel.findOneAndUpdate(
+      { title: guide.title, content: guide.content },
+      newGuide,
+    ).exec();
+  }
+
+  async get(guide: Guides) {
+    return GuidesModel.find({
+      title: guide.title,
+      content: guide.content,
+    }).exec();
+  }
+
+  async delete(guide: Guides) {
+    return GuidesModel.findOneAndDelete({
+      title: guide.title,
+      content: guide.content,
+    }).exec();
+  }
+
+  async list() {
+    return GuidesModel.find().exec();
+  }
 }
 
-export async function atualizar(guide: Guides, newGuide: Guides) {
-  return GuidesModel.findOneAndUpdate(
-    { title: guide.title, content: guide.content },
-    newGuide,
-  ).exec();
-}
-
-export async function consultar(guide: Guides) {
-  return GuidesModel.find({
-    title: guide.title,
-    content: guide.content,
-  }).exec();
-}
-
-export async function deletar(guide: Guides) {
-  return GuidesModel.findOneAndDelete({
-    title: guide.title,
-    content: guide.content,
-  }).exec();
-}
-
-export async function listar() {
-  return GuidesModel.find().exec();
-}
+export default GuidesRepository;
