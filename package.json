@@ -4,11 +4,15 @@
   "description": "",
   "main": "src/index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "npx nodemon src/index.ts",
-    "start": "node dist/index.js",
-    "start:tsc": "ts-node src/index.ts",
-    "build": "tsc"
+    "test": "npx jest --config=jest.config.ts",
+    "dev": "npx nodemon -r dotenv/config src/index.ts",
+    "start": "node -r dotenv/config dist/index.js",
+    "start:dev": "ts-node -r dotenv/config src/index.ts",
+    "build": "tsc",
+    "lint:check": "npx eslint -c .eslintrc.json ./**/*.{ts,test.ts}",
+    "lint:fix": "npx eslint -c .eslintrc.json --fix ./**/*.{ts,test.ts}",
+    "prettier:check": "npx prettier -c ./**/*.{ts,test.ts}",
+    "prettier:write": "npx prettier -w ./**/*.{ts,test.ts}"
   },
   "author": "DBInclui",
   "license": "ISC",
