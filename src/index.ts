@@ -1,7 +1,8 @@
 import './env';
 import app from './app';
 
-app.listen(process.env.PORT || 3000, () => {
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
   // eslint-disable-next-line no-console
-  console.log(`servidor rodando na porta ${process.env.PORT || 3000}`);
+  console.log(`servidor rodando na porta ${PORT}`);
 });
