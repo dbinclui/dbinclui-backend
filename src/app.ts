@@ -1,7 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 
-export const app = express();
+const app = express();
 
 mongoose
   .connect(process.env.MONGO_URL!)
@@ -10,3 +10,5 @@ mongoose
     console.log('Falha de acesso ao BD:');
     console.error(err);
   });
+
+export default app;
