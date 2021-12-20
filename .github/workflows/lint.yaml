@@ -1,0 +1,21 @@
+name: Running Lint and Tests
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16.13.1
+      - run: yarn
+      - run: yarn lint:check
+      - run: yarn prettier:check
+      - run: yarn test
+    env:
+      CI: true

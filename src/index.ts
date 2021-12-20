@@ -1,7 +1,5 @@
-const express = require('express');
-const app = express();
+import { app } from './app';
 
-app.listen(3000, function(){
-console.log('servidor rodando');
-})
-
+app.listen(3000, () => {
+  console.log('servidor rodando');
+});
