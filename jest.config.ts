@@ -1,6 +1,6 @@
 import type { Config } from '@jest/types';
 
-export const config = async (): Promise<Config.InitialOptions> => ({
+const config = async (): Promise<Config.InitialOptions> => ({
   verbose: true,
   preset: 'ts-jest/presets/default',
   name: 'dbinclui',
