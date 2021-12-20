@@ -1,10 +1,8 @@
-import { json } from 'body-parser';
-import { app } from './app';
-import router from './app/routes/routes';
+import './env';
+import app from './app';
 
-app.use(router);
-app.use(json());
-
-app.listen(3000, () => {
-  console.log('servidor rodando');
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  // eslint-disable-next-line no-console
+  console.log(`servidor rodando na porta ${PORT}`);
 });

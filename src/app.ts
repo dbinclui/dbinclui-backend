@@ -1,12 +1,14 @@
 import express from 'express';
-import mongoose from 'mongoose';
+import { json } from 'body-parser';
+import router from './app/routes/routes';
 
-export const app = express();
+import configMongoDB from './database/config';
 
-mongoose
-  .connect(process.env.MONGO_URL || 'url mongo')
-  .then(() => console.log('Conectado ao MongoDb'))
-  .catch((err) => {
-    console.log('Falha de acesso ao BD:');
-    console.error(err);
-  });
+configMongoDB();
+
+const app = express();
+
+app.use(router);
+app.use(json());
+
+export default app;
