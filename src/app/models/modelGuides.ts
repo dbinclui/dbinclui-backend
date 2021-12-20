@@ -9,4 +9,6 @@ const GuidesSchema = new Schema<Guides>(
   { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } },
 );
 
-export const GuidesModel = model<Guides>('Guides', GuidesSchema, 'guides');
+const GuidesModel = model<Guides>('Guides', GuidesSchema, 'guides');
+
+export default GuidesModel;
