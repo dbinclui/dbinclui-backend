@@ -5,12 +5,15 @@
   "main": "src/index.ts",
   "scripts": {
 <<<<<<< HEAD
+<<<<<<< HEAD
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "npx nodemon src/index.ts",
     "start": "node dist/index.js",
     "start:tsc": "ts-node src/index.ts",
     "build": "tsc"
 =======
+=======
+>>>>>>> 48e3d595f60b1e8a2b3caccf8171e2c56e816f6e
     "test": "npx jest --config=jest.config.ts",
     "dev": "npx nodemon -r dotenv/config src/index.ts",
     "start": "node -r dotenv/config dist/index.js",
@@ -20,7 +23,10 @@
     "lint:fix": "npx eslint -c .eslintrc.json --fix ./**/*.{ts,test.ts}",
     "prettier:check": "npx prettier -c ./**/*.{ts,test.ts}",
     "prettier:write": "npx prettier -w ./**/*.{ts,test.ts}"
+<<<<<<< HEAD
 >>>>>>> 82e57a223521136156df41683d149ca618c2fef3
+=======
+>>>>>>> 48e3d595f60b1e8a2b3caccf8171e2c56e816f6e
   },
   "author": "DBInclui",
   "license": "ISC",

@@ -5,6 +5,9 @@
     "jest": true
   },
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 48e3d595f60b1e8a2b3caccf8171e2c56e816f6e
   "settings": {
     "import/resolver": {
       "node": {
@@ -25,18 +28,22 @@
     ]
   },
   "extends": ["airbnb-base"],
+<<<<<<< HEAD
 =======
   "extends": [
     "airbnb-base",
     "prettier"
   ],
 >>>>>>> 82e57a223521136156df41683d149ca618c2fef3
+=======
+>>>>>>> 48e3d595f60b1e8a2b3caccf8171e2c56e816f6e
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": 12,
     "sourceType": "module",
     "project": "./tsconfig.json"
   },
+<<<<<<< HEAD
 <<<<<<< HEAD
   "plugins": ["@typescript-eslint"]
 =======
@@ -62,4 +69,7 @@
   },
   "root": true
 >>>>>>> 82e57a223521136156df41683d149ca618c2fef3
+=======
+  "plugins": ["@typescript-eslint"]
+>>>>>>> 48e3d595f60b1e8a2b3caccf8171e2c56e816f6e
 }

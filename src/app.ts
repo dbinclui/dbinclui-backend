@@ -4,6 +4,7 @@ import configMongoDB from './database/config';
 configMongoDB();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 const app = express();
 
 export default app;
@@ -16,3 +17,8 @@ mongoose
     console.error(err);
   });
 >>>>>>> 82e57a223521136156df41683d149ca618c2fef3
+=======
+const app = express();
+
+export default app;
+>>>>>>> 48e3d595f60b1e8a2b3caccf8171e2c56e816f6e
