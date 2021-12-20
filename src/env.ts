@@ -2,6 +2,25 @@
 import path from 'path';
 import dotenv from 'dotenv';
 
+(async () => {
+  const enviromentFileName = process.env.NODE_ENV === 'development' ? '.env.dev' : '.env.prod';
+
+  try {
+    const result = dotenv.config({
+      path: path.resolve(process.cwd(), 'environments', enviromentFileName),
+    });
+
+    if (result.error) {
+      throw result.error;
+    }
+  } catch {
+    console.error(`
+        Ocorreu um erro ao configurar o caminho para o arquivo '.env.dev'.
+        Confirme que a pasta enviroments está configurada na raiz do projeto contendo o arquivo '.env.dev'. 
+      `);
+  }
+})();
+
 if (process.env.NODE_ENV === 'development') {
   try {
     const result = dotenv.config({
