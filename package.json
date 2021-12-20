@@ -2,7 +2,7 @@
   "name": "dbinclui-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.ts",
   "scripts": {
     "test": "npx jest --config=jest.config.ts",
     "dev": "npx nodemon -r dotenv/config src/index.ts",
@@ -14,17 +14,27 @@
     "prettier:check": "npx prettier -c ./**/*.{ts,test.ts}",
     "prettier:write": "npx prettier -w ./**/*.{ts,test.ts}"
   },
+  "author": "DBInclui",
+  "license": "ISC",
+  "homepage": "https://github.com/nickolasL13/dbinclui-backend#readme",
+  "keywords": [],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nickolasL13/dbinclui-backend.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/nickolasL13/dbinclui-backend/issues"
+  "dependencies": {
+    "axios": "^0.24.0",
+    "body-parser": "^1.19.1",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "errorhandler": "^1.5.1",
+    "express": "^4.17.1",
+    "express-jwt": "^6.1.0",
+    "express-validator": "^6.14.0",
+    "mongodb": "^4.2.1",
+    "mongoose": "^6.1.1",
+    "rest": "^2.0.0"
   },
-  "homepage": "https://github.com/nickolasL13/dbinclui-backend#readme",
   "devDependencies": {
     "@babel/preset-typescript": "^7.16.5",
     "@types/body-parser": "^1.19.2",
@@ -46,20 +56,7 @@
     "prettier": "^2.5.1",
     "ts-jest": "^27.1.2",
     "ts-node": "^10.4.0",
-    "typescript": "^4.5.3"
-  },
-  "dependencies": {
-    "axios": "^0.24.0",
-    "body-parser": "^1.19.1",
-    "cors": "^2.8.5",
-    "dotenv": "^10.0.0",
-    "errorhandler": "^1.5.1",
-    "express": "^4.17.1",
-    "express-jwt": "^6.1.0",
-    "express-validator": "^6.14.0",
-    "jest": "^27.4.4",
-    "mongodb": "^4.2.1",
-    "mongoose": "^6.1.1",
-    "rest": "^2.0.0"
+    "typescript": "^4.5.3",
+    "jest": "^27.4.4"
   }
 }
