@@ -16,6 +16,7 @@ export const config = async (): Promise<Config.InitialOptions> => ({
     '<rootDir>/src/**/*.{spec,test}.{ts,js}',
     '<rootDir>/tests/**/*.{spec,test}.{ts,js}',
   ],
+  passWithNoTests: true,
 });
 
 export default config;
