@@ -12,9 +12,8 @@ import dotenv from 'dotenv';
     return;
   }
 
-  const enviromentFileName = process.env.NODE_ENV === 'production' ? '.env.prod' : '.env.dev';
-
   try {
+    const enviromentFileName = process.env.NODE_ENV === 'production' ? '.env.prod' : '.env.dev';
     const result = dotenv.config({
       path: path.resolve(process.cwd(), 'environments', enviromentFileName),
     });
