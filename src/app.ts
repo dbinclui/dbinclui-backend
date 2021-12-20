@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 export const app = express();
 
 mongoose
-  .connect(process.env.MONGO_URL)
+  .connect(process.env.MONGO_URL || 'url mongo')
   .then(() => console.log('Conectado ao MongoDb'))
   .catch((err) => {
     console.log('Falha de acesso ao BD:');
