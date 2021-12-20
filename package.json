@@ -7,7 +7,7 @@
     "test": "npx jest --config=jest.config.ts",
     "dev": "npx nodemon -r dotenv/config src/index.ts",
     "start": "node -r dotenv/config dist/index.js",
-    "start:tsc": "ts-node -r dotenv/config src/index.ts",
+    "start:dev": "ts-node -r dotenv/config src/index.ts",
     "build": "tsc",
     "lint:check": "npx eslint -c .eslintrc.json ./**/*.{ts,test.ts}",
     "lint:fix": "npx eslint -c .eslintrc.json --fix ./**/*.{ts,test.ts}",

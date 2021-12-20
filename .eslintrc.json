@@ -19,7 +19,9 @@
     "jest"
   ],
   "ignorePatterns": [
-    "./jest.config.ts"
+    "/dist/*",
+    "/coverage/*",
+    "/node_modules/*"
   ],
   "rules": {
     "import/extensions": 0,
