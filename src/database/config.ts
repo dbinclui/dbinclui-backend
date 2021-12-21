@@ -1,12 +1,13 @@
-/* eslint-disable no-console */
 import mongoose from 'mongoose';
+
+import { dbDebug } from '../debugConfig';
 
 export default function configMongoDB() {
   mongoose
     .connect(process.env.MONGO_URL!)
-    .then(() => console.log('Conectado ao MongoDB'))
+    .then(() => dbDebug(`Conectado ao banco de dados em ${process.env.MONGO_URL}`))
     .catch((err) => {
-      console.log('Falha de acesso ao BD:');
-      console.error(err);
+      dbDebug('Falha de acesso ao banco de dados');
+      dbDebug(err);
     });
 }
