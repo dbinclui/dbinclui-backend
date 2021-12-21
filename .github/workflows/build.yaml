@@ -15,8 +15,8 @@ jobs:
           node-version: 16.13.1
       - run: yarn
       - run: yarn build
-      - run: yarn lint:check
-      - run: yarn prettier:check
+      - run: yarn run lint:check
+      - run: yarn run prettier:check
       - run: yarn test
     env:
       CI: true
