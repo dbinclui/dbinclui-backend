@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "paths": {"@app": ["./src/app/*"]},
     "target": "es6" /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */,
     "module": "commonjs" /* Specify what module code is generated. */,
     "rootDir": "." /* Specify the root folder within your source files. */,
