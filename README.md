@@ -27,6 +27,16 @@ Utilizaremos Node.js com Typescript para o backend da aplicação.
 $ npm install
 ```
 
+### Configurando as variáveis de ambiente
+
+Para configurar as variáveis de ambiente, você precisará criar na raíz do projeto a pasta `environments` contendo os arquivos `.env.dev` e `.env.prod` _(opcional)_. A sua estrutura de pastas deverá se parecer com essa:
+
+<img src="https://imgur.com/7AchR0O.png">
+
+Para definir configurar os arquivos você pode usar como modelo o arquivo `.env.sample`. Lá, você encontrará todas as variáveis que precisam ser definidas para que o servidor funcione corretamente.
+
+Por padrão o arquivo `.env.dev` será carregado. Se deseja mudar para o `.env.prod`, defina a variável de ambiente `NODE_ENV=production`.
+
 ### Iniciando o Backend com Nodemon
 
 ```
