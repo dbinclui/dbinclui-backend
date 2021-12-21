@@ -1,11 +1,11 @@
 import path from 'path';
 import dotenv from 'dotenv';
 
-import debug from './debugConfig';
+import { envDebug } from './debugConfig';
 
 (() => {
   if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'development') {
-    debug.env(`
+    envDebug(`
     Variável de ambiente NODE_ENV não está definida corretamente, 'environments/.env.dev' será utilizado como default.
     Certifique-se que a variável NODE_ENV está definida como 'development' ou 'production' na sua máquina.
     Para mais informações, veja: https://stackoverflow.com/questions/11104028/why-is-process-env-node-env-undefined
@@ -22,7 +22,7 @@ import debug from './debugConfig';
       throw result.error;
     }
   } catch {
-    debug.env(`
+    envDebug(`
         Ocorreu um erro ao carregar o arquivo contendo as variáveis de ambiente.
         Confirme que a pasta enviroments está na raiz do projeto e contém os arquivos necessários. 
       `);
