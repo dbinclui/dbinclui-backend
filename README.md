@@ -5,51 +5,51 @@
 
 Web app que dissemina a cultura de inclusão dentro da DBServer, com foco na cultura surda. O web app é destinado para todas as pessoas que desejam aprender LIBRAS e enteder um pouco mais sobre inclusão de PCD`s na sociedade. O web app aproveita o guia de acessibilidade e a apostila de Libras como fonte de informação de inclusão, assim como utiliza a API Libras para as funcionalidades específicas.
 
-## Como Contribuir 🤔
+## Mapa de Tecnologias 🖱️
+
+Utilizaremos Node.js com Typescript para o backend da aplicação.
+
+|        Nome       	|                  Documentação                  	|                  Links dos pacotes               |
+|:-----------------:	|:----------------------------------------------:	|:-----------------------------------------------:	|
+| Node.js           	| https://nodejs.org/dist/latest-v16.x/docs/api/ 	| https://nodejs.org/en/download/                 	|
+| Typescript        	| https://www.typescriptlang.org/docs/           	| https://www.npmjs.com/package/typescript        	|
+| Mongoose          	| https://mongoosejs.com/docs/                   	| https://www.npmjs.com/package/mongoose          	|
+| Axios             	| https://axios-http.com/docs/intro              	| https://www.npmjs.com/package/axios             	|
+| Express           	| http://expressjs.com/en/4x/api.html            	| https://www.npmjs.com/package/express           	|
+| Express Validator 	| https://express-validator.github.io/docs/      	| https://www.npmjs.com/package/express-validator 	|
+| JWT               	| https://jwt.io/introduction                    	| https://www.npmjs.com/package/jsonwebtoken      	|
+
+## Executando o Projeto 💻
+
+### Instalando os módulos
+
+```
+$ npm install
+```
+
+### Configurando as variáveis de ambiente
+
+Para configurar as variáveis de ambiente, você precisará criar na raíz do projeto a pasta `environments` contendo os arquivos `.env.dev` e `.env.prod` _(opcional)_. A sua estrutura de pastas deverá se parecer com essa:
+
+<img src="https://imgur.com/7AchR0O.png">
+
+Para definir configurar os arquivos você pode usar como modelo o arquivo `.env.sample`. Lá, você encontrará todas as variáveis que precisam ser definidas para que o servidor funcione corretamente.
+
+Por padrão o arquivo `.env.dev` será carregado. Se deseja mudar para o `.env.prod`, defina a variável de ambiente `NODE_ENV=production`.
+
+### Iniciando o Backend com Nodemon
+
+```
+$ npm run dev
+```
+
+## Fluxo de versionamento 👨‍💻
 
 ### Clone o repositório
 
 ```
 $ git clone https://github.com/dbinclui-org/dbinclui-backend.git
 ```
-
-### Crie uma branch a partir de develop com sua feature ou correção de bugs
-
-```
-$ git checkout develop // Move para a branch develop
-```
-
-```
-$ git checkout -b minha-branch // Cria e move para a brach "minha-branch"
-```
-
-### Faça o commit das suas alterações (use commits semânticos)
-
-```
-$ git add .
-```
-
-```
-$ git commit -m 'feat: minhas alterações'
-```
-
-### Faça o push para a sua branch
-
-```
-$ git push origin minha-branch
-```
-
-### Mude para develop e coloque sua branch lá
-
-```
-$ git checkout develop
-```
-
-```
-$ git merge minha-branch
-```
-
-## Fluxo do Git Flow 👨‍💻
 
 ### Iniciar o uso do Git Flow no projeto
 ```
@@ -106,27 +106,8 @@ $ git push --set-upstream origin feature/DBI-61
 ### Após as mudanças serem aprovadas por duas pessoas e serem passadas no teste, será possível realizar o *merge request*
 <img src="https://i.imgur.com/V76w9Bh.png"/>
 
-## Executando o Projeto 💻
 
-### Clonando o projeto
-
-```
-$ git clone https://github.com/dbinclui/dbinclui-backend.git
-```
-
-### Instalando os módulos
-
-```
-$ npm install
-```
-
-### Iniciando o Backend com Nodemon
-
-```
-$ npm run dev
-```
-
-## Commit Semântico ⚡
+<!-- ## Commit Semântico ⚡
 
 Pequenas alterações que não são novas funcionalidades.
 
@@ -184,20 +165,4 @@ test: ensure that increment
 
 ```
 
-Para saber mais sobre os commits semânticos, [acesse este artigo](https://blog.geekhunter.com.br/o-que-e-commit-e-como-usar-commits-semanticos/).
-
-## Mapa de Tecnologias 🖱️
-
-A Lib/Framework principal utilizada será ReactJS.
-
-- [Typescript](https://www.typescriptlang.org/download)
-- [Node JS](https://nodejs.org/en/)
-- [Axios](https://www.npmjs.com/package/axios)
-- [Express](https://expressjs.com/pt-br/)
-- [Mongoose](https://mongoosejs.com/)
-- [Express Validator](https://www.npmjs.com/package/express-validator)
-- [JWT](https://jwt.io/)
-
-## Versionamento 🌲
-
-Será utilizado Git com Github.
+Para saber mais sobre os commits semânticos, [acesse este artigo](https://blog.geekhunter.com.br/o-que-e-commit-e-como-usar-commits-semanticos/). -->

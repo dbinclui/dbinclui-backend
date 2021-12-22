@@ -11,5 +11,8 @@
     "strict": true,
     "skipLibCheck": true,
   },
-  "exclude": ["./node_modules", "./tests", "./**/**.test.ts"]
+  "exclude": [
+    "./node_modules",
+    "./**.config.{js,ts,json}",
+  ],
 }
