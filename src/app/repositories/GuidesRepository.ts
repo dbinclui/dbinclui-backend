@@ -1,14 +1,32 @@
 import { Guides } from '../entities/guides';
-import GuidesModel from '../models/modelGuides';
+import { GuidesModel } from '../models/guides';
 
-export interface GuidesRepositoryInterface {
-  buscar(): Promise<Guides[]>;
-}
+class GuidesRepository {
+  async create(guide: Guides) {
+    return GuidesModel.create(guide);
+  }
 
-export class GuidesRepository implements GuidesRepositoryInterface {
-  async buscar(): Promise<Guides[]> {
+  async update(guide: Guides, newGuide: Guides) {
+    return GuidesModel.findOneAndUpdate(guide, newGuide).exec();
+  }
+
+  async get(guide: Guides) {
+    return GuidesModel.find({
+      title: guide.title,
+      content: guide.content,
+    }).exec();
+  }
+
+  async delete(guide: Guides) {
+    return GuidesModel.findOneAndDelete({
+      title: guide.title,
+      content: guide.content,
+    }).exec();
+  }
+
+  async list() {
     return GuidesModel.find().exec();
   }
 }
 
-export default new GuidesRepository();
+export default GuidesRepository;
