@@ -5,7 +5,12 @@ const config = async (): Promise<Config.InitialOptions> => ({
   preset: 'ts-jest/presets/default',
   name: 'dbinclui',
   rootDir: '.',
-  collectCoverageFrom: ['<rootDir>/src/**/*.{ts,js}', '!/node_modules/**', '!/coverage/**'],
+  collectCoverageFrom: [
+    '<rootDir>/src/**/*.{ts,js}',
+    '!/node_modules/**',
+    '!/coverage/**',
+    '!/dist/**',
+  ],
   collectCoverage: true,
   coverageDirectory: 'coverage',
   modulePaths: [

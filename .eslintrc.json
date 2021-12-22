@@ -9,14 +9,21 @@
   "parserOptions": {
     "ecmaVersion": 12,
     "sourceType": "module",
-    "project": "./tsconfig.json"
+    "project": "tsconfig.json"
   },
   "plugins": ["@typescript-eslint", "jest"],
   "ignorePatterns": ["/dist/*", "/coverage/*", "/node_modules/*"],
   "rules": {
     "import/extensions": 0,
     "import/prefer-default-export": 0,
+<<<<<<< HEAD
     "import/no-extraneous-dependencies": ["error", { "devDependencies": ["./src/debugConfig.ts"] }]
+=======
+    "no-useless-constructor": 0,
+    "no-unused-vars": 0,
+    "no-empty-function": 0,
+    "class-methods-use-this": 0
+>>>>>>> 953a4ae23b2227ddebccfef543bed6cf1ffa1109
   },
   "settings": {
     "import/resolver": {
