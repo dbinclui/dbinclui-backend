@@ -34,19 +34,17 @@ describe('guidesRepository', () => {
         await repository.delete(guideTest);
       }).not.toThrow();
     });
-    test('deve listar os guides'),
-      async () => {
+    test('deve listar os guides', async () => {
         const guidesrepositorio = await repository.list();
         expect(guidesrepositorio).toBeDefined();
-      };
+      });
   });
-  test('deve atualizar'),
-    async () => {
+  test('deve atualizar', async () => {
       const guide1 = await repository.create(guideTest);
       const guide2 = await repository.create(guideTest2);
 
       expect(async () => {
         await repository.update(guide1, guide2);
       }).toBe(guide1);
-    };
+    });
 });
