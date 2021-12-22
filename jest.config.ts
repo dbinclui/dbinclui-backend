@@ -17,6 +17,7 @@ const config = async (): Promise<Config.InitialOptions> => ({
     '<rootDir>/src/**/*.{spec,test}.{ts,js}',
     '<rootDir>/tests/**/*.{spec,test}.{ts,js}',
   ],
+  testMatch: ['**/__tests__/**/*.ts', '**/?(*.)+(spec|test).ts'],
   passWithNoTests: true,
 });
 

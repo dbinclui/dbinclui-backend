@@ -10,6 +10,7 @@ describe(GuidesController.name, () => {
   let instance: GuidesController;
 
   beforeEach(() => {
+    // console.log(GuidesRepositoryMock);
     GuidesRepositoryMock.mockClear();
     instance = new GuidesController();
   });
