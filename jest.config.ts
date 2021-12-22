@@ -18,9 +18,6 @@ const config = async (): Promise<Config.InitialOptions> => ({
     '<rootDir>/tests/**/*.{spec,test}.{ts,js}',
   ],
   passWithNoTests: true,
-  transform: {
-    '^.+\\.ts?$': '<rootDir>/node_modules/ts-jest/preprocessor.js',
-  },
 });
 
 export default config;
