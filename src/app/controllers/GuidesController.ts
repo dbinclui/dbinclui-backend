@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { GuidesRepository } from '../repositories/GuidesRepository';
+import GuidesRepository from '../repositories/GuidesRepository';
 
 export class GuidesController {
   private repository: GuidesRepository;
@@ -10,7 +10,7 @@ export class GuidesController {
 
   async getGuides(req: Request, res: Response) {
     try {
-      const guides = await this.repository.buscar();
+      const guides = await this.repository.list();
       res.status(200).json({ data: guides });
     } catch (error) {
       res.status(400).json({

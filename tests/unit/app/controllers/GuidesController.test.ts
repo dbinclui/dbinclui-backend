@@ -1,8 +1,8 @@
 import { getMockReq, getMockRes } from '@jest-mock/express';
-import { GuidesController } from '../../../src/app/controllers/GuidesController';
-import { GuidesRepository } from '../../../src/app/repositories/GuidesRepository';
+import { GuidesController } from '../../../../src/app/controllers/GuidesController';
+import GuidesRepository from '../../../../src/app/repositories/GuidesRepository';
 
-jest.mock('../../../src/app/repositories/GuidesRepository');
+jest.mock('../../../../src/app/repositories/GuidesRepository');
 
 const GuidesRepositoryMock = GuidesRepository as jest.MockedClass<typeof GuidesRepository>;
 
@@ -10,7 +10,6 @@ describe(GuidesController.name, () => {
   let instance: GuidesController;
 
   beforeEach(() => {
-    // console.log(GuidesRepositoryMock);
     GuidesRepositoryMock.mockClear();
     instance = new GuidesController();
   });
@@ -23,11 +22,11 @@ describe(GuidesController.name, () => {
   `, async () => {
     const req = getMockReq();
     const { res } = getMockRes();
-    GuidesRepositoryMock.prototype.buscar.mockResolvedValue([]);
+    GuidesRepositoryMock.prototype.list.mockResolvedValue([]);
     await instance.getGuides(req, res);
 
     expect(GuidesRepositoryMock).toBeCalled();
-    expect(GuidesRepositoryMock.prototype.buscar).toHaveBeenCalled();
+    expect(GuidesRepositoryMock.prototype.list).toHaveBeenCalled();
     expect(res.status).toHaveBeenCalledWith(200);
     expect(res.json).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -41,12 +40,12 @@ describe(GuidesController.name, () => {
     const req = getMockReq();
     const { res } = getMockRes();
     const errorMessage = 'Error';
-    GuidesRepositoryMock.prototype.buscar.mockImplementationOnce(async () =>
+    GuidesRepositoryMock.prototype.list.mockImplementationOnce(async () =>
       Promise.reject(errorMessage),
     );
     await instance.getGuides(req, res);
     expect(GuidesRepositoryMock).toBeCalled();
-    expect(GuidesRepositoryMock.prototype.buscar).toHaveBeenCalled();
+    expect(GuidesRepositoryMock.prototype.list).toHaveBeenCalled();
     expect(res.status).toHaveBeenCalledWith(400);
     expect(res.json).toHaveBeenCalledWith(
       expect.objectContaining({
