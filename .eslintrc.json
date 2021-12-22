@@ -16,14 +16,11 @@
   "rules": {
     "import/extensions": 0,
     "import/prefer-default-export": 0,
-<<<<<<< HEAD
-    "import/no-extraneous-dependencies": ["error", { "devDependencies": ["./src/debugConfig.ts"] }]
-=======
+    "import/no-extraneous-dependencies": ["error", { "devDependencies": ["./src/debugConfig.ts"] }],
     "no-useless-constructor": 0,
     "no-unused-vars": 0,
     "no-empty-function": 0,
     "class-methods-use-this": 0
->>>>>>> 953a4ae23b2227ddebccfef543bed6cf1ffa1109
   },
   "settings": {
     "import/resolver": {
