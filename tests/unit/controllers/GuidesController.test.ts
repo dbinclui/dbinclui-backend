@@ -14,7 +14,7 @@ describe(GuidesController.name, () => {
     instance = new GuidesController();
   });
 
-  it(`When 'construtor' is called should create the instances of ${GuidesRepositoryMock.mock.instances[0]}`, () => {
+  it(`When 'construtor' is called should create the instances of GuidesRepository`, () => {
     expect(GuidesRepositoryMock).toHaveBeenCalledTimes(1);
   });
 
