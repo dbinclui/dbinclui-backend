@@ -1,10 +1,16 @@
 import { Request, Response } from 'express';
-import * as GuidesRepositorio from '../repositories/GuidesRepositorio';
+import { GuidesRepository } from '../repositories/GuidesRepository';
 
-export default class GuidesController {
-  static async getGuides(req: Request, res: Response) {
+export class GuidesController {
+  private repository: GuidesRepository;
+
+  constructor() {
+    this.repository = new GuidesRepository();
+  }
+
+  async getGuides(req: Request, res: Response) {
     try {
-      const guides = await GuidesRepositorio.GuidesRepositorio.buscar();
+      const guides = await this.repository.buscar();
       res.status(200).json({ data: guides });
     } catch (error) {
       res.status(400).json({
@@ -13,3 +19,5 @@ export default class GuidesController {
     }
   }
 }
+
+export default new GuidesController();
