@@ -1,5 +1,7 @@
+import { ObjectId } from 'mongoose' 
+
 export interface Guides {
-  id: string;
+  _id?: ObjectId;
   title: string;
   content: string;
 }
