@@ -54,13 +54,13 @@ describe(GuidesController.name, () => {
     );
   });
 
-  it(`When ${GuidesController.prototype.postGuides.name} is called, it should post the guides data
+  it(`When ${GuidesController.prototype.registerGuide.name} is called, it should post the guides data
   `, async () => {
     const req = getMockReq();
     const { res } = getMockRes();
     req.body = [];
     GuidesRepositoryMock.prototype.create.mockResolvedValue(req.body);
-    await instance.postGuides(req, res);
+    await instance.registerGuide(req, res);
 
     expect(GuidesRepositoryMock).toBeCalled();
     expect(GuidesRepositoryMock.prototype.create).toHaveBeenCalled();
@@ -72,7 +72,7 @@ describe(GuidesController.name, () => {
     );
   });
 
-  it(`When ${GuidesController.prototype.postGuides.name} is called and throws a new error, it should handle the errors
+  it(`When ${GuidesController.prototype.registerGuide.name} is called and throws a new error, it should handle the errors
   `, async () => {
     const req = getMockReq();
     const { res } = getMockRes();
@@ -80,7 +80,7 @@ describe(GuidesController.name, () => {
     GuidesRepositoryMock.prototype.create.mockImplementationOnce(async () =>
       Promise.reject(errorMessage),
     );
-    await instance.postGuides(req, res);
+    await instance.registerGuide(req, res);
     expect(GuidesRepositoryMock).toBeCalled();
     expect(GuidesRepositoryMock.prototype.create).toHaveBeenCalled();
     expect(res.status).toHaveBeenCalledWith(400);
