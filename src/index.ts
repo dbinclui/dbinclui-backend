@@ -1,5 +1,8 @@
-import { app } from './app';
+import './env';
+import { serverDebug } from './debugConfig';
+import app from './app';
 
-app.listen(3000, () => {
-  console.log('servidor rodando');
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  serverDebug(`servidor rodando na porta ${PORT}`);
 });

@@ -1,4 +1,4 @@
-name: Running Lint and Tests
+name: Code styles, tests and building
 on:
   pull_request:
     branches:
@@ -14,8 +14,9 @@ jobs:
         with:
           node-version: 16.13.1
       - run: yarn
-      - run: yarn lint:check
-      - run: yarn prettier:check
+      - run: yarn build
+      - run: yarn run lint:check
+      - run: yarn run prettier:check
       - run: yarn test
     env:
       CI: true

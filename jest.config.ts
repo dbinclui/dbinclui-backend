@@ -1,6 +1,6 @@
 import type { Config } from '@jest/types';
 
-export const config = async (): Promise<Config.InitialOptions> => ({
+const config = async (): Promise<Config.InitialOptions> => ({
   verbose: true,
   preset: 'ts-jest/presets/default',
   name: 'dbinclui',
@@ -9,6 +9,7 @@ export const config = async (): Promise<Config.InitialOptions> => ({
     '<rootDir>/src/**/*.{ts,js}',
     '!/node_modules/**',
     '!/coverage/**',
+    '!/dist/**',
   ],
   collectCoverage: true,
   coverageDirectory: 'coverage',
@@ -16,6 +17,7 @@ export const config = async (): Promise<Config.InitialOptions> => ({
     '<rootDir>/src/**/*.{spec,test}.{ts,js}',
     '<rootDir>/tests/**/*.{spec,test}.{ts,js}',
   ],
+  testMatch: ['**/__tests__/**/*.ts', '**/?(*.)+(spec|test).ts'],
   passWithNoTests: true,
 });
 
