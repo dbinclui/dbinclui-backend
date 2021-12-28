@@ -1,20 +1,15 @@
-import {  NextFunction, Request, Response } from 'express';
-import { body,validationResult } from 'express-validator';
+import { NextFunction, Request, Response } from 'express';
+import { body, validationResult } from 'express-validator';
 
-// eslint-disable-next-line consistent-return
-function validateRequestSchema(
- req: Request,
- res: Response,
- next: NextFunction
-) {
- const errors = validationResult(req);
- if (!errors.isEmpty()) {
-   return res.status(400).json({ errors: errors.array() });
- }
- next();
+function validateRequestSchema(req: Request, res: Response, next: NextFunction) {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(405).json({ errors: errors.array() });
+  }
+  return next();
 }
 
-const guideValidate = [
+const registerValidate = [
   body('title')
     .notEmpty()
     .withMessage('O campo está vazio')
@@ -22,10 +17,7 @@ const guideValidate = [
     .withMessage('Deve ter entre 1 e 32 caracteres')
     .isString(),
 
-  body('content')
-  .notEmpty()
-  .withMessage('O campo está vazio')
-  .isString(),
+  body('content').notEmpty().withMessage('O campo está vazio').isString(),
 ];
 
-export { guideValidate,validateRequestSchema};
+export { registerValidate, validateRequestSchema };
