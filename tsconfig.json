@@ -13,6 +13,9 @@
   },
   "exclude": [
     "./node_modules",
-    "./**.config.{js,ts,json}",
+    "./*.config.ts",
+    "./**/*.test.ts",
+    "./**/*.spect.ts",
+    "./tests",
   ],
 }
