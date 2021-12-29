@@ -66,6 +66,6 @@
     "prettier": "^2.5.1",
     "supports-color": "^9.2.1",
     "ts-jest": "^27.1.2",
-    "ts-node": "^10.4.0",
+    "ts-node": "^10.4.0"
   }
 }
