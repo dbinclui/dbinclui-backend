@@ -1,10 +1,7 @@
 import { getMockReq, getMockRes } from '@jest-mock/express';
 import { validationResult } from 'express-validator';
 import { Guides } from '../../../../src/app/entities/guides';
-import {
-  registerValidate,
-  validateRequestSchema,
-} from '../../../../src/app/middlewares/validator/GuidesValidator';
+import { validateRequestSchema } from '../../../../src/app/middlewares/validator/GuidesValidator';
 
 jest.useFakeTimers();
 
@@ -14,7 +11,6 @@ const validateRequestSchemaMock = validateRequestSchema as jest.MockedFunction<
   typeof validateRequestSchema
 >;
 const validationResultMock = validationResult as jest.MockedFunction<typeof validationResult>;
-const registerValidateMock = registerValidate as jest.Mocked<typeof registerValidate>;
 
 describe('GuidesValidator Test', () => {
   const registerValidateListMock: Guides[] = [
