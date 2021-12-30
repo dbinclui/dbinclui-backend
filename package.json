@@ -9,7 +9,7 @@
   "scripts": {
     "test": "npx jest --config=jest.config.ts",
     "test:watch": "npx jest --watch --config=jest.config.ts",
-    "dev": "npx nodemon src/index.ts",
+    "dev": "ts-node-dev -r tsconfig-paths/register src/index.ts",
     "start": "node dist/index.js",
     "start:dev": "ts-node src/index.ts",
     "build": "tsc",
@@ -66,6 +66,7 @@
     "prettier": "^2.5.1",
     "supports-color": "^9.2.1",
     "ts-jest": "^27.1.2",
-    "ts-node": "^10.4.0"
+    "ts-node": "^10.4.0",
+    "tsconfig-paths": "^3.12.0"
   }
 }
