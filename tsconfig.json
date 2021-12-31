@@ -10,7 +10,7 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "skipLibCheck": true,
-    "baseUrl": "./",
+    "baseUrl": ".",
     "paths": {
       "@controllers/*": ["./src/app/controllers/*"],
       "@entities/*": ["./src/app/entities/*"],
@@ -20,5 +20,5 @@
       "@routes/*": ["./src/app/routes/*"]
     }
   },
-  "exclude": ["./node_modules", "./*.config.ts", "./**/*.test.ts", "./**/*.spect.ts", "./tests"]
+  "exclude": ["./node_modules"]
 }
