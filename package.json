@@ -12,7 +12,7 @@
     "dev": "npx nodemon src/index.ts",
     "start": "node dist/index.js",
     "start:dev": "ts-node src/index.ts",
-    "build": "tsc",
+    "build": "tsc -p ./tsconfig.build.json",
     "lint:check": "npx eslint -c .eslintrc.json ./**/*.{ts,test.ts}",
     "lint:fix": "npx eslint -c .eslintrc.json --fix ./**/*.{ts,test.ts}",
     "prettier:check": "npx prettier -c ./**/*.{ts,test.ts}",
