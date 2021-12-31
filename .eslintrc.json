@@ -26,6 +26,10 @@
     "import/resolver": {
       "node": {
         "extensions": [".js", ".ts"]
+      },
+      "typescript": {
+        "project": "tsconfig.eslint.json",
+        "extensions": [".ts"]
       }
     }
   },
