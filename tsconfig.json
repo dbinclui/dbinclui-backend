@@ -13,9 +13,5 @@
   },
   "exclude": [
     "./node_modules",
-    "./*.config.ts",
-    "./**/*.test.ts",
-    "./**/*.spect.ts",
-    "./tests",
   ],
 }
