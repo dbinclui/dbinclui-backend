@@ -1,0 +1,22 @@
+name: Code styles, tests and building
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16.13.1
+      - run: yarn
+      - run: yarn build
+      - run: yarn run lint:check
+      - run: yarn run prettier:check
+      - run: yarn test
+    env:
+      CI: true
