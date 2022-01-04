@@ -1,8 +1,8 @@
 import { getMockReq, getMockRes } from '@jest-mock/express';
-import { GuidesController } from '../../../../src/app/controllers/GuidesController';
-import GuidesRepository from '../../../../src/app/repositories/GuidesRepository';
+import { GuidesController } from '@controllers/GuidesController';
+import GuidesRepository from '@repositories/GuidesRepository';
 
-jest.mock('../../../../src/app/repositories/GuidesRepository');
+jest.mock('@repositories/GuidesRepository');
 
 const GuidesRepositoryMock = GuidesRepository as jest.MockedClass<typeof GuidesRepository>;
 

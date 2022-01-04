@@ -1,10 +1,10 @@
-import GuidesRepository from '../../../../src/app/repositories/GuidesRepository';
-import { Guides } from '../../../../src/app/entities/guides';
-import { GuidesModel } from '../../../../src/app/models/guides';
+import GuidesRepository from '@repositories/GuidesRepository';
+import { Guides } from '@entities/guides';
+import { GuidesModel } from '@models/guides';
 
 jest.useFakeTimers();
 
-jest.mock('../../../../src/app/models/guides');
+jest.mock('@models/guides');
 
 const GuidesModelMock = GuidesModel as jest.MockedClass<typeof GuidesModel>;
 
