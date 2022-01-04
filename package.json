@@ -10,7 +10,7 @@
     "test": "npx jest --config=jest.config.ts",
     "test:watch": "npx jest --watch --config=jest.config.ts",
     "dev": "ts-node-dev -r tsconfig-paths/register src/index.ts",
-    "start": "node dist/index.js",
+    "start": "node dist/src/index.js",
     "start:dev": "ts-node src/index.ts",
     "start:dev:log": "DEBUG=db-inclui:* ts-node src/index.ts",
     "build": "tsc -p ./tsconfig.build.json",
