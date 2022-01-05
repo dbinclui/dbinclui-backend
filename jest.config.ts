@@ -13,12 +13,17 @@ const config = async (): Promise<Config.InitialOptions> => ({
   ],
   collectCoverage: true,
   coverageDirectory: 'coverage',
-  modulePaths: [
-    '<rootDir>/src/**/*.{spec,test}.{ts,js}',
-    '<rootDir>/tests/**/*.{spec,test}.{ts,js}',
-  ],
+  modulePaths: ['node_modules', '<rootDir>/src/', '<rootDir>/tests/'],
   testMatch: ['**/__tests__/**/*.ts', '**/?(*.)+(spec|test).ts'],
   passWithNoTests: true,
+  moduleNameMapper: {
+    '@controllers/(.*)': ['<rootDir>/src/app/controllers/$1'],
+    '@entities/(.*)': ['<rootDir>/src/app/entities/$1'],
+    '@middlewares/(.*)': ['<rootDir>/scr/app/middlewares/$1'],
+    '@models/(.*)': ['<rootDir>/src/app/models/$1'],
+    '@repositories/(.*)': ['<rootDir>/src/app/repositories/$1'],
+    '@routes/(.*)': ['<rootDir>/src/app/routes/$1'],
+  },
 });
 
 export default config;
