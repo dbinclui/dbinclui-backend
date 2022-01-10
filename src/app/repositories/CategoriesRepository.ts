@@ -27,6 +27,10 @@ class CategoriesRepository {
     return CategoriesModel.find({ title, shortDescription }).exec();
   }
 
+  async delete(category: Categories) {
+    return CategoriesModel.findOneAndDelete(category).exec();
+  }
+
   async deleteById(id: ObjectId) {
     return CategoriesModel.findOneAndDelete({
       _id: id,
