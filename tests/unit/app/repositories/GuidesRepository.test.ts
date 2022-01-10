@@ -1,12 +1,14 @@
 import GuidesRepository from '@repositories/GuidesRepository';
 import { Guides } from '@entities/guides';
 import { GuidesModel } from '@models/guides';
+import { Mongoose } from 'mongoose';
 
 jest.useFakeTimers();
 
 jest.mock('@models/guides');
 
 const GuidesModelMock = GuidesModel as jest.MockedClass<typeof GuidesModel>;
+const mockObjectId = new Mongoose.prototype.ObjectId;
 
 describe(GuidesRepository.name, () => {
   let instance: GuidesRepository;
@@ -58,8 +60,7 @@ describe(GuidesRepository.name, () => {
   it(`${GuidesRepository.prototype.get.name}: 
   quando o método for chamado deve ser feita a lógica de procurar os dados`, async () => {
     const searchMock = {
-      title: 'Result teste',
-      content: 'content',
+      _id: mockObjectId
     };
     const findMock = jest.fn().mockImplementation(() => ({
       exec: async () => searchMock,
@@ -67,7 +68,7 @@ describe(GuidesRepository.name, () => {
 
     GuidesModelMock.find = findMock;
 
-    const result = await instance.get(searchMock);
+    const result = await instance.get(mockObjectId);
 
     expect(GuidesModelMock.find).toBeCalledTimes(1);
     expect(GuidesModelMock.find).toBeCalledWith(searchMock);
@@ -75,26 +76,22 @@ describe(GuidesRepository.name, () => {
     expect(result).toBe(searchMock);
   });
 
-  it(`${GuidesRepository.prototype.get.name}: 
+  it(`${GuidesRepository.prototype.delete.name}: 
   quando o método for chamado deve ser feita a lógica de deletar o registro`, async () => {
-    const [guideTest] = guidesListMock;
-
+    const searchMock = {
+      _id: mockObjectId
+    };
     const findOneAndDeleteMock = jest.fn().mockImplementation(() => ({
-      exec: async () => true,
+      exec: async () => searchMock,
     }));
 
     GuidesModelMock.findOneAndDelete = findOneAndDeleteMock;
 
-    const result = await instance.delete(guideTest);
-
+    const result = await instance.delete(mockObjectId);
     expect(GuidesModelMock.findOneAndDelete).toBeCalledTimes(1);
-    expect(GuidesModelMock.findOneAndDelete).toBeCalledWith({
-      title: guideTest.title,
-      content: guideTest.content,
-    });
-
+    expect(GuidesModelMock.findOneAndDelete).toBeCalledWith(searchMock);
     expect(findOneAndDeleteMock).toBeCalled();
-    expect(result).toEqual(true);
+    expect(result).toBe(searchMock);
   });
 
   it(`${GuidesRepository.prototype.create.name}: 
