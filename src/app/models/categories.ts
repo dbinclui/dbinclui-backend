@@ -1,6 +1,5 @@
-import { model, Schema, SchemaTypes, ObjectId } from 'mongoose';
+import { model, Schema } from 'mongoose';
 import { Categories } from '@entities/categories';
-import { Guides } from '@entities/guides';
 
 const CategoriesSchema = new Schema<Categories>(
   {
