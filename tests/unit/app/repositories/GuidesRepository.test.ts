@@ -8,7 +8,7 @@ jest.useFakeTimers();
 jest.mock('@models/guides');
 
 const GuidesModelMock = GuidesModel as jest.MockedClass<typeof GuidesModel>;
-const mockObjectId = new Mongoose.prototype.ObjectId;
+const mockObjectId = new Mongoose.prototype.ObjectId();
 
 describe(GuidesRepository.name, () => {
   let instance: GuidesRepository;
@@ -60,7 +60,7 @@ describe(GuidesRepository.name, () => {
   it(`${GuidesRepository.prototype.get.name}: 
   quando o método for chamado deve ser feita a lógica de procurar os dados`, async () => {
     const searchMock = {
-      _id: mockObjectId
+      _id: mockObjectId,
     };
     const findMock = jest.fn().mockImplementation(() => ({
       exec: async () => searchMock,
@@ -79,7 +79,7 @@ describe(GuidesRepository.name, () => {
   it(`${GuidesRepository.prototype.delete.name}: 
   quando o método for chamado deve ser feita a lógica de deletar o registro`, async () => {
     const searchMock = {
-      _id: mockObjectId
+      _id: mockObjectId,
     };
     const findOneAndDeleteMock = jest.fn().mockImplementation(() => ({
       exec: async () => searchMock,
