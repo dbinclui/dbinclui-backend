@@ -1,10 +1,9 @@
 import { ObjectId } from 'mongoose';
-import { Guides } from './guides';
+import { Guides } from '@entities/guides';
 
 export interface Categories {
-  _id: ObjectId;
-  _idGuides: ObjectId;
-  _idParent?: ObjectId;
   title: string;
   shortDescription: string;
+  guide: Guides;
+  parentCategory: Categories;
 }

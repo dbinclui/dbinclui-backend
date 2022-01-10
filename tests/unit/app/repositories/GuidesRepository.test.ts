@@ -36,7 +36,7 @@ describe(GuidesRepository.name, () => {
 
   it(`${GuidesRepository.prototype.update.name}: 
   quando o método for chamado deve ser feita a lógica de atualização`, async () => {
-    const [guideTest] = guidesListMock;
+    const [guideTest] = guidesListMock; 
     const updateMock = {
       title: 'update teste',
       content: 'teste content',
