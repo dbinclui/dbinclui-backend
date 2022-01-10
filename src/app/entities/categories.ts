@@ -6,5 +6,5 @@ export interface Categories {
   title: string;
   shortDescription: string;
   guide: Guides;
-  parentCategory: Categories;
+  parentCategory?: Categories;
 }
