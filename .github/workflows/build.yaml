@@ -13,10 +13,10 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 16.13.1
-    - run: node dist/src/index.js       
-    - run: tsc -p ./tsconfig.build.json       
-    - run: npx eslint -c .eslintrc.json .//*.{ts,test.ts}       
-    - run: npx prettier -c .//*.{ts,test.ts}       
-    - run: npx jest --config=jest.config.ts
+      - run: npm install
+      - run: npm run build
+      - run: npm run lint:check
+      - run: npm run prettier:check
+      - run: npm run test
     env:
       CI: true
