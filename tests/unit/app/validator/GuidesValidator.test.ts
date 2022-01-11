@@ -1,9 +1,6 @@
 import { getMockReq, getMockRes } from '@jest-mock/express';
 import { validationResult, body, ValidationChain, Result } from 'express-validator';
-import {
-  validateRequestSchema,
-  registerValidate,
-} from '@middlewares/validator/GuidesValidator';
+import { validateRequestSchema, registerValidate } from '@middlewares/validator/GuidesValidator';
 
 jest.useFakeTimers();
 
