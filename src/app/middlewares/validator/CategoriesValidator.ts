@@ -10,15 +10,10 @@ function validateRequestSchema(req: Request, res: Response, next: NextFunction) 
 }
 
 const registerValidate = () => [
-  body('title')
-    .notEmpty()
-    .withMessage('O campo está vazio')
-    .isString(),
-    //.exists()
-    //.withMessage('Este title já existe!!!'),
+  body('title').notEmpty().withMessage('O campo está vazio').isString(),
+
   body('shortDescription').notEmpty().withMessage('O campo está vazio').isString(),
   body('guide').notEmpty().withMessage('O campo está vazio').isString(),
-  body('parentCategory').withMessage('Não existe esta categoria!!!'),
 ];
 
 export { registerValidate, validateRequestSchema };
