@@ -3,7 +3,7 @@ import { validationResult, body, ValidationChain, Result } from 'express-validat
 import {
   validateRequestSchema,
   registerValidate,
-} from '../../../../src/app/middlewares/validator/GuidesValidator';
+} from '@middlewares/validator/GuidesValidator';
 
 jest.useFakeTimers();
 
