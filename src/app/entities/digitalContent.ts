@@ -8,6 +8,5 @@ export interface digitalContent {
   category?: Categories;
   title: string;
   shortDescription: string;
-  // eslint-disable-next-line no-undef
-  upload: File;
+  filePath: string;
 }
