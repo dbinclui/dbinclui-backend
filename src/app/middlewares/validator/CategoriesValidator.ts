@@ -1,13 +1,4 @@
-import { NextFunction, Request, Response } from 'express';
-import { body, validationResult } from 'express-validator';
-
-function validateRequestSchema(req: Request, res: Response, next: NextFunction) {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(405).json({ errors: errors.array() });
-  }
-  return next();
-}
+import { body } from 'express-validator';
 
 const registerValidate = () => [
   body('title').notEmpty().withMessage('O campo está vazio').isString(),
@@ -16,4 +7,4 @@ const registerValidate = () => [
   body('guide').notEmpty().withMessage('O campo está vazio').isString(),
 ];
 
-export { registerValidate, validateRequestSchema };
+export { registerValidate };
