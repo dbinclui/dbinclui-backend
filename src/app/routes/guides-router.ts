@@ -10,7 +10,8 @@ export default (router: Router) => {
     router.get('/list', GuidesController.getGuides),
     router.post(
       '/register',
-      [registerValidate, validateRequestSchema],
+      registerValidate(),
+      validateRequestSchema,
       GuidesController.registerGuide,
     ),
   ]);
