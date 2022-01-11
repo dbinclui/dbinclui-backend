@@ -5,8 +5,7 @@ import {
   registerValidate,
 } from '../../../../src/app/middlewares/validator/CategoriesValidator';
 
-//jest.useFakeTimers();
-jest.setTimeout(600000);
+jest.useFakeTimers();
 
 jest.mock('express-validator');
 
@@ -24,30 +23,22 @@ describe('CategoriesValidator Test', () => {
       notEmpty: jest.fn().mockImplementation(() => validatSchemaChainMock),
       withMessage: jest.fn().mockImplementation((_) => validatSchemaChainMock),
       isString: jest.fn().mockImplementation(() => validatSchemaChainMock),
-      //exists: jest.fn().mockImplementation(() => validatSchemaChainMock),
-      //not: jest.fn().mockImplementation(() => validatSchemaChainMock)
     } as unknown as ValidationChain;
     bodyMock.mockImplementation(() => validatSchemaChainMock);
 
     registerValidate();
-    //expect(validatSchemaChainMock.exists).toBeCalledTimes(2);
+
     expect(validatSchemaChainMock.notEmpty).toBeCalledTimes(3);
-    expect(validatSchemaChainMock.withMessage).toBeCalledTimes(4);
+    expect(validatSchemaChainMock.withMessage).toBeCalledTimes(3);
     expect(validatSchemaChainMock.withMessage).toHaveBeenNthCalledWith(1, 'O campo está vazio');
-   // expect(validatSchemaChainMock.withMessage).toHaveBeenNthCalledWith(2, 'Este title já existe!!!');
+
     expect(validatSchemaChainMock.withMessage).toHaveBeenNthCalledWith(2, 'O campo está vazio');
-    expect(validatSchemaChainMock.withMessage).toHaveBeenNthCalledWith(
-     3,
-     'O campo está vazio',
-   );
-    expect(validatSchemaChainMock.withMessage).toHaveBeenNthCalledWith(4, 'Não existe esta categoria!!!');
+    expect(validatSchemaChainMock.withMessage).toHaveBeenNthCalledWith(3, 'O campo está vazio');
+
     expect(validatSchemaChainMock.isString).toBeCalledTimes(3);
     expect(bodyMock).toBeCalledWith('title');
     expect(bodyMock).toBeCalledWith('shortDescription');
     expect(bodyMock).toBeCalledWith('guide');
-    expect(bodyMock).toBeCalledWith('parentCategory');
-
-    const results = Promise.reject();
   });
 
   it(`${validateRequestSchema.name}: 
