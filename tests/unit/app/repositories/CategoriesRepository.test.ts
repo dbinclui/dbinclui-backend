@@ -12,13 +12,15 @@ describe(CategoriesRepository.name, () => {
   let instance: CategoriesRepository;
   const categoriesListMock: Categories[] = [
     {
-      title: 'teste jest',
-      shortDescription: 'testando o test',
+      _id: {} as ObjectId,
+      title: 'Result teste',
+      shortDescription: 'shortDescription',
       guide: {} as Guides,
     },
     {
-      title: 'teste2222 jest',
-      shortDescription: 'testando o test2222',
+      _id: {} as ObjectId,
+      title: 'Result teste 2',
+      shortDescription: 'shortDescription 2',
       guide: {} as Guides,
     },
   ];
@@ -31,41 +33,34 @@ describe(CategoriesRepository.name, () => {
   it(`${CategoriesRepository.prototype.create.name}: 
   quando o método for chamado deve ser feita a lógica de inserção`, async () => {
     const [categoryTest] = categoriesListMock;
+
     await instance.create(categoryTest);
+
     expect(CategoriesModelMock.create).toBeCalledTimes(1);
     expect(CategoriesModelMock.create).toBeCalledWith(categoryTest);
   });
 
   it(`${CategoriesRepository.prototype.update.name}: 
   quando o método for chamado deve ser feita a lógica de atualização`, async () => {
-    const [categoryTest] = categoriesListMock;
-    const updateMock = {
-      title: 'update teste',
-      shortDescription: 'teste shortDescription',
-      guide: {} as Guides,
-    };
+    const [categoryMock, updateMock] = categoriesListMock;
 
     const findOneAndUpdateMock = jest.fn().mockImplementation(() => ({
       exec: async () => updateMock,
     }));
     CategoriesModelMock.findOneAndUpdate = findOneAndUpdateMock;
 
-    const result = await instance.update(categoryTest, updateMock);
+    const result = await instance.update(categoryMock, updateMock);
 
     expect(CategoriesModelMock.findOneAndUpdate).toBeCalledTimes(1);
-    expect(CategoriesModelMock.findOneAndUpdate).toBeCalledWith(categoryTest, updateMock);
+    expect(CategoriesModelMock.findOneAndUpdate).toBeCalledWith(categoryMock, updateMock);
 
     expect(result).toBe(updateMock);
   });
 
   it(`${CategoriesRepository.prototype.getById.name}: 
   quando o método for chamado deve ser feita a lógica de procurar os dados pelo Id`, async () => {
-    const searchMock = {
-      _id: {} as ObjectId,
-      title: 'Result teste',
-      shortDescription: 'shortDescription',
-      guide: {} as Guides,
-    };
+    const [searchMock] = categoriesListMock;
+
     const findByIdMock = jest.fn().mockImplementation(() => ({
       exec: async () => searchMock,
     }));
@@ -73,7 +68,7 @@ describe(CategoriesRepository.name, () => {
     CategoriesModelMock.findById = findByIdMock;
 
     const { _id: id } = searchMock;
-    const result = await instance.getById(id);
+    const result = await instance.getById(id!);
 
     expect(CategoriesModelMock.findById).toBeCalledTimes(1);
     expect(CategoriesModelMock.findById).toBeCalledWith(id);
@@ -83,12 +78,8 @@ describe(CategoriesRepository.name, () => {
 
   it(`${CategoriesRepository.prototype.getByTitle.name}: 
   quando o método for chamado deve ser feita a lógica de procurar os dados pelo título`, async () => {
-    const searchMock = {
-      _id: {} as ObjectId,
-      title: 'Result teste',
-      shortDescription: 'shortDescription',
-      guide: {} as Guides,
-    };
+    const [searchMock] = categoriesListMock;
+
     const findMock = jest.fn().mockImplementation(() => ({
       exec: async () => searchMock,
     }));
@@ -105,12 +96,8 @@ describe(CategoriesRepository.name, () => {
 
   it(`${CategoriesRepository.prototype.getByDescription.name}: 
   quando o método for chamado deve ser feita a lógica de procurar os dados pela descrição`, async () => {
-    const searchMock = {
-      _id: {} as ObjectId,
-      title: 'Result teste',
-      shortDescription: 'shortDescription',
-      guide: {} as Guides,
-    };
+    const [searchMock] = categoriesListMock;
+
     const findMock = jest.fn().mockImplementation(() => ({
       exec: async () => searchMock,
     }));
@@ -129,12 +116,8 @@ describe(CategoriesRepository.name, () => {
 
   it(`${CategoriesRepository.prototype.getByTitleAndDescription.name}: 
   quando o método for chamado deve ser feita a lógica de procurar os dados pelo título e pela descrição`, async () => {
-    const searchMock = {
-      _id: {} as ObjectId,
-      title: 'Result teste',
-      shortDescription: 'shortDescription',
-      guide: {} as Guides,
-    };
+    const [searchMock] = categoriesListMock;
+
     const findMock = jest.fn().mockImplementation(() => ({
       exec: async () => searchMock,
     }));
