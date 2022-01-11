@@ -1,3 +1,4 @@
+import { ObjectId } from 'mongoose';
 import { Guides } from '../entities/guides';
 import { GuidesModel } from '../models/guides';
 
@@ -10,17 +11,15 @@ class GuidesRepository {
     return GuidesModel.findOneAndUpdate(guide, newGuide).exec();
   }
 
-  async get(guide: Guides) {
+  async get(guideId: ObjectId) {
     return GuidesModel.find({
-      title: guide.title,
-      content: guide.content,
+      _id: guideId,
     }).exec();
   }
 
-  async delete(guide: Guides) {
+  async delete(guideId: ObjectId) {
     return GuidesModel.findOneAndDelete({
-      title: guide.title,
-      content: guide.content,
+      _id: guideId,
     }).exec();
   }
 
