@@ -1,52 +1,52 @@
 import { DigitalContents } from '@entities/digitalContents';
-import { digitalContentModel } from '@models/digitalContent';
+import { DigitalContentsModel } from '@models/digitalContents';
 import { ObjectId } from 'mongoose';
 
 class digitalContentRepository {
   async create(digitalContent: DigitalContents) {
-    return digitalContentModel.create(digitalContent);
+    return DigitalContentsModel.create(digitalContent);
   }
 
   async update(digitalContent: DigitalContents, newDigitalContent: DigitalContents) {
-    return digitalContentModel.findOneAndUpdate(digitalContent, newDigitalContent).exec();
+    return DigitalContentsModel.findOneAndUpdate(digitalContent, newDigitalContent).exec();
   }
 
   async getById(id: ObjectId) {
-    return digitalContentModel.findById(id).exec();
+    return DigitalContentsModel.findById(id).exec();
   }
 
   async getByTitle(title: string) {
-    return digitalContentModel.find({ title }).exec();
+    return DigitalContentsModel.find({ title }).exec();
   }
 
   async getByDescription(shortDescription: string) {
-    return digitalContentModel.find({ shortDescription }).exec();
+    return DigitalContentsModel.find({ shortDescription }).exec();
   }
 
   async getByTitleAndDescription(title: string, shortDescription: string) {
-    return digitalContentModel.find({ title, shortDescription }).exec();
+    return DigitalContentsModel.find({ title, shortDescription }).exec();
   }
 
   async getByGuide(id: ObjectId) {
-    return digitalContentModel.find({ id }).exec();
+    return DigitalContentsModel.findById(id).exec();
   }
 
   async getByCategory(id: ObjectId) {
-    return digitalContentModel.find({ id }).exec();
+    return DigitalContentsModel.findById(id).exec();
   }
 
   async delete(digitalContent: DigitalContents) {
-    return digitalContentModel.findOneAndDelete(digitalContent).exec();
+    return DigitalContentsModel.findOneAndDelete(digitalContent).exec();
   }
 
   async deleteById(id: ObjectId) {
-    return digitalContentModel.findOneAndDelete({
+    return DigitalContentsModel.findOneAndDelete({
       _id: id,
     }).exec();
   }
 
   async list() {
-    return digitalContentModel.find().exec();
+    return DigitalContentsModel.find().exec();
   }
 }
 

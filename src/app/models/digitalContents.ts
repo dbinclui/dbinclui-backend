@@ -9,9 +9,9 @@ const DigitalContentSchema = new Schema<DigitalContents>({
   filePath: { type: String, required: true },
 });
 
-export const digitalContentModel = model<DigitalContents>(
+export const DigitalContentsModel = model<DigitalContents>(
   'DigitalContent',
   DigitalContentSchema,
   'digitalContent',
 );
-export default digitalContentModel;
+export default DigitalContentsModel;
