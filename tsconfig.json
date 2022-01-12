@@ -14,7 +14,7 @@
     "paths": {
       "@controllers/*": ["./src/app/controllers/*"],
       "@entities/*": ["./src/app/entities/*"],
-      "@middlewares/*": ["./scr/app/middlewares/*"],
+      "@middlewares/*": ["./src/app/middlewares/*"],
       "@models/*": ["./src/app/models/*"],
       "@repositories/*": ["./src/app/repositories/*"],
       "@routes/*": ["./src/app/routes/*"]
