@@ -1,5 +1,5 @@
 import { model, Schema } from 'mongoose';
-import { digitalContent } from '../entities/digitalContent';
+import { digitalContent } from '@entities/digitalContent';
 
 const DigitalContentSchema = new Schema<digitalContent>(
     {
