@@ -44,18 +44,20 @@ export class DigitalContentController {
 
       const guide = await this.guidesRepository.get(req.body.guide);
 
+      if (!guide) return res.status(400).json({ message: 'Esse guia não existe' });
+
       const newDigitalContent: DigitalContent = {
         title: '',
-        guide: {} as any,
-        category: category || undefined,
+        guide,
+        category,
         shortDescription: '',
         filePath: '',
       };
 
-      const createdDigitalContent = await this.repository.create(req.body);
-      res.status(200).json({ data: newDigitalContent });
+      const createdDigitalContent = await this.repository.create(newDigitalContent);
+      return res.status(200).json({ data: createdDigitalContent });
     } catch (error) {
-      res.status(400).json({
+      return res.status(400).json({
         message: error,
       });
     }

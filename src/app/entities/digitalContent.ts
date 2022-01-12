@@ -5,7 +5,7 @@ import { Categories } from '@entities/categories';
 export interface digitalContent {
   _id?: ObjectId;
   guide: Guides;
-  category?: Categories;
+  category?: Categories | null;
   title: string;
   shortDescription: string;
   filePath: string;
