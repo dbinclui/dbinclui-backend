@@ -12,9 +12,7 @@ class GuidesRepository {
   }
 
   async get(guideId: ObjectId) {
-    return GuidesModel.find({
-      _id: guideId,
-    }).exec();
+    return GuidesModel.findById(guideId).exec();
   }
 
   async delete(guideId: ObjectId) {

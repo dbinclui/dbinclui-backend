@@ -47,7 +47,7 @@ export class DigitalContentController {
       const newDigitalContent: DigitalContent = {
         title: '',
         guide: {} as any,
-        category: {} as any,
+        category: category || undefined,
         shortDescription: '',
         filePath: '',
       };
