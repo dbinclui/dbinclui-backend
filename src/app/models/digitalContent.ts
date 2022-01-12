@@ -6,7 +6,6 @@ const DigitalContentSchema = new Schema<digitalContent>({
   shortDescription: { type: String, required: true },
   guide: { type: Schema.Types.ObjectId, ref: 'Guides', required: true },
   category: { type: Schema.Types.ObjectId, ref: 'Category' },
-  // eslint-disable-next-line no-undef
   filePath: { type: String, required: true },
 });
 
