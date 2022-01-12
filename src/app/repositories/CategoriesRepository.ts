@@ -16,15 +16,15 @@ class CategoriesRepository {
   }
 
   async getByTitle(title: string) {
-    return CategoriesModel.find({ title }).exec();
+    return CategoriesModel.findOne({ title }).exec();
   }
 
   async getByDescription(shortDescription: string) {
-    return CategoriesModel.find({ shortDescription }).exec();
+    return CategoriesModel.findOne({ shortDescription }).exec();
   }
 
   async getByTitleAndDescription(title: string, shortDescription: string) {
-    return CategoriesModel.find({ title, shortDescription }).exec();
+    return CategoriesModel.findOne({ title, shortDescription }).exec();
   }
 
   async delete(category: Categories) {
