@@ -1,10 +1,9 @@
 import { Router } from 'express';
-import GuidesController from '../controllers/GuidesController';
-import { registerValidate, validateRequestSchema } from '../middlewares/validator/GuidesValidator';
+import { registerValidate, validateRequestSchema } from '@middlewares/validator/GuidesValidator';
+import GuidesController from '@controllers/GuidesController';
 
 GuidesController.getGuides = GuidesController.getGuides.bind(GuidesController);
 GuidesController.registerGuide = GuidesController.registerGuide.bind(GuidesController);
-
 
 export default (router: Router) => {
   router.use('guides', [
