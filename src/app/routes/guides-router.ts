@@ -6,7 +6,7 @@ GuidesController.getGuides = GuidesController.getGuides.bind(GuidesController);
 GuidesController.registerGuide = GuidesController.registerGuide.bind(GuidesController);
 
 export default (router: Router) => {
-  router.use('guides', [
+  router.use('/guides', [
     router.get('/list', GuidesController.getGuides),
     router.post(
       '/register',
