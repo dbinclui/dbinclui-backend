@@ -2,7 +2,7 @@ import { ObjectId } from 'mongoose';
 import { Guides } from '@entities/guides';
 import { Categories } from '@entities/categories';
 
-export interface digitalContent {
+export interface DigitalContents {
   _id?: ObjectId;
   guide: Guides;
   category?: Categories | null;
