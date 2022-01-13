@@ -1,6 +1,7 @@
 import { Router } from 'express';
-import { registerValidate, validateRequestSchema } from '@middlewares/validator/GuidesValidator';
+import { registerValidate } from '@middlewares/validator/GuidesValidator';
 import GuidesController from '@controllers/GuidesController';
+import { validateRequestSchema } from '@middlewares/validator/ValidateSchema';
 
 const router = Router();
 
