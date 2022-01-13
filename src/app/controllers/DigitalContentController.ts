@@ -1,18 +1,18 @@
 import { Request, Response } from 'express';
-import { digitalContent as DigitalContent } from '@entities/digitalContent';
-// import DigitalContentsRepository from '@repositories/DigitalContentsRepository';
+import { DigitalContents } from '@entities/digitalContents';
 import CategoriesRepository from '@repositories/CategoriesRepository';
 import GuidesRepository from '@repositories/GuidesRepository';
+import DigitalContentRepository from '@repositories/DigitalContentsRepository';
 
 export class DigitalContentController {
-  private repository: CategoriesRepository;
+  private repository: DigitalContentRepository;
 
   private categoriesRepository: CategoriesRepository;
 
   private guidesRepository: GuidesRepository;
 
   constructor() {
-    this.repository = new CategoriesRepository();
+    this.repository = new DigitalContentRepository();
     this.categoriesRepository = new CategoriesRepository();
     this.guidesRepository = new GuidesRepository();
   }
@@ -30,28 +30,22 @@ export class DigitalContentController {
 
   async registerDigitalContent(req: Request, res: Response) {
     try {
-      // TODO Precisamos de três coisas para criar o conteúdo digital no banco:
-      //
-      //  - O link do arquivo que vamos fazer o upload
-      //  - O documento (ou ID do documento) do guia que o contéudo faz parte
-      //  - O documento (ou ID do documento) da categoria que o contéudo pode fazer parte
-
-      // aqui esses `req.body`s da vida vão ser substituidos pelo quer q seja quando precisar
-
       const category = req.body.category
-        ? await this.categoriesRepository.getByTitle(req.body.category)
+        ? await this.categoriesRepository.getById(req.body.category)
         : undefined;
 
       const guide = await this.guidesRepository.get(req.body.guide);
 
       if (!guide) return res.status(400).json({ message: 'Esse guia não existe' });
 
-      const newDigitalContent: DigitalContent = {
-        title: '',
+      const { title, shortDescription } = req.body;
+
+      const newDigitalContent: DigitalContents = {
+        title,
         guide,
         category,
-        shortDescription: '',
-        filePath: '',
+        shortDescription,
+        filePath: (req as any).file.path,
       };
 
       const createdDigitalContent = await this.repository.create(newDigitalContent);
