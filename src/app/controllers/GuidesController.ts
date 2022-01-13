@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import GuidesRepository from '../repositories/GuidesRepository';
+import GuidesRepository from '@repositories/GuidesRepository';
 
 export class GuidesController {
   private repository: GuidesRepository;

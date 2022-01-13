@@ -19,7 +19,7 @@ const config = async (): Promise<Config.InitialOptions> => ({
   moduleNameMapper: {
     '@controllers/(.*)': ['<rootDir>/src/app/controllers/$1'],
     '@entities/(.*)': ['<rootDir>/src/app/entities/$1'],
-    '@middlewares/(.*)': ['<rootDir>/scr/app/middlewares/$1'],
+    '@middlewares/(.*)': ['<rootDir>/src/app/middlewares/$1'],
     '@models/(.*)': ['<rootDir>/src/app/models/$1'],
     '@repositories/(.*)': ['<rootDir>/src/app/repositories/$1'],
     '@routes/(.*)': ['<rootDir>/src/app/routes/$1'],
