@@ -1,7 +1,6 @@
 import { v2 as cloudinary } from 'cloudinary';
 import { CloudinaryStorage } from 'multer-storage-cloudinary';
-import  multer from 'multer';
-import { Request } from 'express'
+import multer from 'multer';
 
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -12,8 +11,8 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
   cloudinary,
   params: {
-    folder: "Uploads",
-    format: async (req: Request, file: any)=>  'mp4'
+    folder: 'Uploads',
+    resource_type: 'auto',
   } as any,
 });
 

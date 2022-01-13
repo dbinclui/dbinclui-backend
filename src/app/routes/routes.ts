@@ -8,9 +8,10 @@ const router = Router();
 router.use('/guides', guidesRouter);
 router.use('/categories', categoriesRouter);
 
-router.get('/',upload.single('file') ,(_, res) => {
+router.get('/', upload.single('file'), (_, res) => {
   // eslint-disable-next-line no-console
   console.log(_.file, _.body);
+
   res.status(200).json({ message: 'Bem vindo a API DBInclui' });
 });
 
