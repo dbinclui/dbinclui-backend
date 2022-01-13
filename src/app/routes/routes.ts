@@ -1,17 +1,13 @@
 import { Router } from 'express';
-import upload from '@middlewares/upload/Multer';
-import guidesRouter from './guides-router';
-import categoriesRouter from './categories-router';
+import guidesRouter from '@routes/guides-router';
+import categoriesRouter from '@routes/categories-router';
 
 const router = Router();
 
 router.use('/guides', guidesRouter);
 router.use('/categories', categoriesRouter);
 
-router.get('/', upload.single('file'), (_, res) => {
-  // eslint-disable-next-line no-console
-  console.log(_.file, _.body);
-
+router.get('/', (_, res) => {
   res.status(200).json({ message: 'Bem vindo a API DBInclui' });
 });
 
