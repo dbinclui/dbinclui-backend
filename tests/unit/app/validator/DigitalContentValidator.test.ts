@@ -1,12 +1,12 @@
 import { body, ValidationChain } from 'express-validator';
-import { registerValidate } from '@middlewares/validator/CategoriesValidator';
+import { registerValidate } from '@middlewares/validator/DigitalContentValidator';
 
 jest.useFakeTimers();
 jest.mock('express-validator');
 
 const bodyMock = body as jest.MockedFunction<typeof body>;
 
-describe('CategoriesValidator Test', () => {
+describe('DigitalContentValidator Test', () => {
     beforeEach(() => {
         bodyMock.mockClear();
     });
@@ -30,7 +30,7 @@ describe('CategoriesValidator Test', () => {
         expect(bodyMock).toBeCalledWith('title');
         expect(bodyMock).toBeCalledWith('shortDescription');
         expect(bodyMock).toBeCalledWith('guide');
-        expect(bodyMock).toBeCalledWith('filePath');
+        expect(bodyMock).toBeCalledWith('filePath'); 
 
         
 
