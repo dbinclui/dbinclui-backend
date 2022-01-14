@@ -54,7 +54,7 @@ export class DigitalContentController {
       const createdDigitalContent = await this.repository.create(newDigitalContent);
       return res.status(200).json({ data: createdDigitalContent });
     } catch (error) {
-      return res.status(400).json({
+      return res.status(500).json({
         message: error,
       });
     }
