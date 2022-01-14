@@ -4,7 +4,7 @@ import CategoriesRepository from '@repositories/CategoriesRepository';
 import GuidesRepository from '@repositories/GuidesRepository';
 import DigitalContentRepository from '@repositories/DigitalContentsRepository';
 
-export class DigitalContentController {
+export class DigitalContentsController {
   private repository: DigitalContentRepository;
 
   private categoriesRepository: CategoriesRepository;
@@ -61,4 +61,4 @@ export class DigitalContentController {
   }
 }
 
-export default new DigitalContentController();
+export default new DigitalContentsController();

@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import guidesRouter from './guides-router';
-import categoriesRouter from './categories-router';
+import guidesRouter from '@routes/guides-router';
+import categoriesRouter from '@routes/categories-router';
 
 const router = Router();
 
