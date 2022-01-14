@@ -19,6 +19,8 @@ describe('DigitalContentValidator Test', () => {
         } as unknown as ValidationChain;
         bodyMock.mockImplementation(() => validatSchemaChainMock);
 
+        registerValidate();
+
         expect(validatSchemaChainMock.notEmpty).toBeCalledTimes(4);
         expect(validatSchemaChainMock.withMessage).toBeCalledTimes(4);
         expect(validatSchemaChainMock.withMessage).toHaveBeenNthCalledWith(1, 'O campo está vazio');
@@ -30,10 +32,7 @@ describe('DigitalContentValidator Test', () => {
         expect(bodyMock).toBeCalledWith('title');
         expect(bodyMock).toBeCalledWith('shortDescription');
         expect(bodyMock).toBeCalledWith('guide');
-        expect(bodyMock).toBeCalledWith('filePath'); 
+        expect(bodyMock).toBeCalledWith('filePath');
 
-        
-
-        registerValidate();
     });
 });
