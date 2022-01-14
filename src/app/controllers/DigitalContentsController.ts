@@ -22,7 +22,7 @@ export class DigitalContentsController {
       const digitalContents = await this.repository.list();
       res.status(200).json({ data: digitalContents });
     } catch (error) {
-      res.status(400).json({
+      res.status(500).json({
         message: error,
       });
     }
