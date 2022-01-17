@@ -1,7 +1,7 @@
 import { model, Schema } from 'mongoose';
-import { digitalContent } from '@entities/digitalContent';
+import { DigitalContents } from '@entities/digitalContents';
 
-const DigitalContentSchema = new Schema<digitalContent>({
+const DigitalContentSchema = new Schema<DigitalContents>({
   title: { type: String, required: true },
   shortDescription: { type: String, required: true },
   guide: { type: Schema.Types.ObjectId, ref: 'Guides', required: true },
@@ -9,9 +9,9 @@ const DigitalContentSchema = new Schema<digitalContent>({
   filePath: { type: String, required: true },
 });
 
-export const digitalContentModel = model<digitalContent>(
+export const DigitalContentsModel = model<DigitalContents>(
   'DigitalContent',
   DigitalContentSchema,
   'digitalContent',
 );
-export default digitalContentModel;
+export default DigitalContentsModel;
