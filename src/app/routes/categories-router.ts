@@ -13,4 +13,5 @@ export default [
     validateRequestSchema,
     CategoriesController.registerCategory,
   ),
+  router.get('/getByGuide/:id', CategoriesController.getCategoriesByGuide),
 ];
