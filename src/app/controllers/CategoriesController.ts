@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import CategoriesRepository from '@repositories/CategoriesRepository';
 import bindedInstance from '@utils/bindedInstance';
-import CategoriesModel from '@models/categories';
 
 export class CategoriesController {
   private repository: CategoriesRepository;
