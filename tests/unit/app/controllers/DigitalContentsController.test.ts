@@ -119,34 +119,6 @@ describe(DigitalContentsController.name, () => {
     );
   });
 
-  it(`When ${DigitalContentsController.prototype.registerDigitalContent.name} is called and no file is uploaded, the error should be handled
-  `, async () => {
-    const { res } = getMockRes();
-    const req = getMockReq({
-      body: {
-        category: 'id-teste',
-        guide: 'id-teste',
-        title: 'titulo',
-        shortDescription: 'descricao',
-      },
-    });
-
-    const errorMessage = 'Ocorreu um erro ao fazer o upload do arquivo';
-
-    await instance.registerDigitalContent(req, res);
-
-    expect(CategoriesRepositoryMock.prototype.getById).not.toHaveBeenCalled();
-    expect(GuidesRepositoryMock.prototype.get).not.toHaveBeenCalled();
-    expect(DigitalContentsRepositoryMock.prototype.create).not.toHaveBeenCalled();
-
-    expect(res.status).toHaveBeenCalledWith(500);
-    expect(res.json).toHaveBeenCalledWith(
-      expect.objectContaining({
-        message: errorMessage,
-      }),
-    );
-  });
-
   it(`When ${DigitalContentsController.prototype.registerDigitalContent.name} is called and an invalid guide Id is provided, the error should be handled
   `, async () => {
     const { res } = getMockRes();
@@ -170,7 +142,7 @@ describe(DigitalContentsController.name, () => {
     expect(GuidesRepositoryMock.prototype.get).toHaveBeenCalledWith(req.body.guide);
     expect(DigitalContentsRepositoryMock.prototype.create).not.toHaveBeenCalled();
 
-    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.status).toHaveBeenCalledWith(404);
     expect(res.json).toHaveBeenCalledWith(
       expect.objectContaining({
         message: errorMessage,
