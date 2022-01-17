@@ -11,7 +11,7 @@ class CategoriesRepository {
     return CategoriesModel.findOneAndUpdate(category, newGuide).exec();
   }
 
-  async getById(id: ObjectId) {
+  async getById(id: ObjectId | string) {
     return CategoriesModel.findById(id).exec();
   }
 
@@ -27,7 +27,7 @@ class CategoriesRepository {
     return CategoriesModel.findOne({ title, shortDescription }).exec();
   }
 
-  async getByGuideId(id: ObjectId) {
+  async getByGuideId(id: ObjectId | string) {
     return CategoriesModel.find({ guide: id }).exec();
   }
 
@@ -35,7 +35,7 @@ class CategoriesRepository {
     return CategoriesModel.findOneAndDelete(category).exec();
   }
 
-  async deleteById(id: ObjectId) {
+  async deleteById(id: ObjectId | string) {
     return CategoriesModel.findOneAndDelete({
       _id: id,
     }).exec();
