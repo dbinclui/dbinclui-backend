@@ -31,9 +31,6 @@ export class DigitalContentsController {
 
   async registerDigitalContent(req: Request, res: Response) {
     try {
-      if (!req.file)
-        return res.status(500).json({ message: 'Ocorreu um erro ao fazer o upload do arquivo' });
-
       const category = req.body.category
         ? await this.categoriesRepository.getById(req.body.category)
         : undefined;
@@ -49,7 +46,7 @@ export class DigitalContentsController {
         guide,
         category,
         shortDescription,
-        filePath: req.file.path,
+        filePath: req.file!.path,
       };
 
       const createdDigitalContent = await this.repository.create(newDigitalContent);
