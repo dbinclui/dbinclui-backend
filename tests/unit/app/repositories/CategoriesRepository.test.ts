@@ -138,6 +138,27 @@ describe(CategoriesRepository.name, () => {
     expect(result).toBe(searchMock);
   });
 
+  it(`${CategoriesRepository.prototype.getByGuideId.name}: 
+  quando o método for chamado deve ser feita a lógica de procurar os dados pelo id do guia`, async () => {
+    const [searchMock] = categoriesListMock;
+
+    const findMock = jest.fn().mockImplementation(() => ({
+      exec: async () => [searchMock],
+    }));
+
+    CategoriesModelMock.find = findMock;
+
+    const { _id: id } = searchMock;
+    const result = await instance.getByGuideId(id!);
+
+    expect(CategoriesModelMock.find).toBeCalledTimes(1);
+    expect(CategoriesModelMock.find).toBeCalledWith({
+      guide: id,
+    });
+
+    expect(result).toEqual([searchMock]);
+  });
+
   it(`${CategoriesRepository.prototype.delete.name}: 
   quando o método for chamado deve ser feita a lógica de deletar o registro`, async () => {
     const [categoryTest] = categoriesListMock;
