@@ -23,6 +23,7 @@ const config = async (): Promise<Config.InitialOptions> => ({
     '@models/(.*)': ['<rootDir>/src/app/models/$1'],
     '@repositories/(.*)': ['<rootDir>/src/app/repositories/$1'],
     '@routes/(.*)': ['<rootDir>/src/app/routes/$1'],
+    '@utils/(.*)': ['<rootDir>/src/app/utils/$1'],
   },
 });
 

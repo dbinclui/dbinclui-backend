@@ -62,17 +62,17 @@ describe(GuidesRepository.name, () => {
     const searchMock = {
       _id: mockObjectId,
     };
-    const findMock = jest.fn().mockImplementation(() => ({
+    const findByIdMock = jest.fn().mockImplementation(() => ({
       exec: async () => searchMock,
     }));
 
-    GuidesModelMock.find = findMock;
+    GuidesModelMock.findById = findByIdMock;
 
     const result = await instance.get(mockObjectId);
 
-    expect(GuidesModelMock.find).toBeCalledTimes(1);
-    expect(GuidesModelMock.find).toBeCalledWith(searchMock);
-    expect(findMock).toBeCalled();
+    expect(GuidesModelMock.findById).toBeCalledTimes(1);
+    expect(GuidesModelMock.findById).toBeCalledWith(mockObjectId);
+    expect(findByIdMock).toBeCalled();
     expect(result).toBe(searchMock);
   });
 

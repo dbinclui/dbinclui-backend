@@ -11,27 +11,31 @@ class CategoriesRepository {
     return CategoriesModel.findOneAndUpdate(category, newGuide).exec();
   }
 
-  async getById(id: ObjectId) {
+  async getById(id: ObjectId | string) {
     return CategoriesModel.findById(id).exec();
   }
 
   async getByTitle(title: string) {
-    return CategoriesModel.find({ title }).exec();
+    return CategoriesModel.findOne({ title }).exec();
   }
 
   async getByDescription(shortDescription: string) {
-    return CategoriesModel.find({ shortDescription }).exec();
+    return CategoriesModel.findOne({ shortDescription }).exec();
   }
 
   async getByTitleAndDescription(title: string, shortDescription: string) {
-    return CategoriesModel.find({ title, shortDescription }).exec();
+    return CategoriesModel.findOne({ title, shortDescription }).exec();
+  }
+
+  async getByGuideId(id: ObjectId | string) {
+    return CategoriesModel.find({ guide: id }).exec();
   }
 
   async delete(category: Categories) {
     return CategoriesModel.findOneAndDelete(category).exec();
   }
 
-  async deleteById(id: ObjectId) {
+  async deleteById(id: ObjectId | string) {
     return CategoriesModel.findOneAndDelete({
       _id: id,
     }).exec();

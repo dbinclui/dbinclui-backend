@@ -80,16 +80,16 @@ describe(CategoriesRepository.name, () => {
   quando o método for chamado deve ser feita a lógica de procurar os dados pelo título`, async () => {
     const [searchMock] = categoriesListMock;
 
-    const findMock = jest.fn().mockImplementation(() => ({
+    const findOneMock = jest.fn().mockImplementation(() => ({
       exec: async () => searchMock,
     }));
 
-    CategoriesModelMock.find = findMock;
+    CategoriesModelMock.findOne = findOneMock;
 
     const result = await instance.getByTitle(searchMock.title);
 
-    expect(CategoriesModelMock.find).toBeCalledTimes(1);
-    expect(CategoriesModelMock.find).toBeCalledWith({ title: searchMock.title });
+    expect(CategoriesModelMock.findOne).toBeCalledTimes(1);
+    expect(CategoriesModelMock.findOne).toBeCalledWith({ title: searchMock.title });
 
     expect(result).toBe(searchMock);
   });
@@ -98,16 +98,16 @@ describe(CategoriesRepository.name, () => {
   quando o método for chamado deve ser feita a lógica de procurar os dados pela descrição`, async () => {
     const [searchMock] = categoriesListMock;
 
-    const findMock = jest.fn().mockImplementation(() => ({
+    const findOneMock = jest.fn().mockImplementation(() => ({
       exec: async () => searchMock,
     }));
 
-    CategoriesModelMock.find = findMock;
+    CategoriesModelMock.findOne = findOneMock;
 
     const result = await instance.getByDescription(searchMock.shortDescription);
 
-    expect(CategoriesModelMock.find).toBeCalledTimes(1);
-    expect(CategoriesModelMock.find).toBeCalledWith({
+    expect(CategoriesModelMock.findOne).toBeCalledTimes(1);
+    expect(CategoriesModelMock.findOne).toBeCalledWith({
       shortDescription: searchMock.shortDescription,
     });
 
@@ -118,24 +118,45 @@ describe(CategoriesRepository.name, () => {
   quando o método for chamado deve ser feita a lógica de procurar os dados pelo título e pela descrição`, async () => {
     const [searchMock] = categoriesListMock;
 
-    const findMock = jest.fn().mockImplementation(() => ({
+    const findOneMock = jest.fn().mockImplementation(() => ({
       exec: async () => searchMock,
     }));
 
-    CategoriesModelMock.find = findMock;
+    CategoriesModelMock.findOne = findOneMock;
 
     const result = await instance.getByTitleAndDescription(
       searchMock.title,
       searchMock.shortDescription,
     );
 
-    expect(CategoriesModelMock.find).toBeCalledTimes(1);
-    expect(CategoriesModelMock.find).toBeCalledWith({
+    expect(CategoriesModelMock.findOne).toBeCalledTimes(1);
+    expect(CategoriesModelMock.findOne).toBeCalledWith({
       title: searchMock.title,
       shortDescription: searchMock.shortDescription,
     });
 
     expect(result).toBe(searchMock);
+  });
+
+  it(`${CategoriesRepository.prototype.getByGuideId.name}: 
+  quando o método for chamado deve ser feita a lógica de procurar os dados pelo id do guia`, async () => {
+    const [searchMock] = categoriesListMock;
+
+    const findMock = jest.fn().mockImplementation(() => ({
+      exec: async () => [searchMock],
+    }));
+
+    CategoriesModelMock.find = findMock;
+
+    const { _id: id } = searchMock;
+    const result = await instance.getByGuideId(id!);
+
+    expect(CategoriesModelMock.find).toBeCalledTimes(1);
+    expect(CategoriesModelMock.find).toBeCalledWith({
+      guide: id,
+    });
+
+    expect(result).toEqual([searchMock]);
   });
 
   it(`${CategoriesRepository.prototype.delete.name}: 
