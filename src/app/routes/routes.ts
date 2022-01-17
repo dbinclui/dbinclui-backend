@@ -1,11 +1,13 @@
 import { Router } from 'express';
-import guidesRouter from './guides-router';
-import categoriesRouter from './categories-router';
+import guidesRouter from '@routes/guides-router';
+import categoriesRouter from '@routes/categories-router';
+import digitalContentsRouter from '@routes/Digital-contents-router';
 
 const router = Router();
 
 router.use('/guides', guidesRouter);
 router.use('/categories', categoriesRouter);
+router.use('/digital-contents', digitalContentsRouter);
 
 router.get('/', (_, res) => {
   res.status(200).json({ message: 'Bem vindo a API DBInclui' });

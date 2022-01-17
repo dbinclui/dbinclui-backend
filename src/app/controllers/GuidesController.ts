@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import GuidesRepository from '@repositories/GuidesRepository';
+import bindedInstance from '@utils/bindedInstance';
 
 export class GuidesController {
   private repository: GuidesRepository;
@@ -31,4 +32,4 @@ export class GuidesController {
   }
 }
 
-export default new GuidesController();
+export default bindedInstance(GuidesController);
