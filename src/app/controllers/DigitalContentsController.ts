@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Request, Response, Express } from 'express';
 import { DigitalContents } from '@entities/digitalContents';
 import CategoriesRepository from '@repositories/CategoriesRepository';
 import GuidesRepository from '@repositories/GuidesRepository';
@@ -46,7 +46,10 @@ export class DigitalContentsController {
         guide,
         category,
         shortDescription,
-        filePath: req.file!.path,
+        filePaths: (req.files! as Express.Multer.File[]).reduce(
+          (paths: string[], file) => [...paths, file.path],
+          [],
+        ),
       };
 
       const createdDigitalContent = await this.repository.create(newDigitalContent);

@@ -8,5 +8,5 @@ export interface DigitalContents {
   category?: Categories | null;
   title: string;
   shortDescription: string;
-  filePath: string;
+  filePaths: string[];
 }
