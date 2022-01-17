@@ -18,7 +18,7 @@ const registerValidate = () => [
       });
       return isValid;
     })
-    .withMessage('Arquivo não suportado. Envie apenas vídeo ou imagem.')
+    .withMessage('Arquivo não suportado. Envie apenas vídeo ou imagem.'),
 ];
 
 export { registerValidate };
