@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import CategoriesRepository from '@repositories/CategoriesRepository';
+import bindedInstance from '@utils/bindedInstance';
 
 export class CategoriesController {
   private repository: CategoriesRepository;
@@ -31,4 +32,4 @@ export class CategoriesController {
   }
 }
 
-export default new CategoriesController();
+export default bindedInstance(CategoriesController);

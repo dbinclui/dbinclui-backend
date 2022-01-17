@@ -6,7 +6,7 @@ const DigitalContentSchema = new Schema<DigitalContents>({
   shortDescription: { type: String, required: true },
   guide: { type: Schema.Types.ObjectId, ref: 'Guides', required: true },
   category: { type: Schema.Types.ObjectId, ref: 'Category' },
-  filePath: { type: String, required: true },
+  filePaths: [{ type: String, required: true }],
 });
 
 export const DigitalContentsModel = model<DigitalContents>(
