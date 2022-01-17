@@ -40,7 +40,7 @@ export class DigitalContentsController {
 
       const guide = await this.guidesRepository.get(req.body.guide);
 
-      if (!guide) return res.status(400).json({ message: 'Esse guia não existe' });
+      if (!guide) return res.status(404).json({ message: 'Esse guia não existe' });
 
       const { title, shortDescription } = req.body;
 
