@@ -27,7 +27,6 @@
     "url": "git+https://github.com/nickolasL13/dbinclui-backend.git"
   },
   "dependencies": {
-    "@jest-mock/express": "^1.4.5",
     "axios": "^0.24.0",
     "body-parser": "^1.19.1",
     "cloudinary": "^1.28.1",
@@ -49,6 +48,7 @@
   },
   "devDependencies": {
     "@babel/preset-typescript": "^7.16.5",
+    "@jest-mock/express": "^1.4.5",
     "@shelf/jest-mongodb": "^2.1.1",
     "@types/body-parser": "^1.19.2",
     "@types/cors": "^2.8.12",
