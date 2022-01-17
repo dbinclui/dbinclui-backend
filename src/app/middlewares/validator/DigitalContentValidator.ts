@@ -7,7 +7,7 @@ const registerValidate = () => [
   body('guide').notEmpty().withMessage('O campo está vazio').isString(),
 
   check('files')
-    .custom((value, { req }) => req.files.lenght > 0)
+    .custom((value, { req }) => req.files.length > 0)
     .withMessage('Envie ao menos um arquivo.')
     .custom((value, { req }) => {
       let isValid = true;
