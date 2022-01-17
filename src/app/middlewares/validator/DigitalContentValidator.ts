@@ -10,13 +10,15 @@ const registerValidate = () => [
     .custom((value, { req }) => req.files.lenght > 0)
     .withMessage('Envie ao menos um arquivo.')
     .custom((value, { req }) => {
-      let isValid = false;
+      let isValid = true;
       req.files.forEach((file: any) => {
-        if (file.mimetype.includes('video') || file.mimetype.includes('image')) {
-          isValid = true;
+        if (!file.mimetype.includes('video') && !file.mimetype.includes('image')) {
+          isValid = false;
         }
       });
-    }),
+      return isValid;
+    })
+    .withMessage('Arquivo não suportado. Envie apenas vídeo ou imagem.')
 ];
 
 export { registerValidate };
