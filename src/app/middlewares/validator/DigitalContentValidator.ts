@@ -5,7 +5,7 @@ const registerValidate = () => [
 
   body('shortDescription').notEmpty().withMessage('O campo está vazio').isString(),
   body('guide').notEmpty().withMessage('O campo está vazio').isString(),
-  body('filePath').notEmpty().withMessage('O campo está vazio').isString(),
+
   check('files')
     .custom((value, { req }) => req.files.lenght > 0)
     .withMessage('Envie ao menos um arquivo.')
