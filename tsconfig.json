@@ -17,7 +17,8 @@
       "@middlewares/*": ["./src/app/middlewares/*"],
       "@models/*": ["./src/app/models/*"],
       "@repositories/*": ["./src/app/repositories/*"],
-      "@routes/*": ["./src/app/routes/*"]
+      "@routes/*": ["./src/app/routes/*"],
+      "@utils/*": ["./src/app/utils/*"]
     }
   },
   "exclude": ["./node_modules"]

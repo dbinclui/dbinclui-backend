@@ -3,6 +3,7 @@ import { DigitalContents } from '@entities/digitalContents';
 import CategoriesRepository from '@repositories/CategoriesRepository';
 import GuidesRepository from '@repositories/GuidesRepository';
 import DigitalContentRepository from '@repositories/DigitalContentsRepository';
+import bindedInstance from '@utils/bindedInstance';
 
 export class DigitalContentsController {
   private repository: DigitalContentRepository;
@@ -60,16 +61,6 @@ export class DigitalContentsController {
     }
   }
 }
-
-const bindedInstance = <T>(ClassObject: new (...args: any[]) => T): T => {
-  const instance: { [key: string]: any } = new ClassObject();
-
-  Object.getOwnPropertyNames(ClassObject.prototype).forEach((method) => {
-    if (instance[method].bind) instance[method] = instance[method].bind(instance);
-  });
-
-  return instance as T;
-};
 
 const instance = bindedInstance(DigitalContentsController);
 
