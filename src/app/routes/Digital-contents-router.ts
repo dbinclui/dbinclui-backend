@@ -13,6 +13,6 @@ export default [
     upload.array("files"),
     registerValidate(),
     validateRequestSchema,
-    DigitalContentsController.registerDigitalContents,
+    DigitalContentsController.registerDigitalContent,
   ),
 ];
