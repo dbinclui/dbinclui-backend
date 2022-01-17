@@ -25,7 +25,7 @@ export class CategoriesController {
       const categories = await this.repository.getByGuideId(req.params.id);
       res.status(200).json({ data: categories });
     } catch (error) {
-      res.status(400).json({
+      res.status(500).json({
         message: error,
       });
     }
