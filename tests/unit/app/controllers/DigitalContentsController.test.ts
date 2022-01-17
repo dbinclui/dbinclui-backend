@@ -1,3 +1,4 @@
+import { Express } from 'express';
 import { getMockReq, getMockRes } from '@jest-mock/express';
 import { DigitalContentsController } from '@controllers/DigitalContentsController';
 import DigitalContentsRepository from '@repositories/DigitalContentsRepository';
@@ -79,7 +80,7 @@ describe(DigitalContentsController.name, () => {
   `, async () => {
     const { res } = getMockRes();
     const req = getMockReq({
-      file: { path: 'path-teste' },
+      files: [{ path: 'path-teste' }],
       body: {
         category: 'id-teste',
         guide: 'id-teste',
@@ -96,7 +97,10 @@ describe(DigitalContentsController.name, () => {
       ...req.body,
       category: mockCategory,
       guide: mockGuide,
-      filePath: req.file?.path,
+      filePaths: (req.files! as Express.Multer.File[]).reduce(
+        (paths: string[], file) => [...paths, file.path],
+        [],
+      ),
     };
 
     GuidesRepositoryMock.prototype.get.mockResolvedValue(mockGuide);
@@ -123,7 +127,7 @@ describe(DigitalContentsController.name, () => {
   `, async () => {
     const { res } = getMockRes();
     const req = getMockReq({
-      file: { path: 'path-teste' },
+      files: [{ path: 'path-teste' }],
       body: {
         category: 'id-teste',
         guide: '',
@@ -154,7 +158,7 @@ describe(DigitalContentsController.name, () => {
   `, async () => {
     const { res } = getMockRes();
     const req = getMockReq({
-      file: { path: 'path-teste' },
+      files: [{ path: 'path-teste' }],
       body: {
         category: 'id-teste',
         guide: 'id-teste',
