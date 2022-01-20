@@ -10,9 +10,9 @@ export default [
   router.get('/list', DigitalContentsController.getDigitalContents),
   router.post(
     '/register',
-    upload.array('files'),
     registerValidate(),
     validateRequestSchema,
+    upload.array('files'),
     DigitalContentsController.registerDigitalContent,
   ),
 ];
