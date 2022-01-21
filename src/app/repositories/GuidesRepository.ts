@@ -1,5 +1,4 @@
-import { ObjectId as ObjId } from 'mongodb';
-import { ObjectId } from 'mongoose';
+import { ObjectId, Types } from 'mongoose';
 import { Guides } from '../entities/guides';
 import { GuidesModel } from '../models/guides';
 
@@ -29,7 +28,7 @@ class GuidesRepository {
   async getWithCategoriesAndContent(guideId: string) {
     return GuidesModel.aggregate([
       {
-        $match: { _id: new ObjId(guideId) },
+        $match: { _id: new Types.ObjectId(guideId) },
       },
       {
         $lookup: {

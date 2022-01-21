@@ -90,4 +90,48 @@ describe(GuidesController.name, () => {
       }),
     );
   });
+
+  it(`When ${GuidesController.prototype.getWithCategoriesAndContent.name} is called, it should get the guides data
+  `, async () => {
+    const req = getMockReq({
+      params: {
+        guideId: '123456789123',
+      },
+    });
+    const { res } = getMockRes();
+    GuidesRepositoryMock.prototype.getWithCategoriesAndContent.mockResolvedValue([]);
+    await instance.getWithCategoriesAndContent(req, res);
+
+    expect(GuidesRepositoryMock).toBeCalled();
+    expect(GuidesRepositoryMock.prototype.getWithCategoriesAndContent).toHaveBeenCalled();
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        data: [],
+      }),
+    );
+  });
+
+  it(`When ${GuidesController.prototype.getWithCategoriesAndContent.name} is called and throws a new error, it should handle the errors
+  `, async () => {
+    const req = getMockReq({
+      params: {
+        guideId: '123456789123',
+      },
+    });
+    const { res } = getMockRes();
+    const errorMessage = 'Error';
+    GuidesRepositoryMock.prototype.getWithCategoriesAndContent.mockImplementationOnce(async () =>
+      Promise.reject(errorMessage),
+    );
+    await instance.getWithCategoriesAndContent(req, res);
+    expect(GuidesRepositoryMock).toBeCalled();
+    expect(GuidesRepositoryMock.prototype.getWithCategoriesAndContent).toHaveBeenCalled();
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        message: errorMessage,
+      }),
+    );
+  });
 });
