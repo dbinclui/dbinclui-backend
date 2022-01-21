@@ -3,16 +3,15 @@ import { Guides } from '@entities/guides';
 import { GuidesModel } from '@models/guides';
 import { ObjectId, Types } from 'mongoose';
 
-
 jest.mock('mongoose', () => {
   const originalModule = jest.requireActual('mongoose');
-  
+
   return {
     ...originalModule,
     Types: {
       ObjectId: jest.fn(),
-    }
-  }
+    },
+  };
 });
 
 jest.mock('@models/guides');
@@ -121,12 +120,12 @@ describe(GuidesRepository.name, () => {
   com as categorias e conteúdos digitais relacionados`, async () => {
     const testId = '123456789123';
     GuidesModelMock.aggregate = jest.fn().mockImplementation(() => ({
-      exec: async () => guidesListMock
+      exec: async () => guidesListMock,
     }));
 
     const result = await instance.getWithCategoriesAndContent(testId);
     expect(GuidesModelMock.find).toBeCalledTimes(1);
     expect(result).toBe(guidesListMock);
     expect(mockObjectIdConstructor).toBeCalledWith(testId);
-  })
+  });
 });
