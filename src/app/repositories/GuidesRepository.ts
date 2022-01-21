@@ -1,3 +1,4 @@
+import { ObjectId as ObjId } from 'mongodb';
 import { ObjectId } from 'mongoose';
 import { Guides } from '../entities/guides';
 import { GuidesModel } from '../models/guides';
@@ -23,6 +24,45 @@ class GuidesRepository {
 
   async list() {
     return GuidesModel.find().exec();
+  }
+
+  async getWithCategoriesAndContent(guideId: string) {
+    return GuidesModel.aggregate([
+      {
+        $match: { _id: new ObjId(guideId) },
+      },
+      {
+        $lookup: {
+          from: 'categories',
+          localField: '_id',
+          foreignField: 'guide',
+          as: 'categories',
+          pipeline: [
+            {
+              $lookup: {
+                from: 'digitalContent',
+                localField: '_id',
+                foreignField: 'category',
+                as: 'digitalContents',
+              },
+            },
+          ],
+        },
+      },
+      {
+        $lookup: {
+          from: 'digitalContent',
+          localField: '_id',
+          foreignField: 'guide',
+          as: 'digitalContents',
+          pipeline: [
+            {
+              $match: { category: undefined },
+            },
+          ],
+        },
+      },
+    ]).exec();
   }
 }
 

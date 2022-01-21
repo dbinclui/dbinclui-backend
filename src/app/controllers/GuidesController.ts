@@ -30,6 +30,17 @@ export class GuidesController {
       });
     }
   }
+
+  async getWithCategoriesAndContent(req: Request, res: Response) {
+    try {
+      const guides = await this.repository.getWithCategoriesAndContent(req.params.guideId);
+      res.status(200).json({ data: guides });
+    } catch (error) {
+      res.status(400).json({
+        message: error,
+      });
+    }
+  }
 }
 
 export default bindedInstance(GuidesController);
