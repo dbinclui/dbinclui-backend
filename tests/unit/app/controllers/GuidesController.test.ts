@@ -134,4 +134,41 @@ describe(GuidesController.name, () => {
       }),
     );
   });
+
+  it(`When ${GuidesController.prototype.updateGuide.name} is called, it should update the guides data
+  `, async () => {
+    const req = getMockReq();
+    const { res } = getMockRes();
+    req.body = [];
+    GuidesRepositoryMock.prototype.update.mockResolvedValue(req.body);
+    await instance.updateGuide(req, res);
+
+    expect(GuidesRepositoryMock).toBeCalled();
+    expect(GuidesRepositoryMock.prototype.update).toHaveBeenCalled();
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        data: [],
+      }),
+    );
+  });
+
+  it(`When ${GuidesController.prototype.updateGuide.name} is called and throws a new error, it should handle the errors
+  `, async () => {
+    const req = getMockReq();
+    const { res } = getMockRes();
+    const errorMessage = 'Error';
+    GuidesRepositoryMock.prototype.update.mockImplementationOnce(async () =>
+      Promise.reject(errorMessage),
+    );
+    await instance.updateGuide(req, res);
+    expect(GuidesRepositoryMock).toBeCalled();
+    expect(GuidesRepositoryMock.prototype.update).toHaveBeenCalled();
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        message: errorMessage,
+      }),
+    );
+  });
 });

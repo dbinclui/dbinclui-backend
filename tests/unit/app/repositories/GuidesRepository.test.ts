@@ -1,7 +1,7 @@
 import GuidesRepository from '@repositories/GuidesRepository';
 import { Guides } from '@entities/guides';
 import { GuidesModel } from '@models/guides';
-import { ObjectId, Types } from 'mongoose';
+import mongoose, { ObjectId, Types } from 'mongoose';
 
 jest.mock('mongoose', () => {
   const originalModule = jest.requireActual('mongoose');
@@ -53,16 +53,18 @@ describe(GuidesRepository.name, () => {
       content: 'teste content',
     };
 
-    const findOneAndUpdateMock = jest.fn().mockImplementation(() => ({
+    const findByIdAndUpdateMock = jest.fn().mockImplementation(() => ({
       exec: async () => updateMock,
     }));
-    GuidesModelMock.findOneAndUpdate = findOneAndUpdateMock;
+    GuidesModelMock.findByIdAndUpdate = findByIdAndUpdateMock;
 
-    const result = await instance.update(guideTest, updateMock);
+    const mockObjectId = new mongoose.Types.ObjectId().toString();
 
-    expect(GuidesModelMock.findOneAndUpdate).toBeCalledTimes(1);
-    expect(GuidesModelMock.findOneAndUpdate).toBeCalledWith(guideTest, updateMock);
-    expect(findOneAndUpdateMock).toBeCalled();
+    const result = await instance.update(mockObjectId, updateMock);
+
+    expect(GuidesModelMock.findByIdAndUpdate).toBeCalledTimes(1);
+    expect(GuidesModelMock.findByIdAndUpdate).toBeCalledWith(mockObjectId, updateMock);
+    expect(findByIdAndUpdateMock).toBeCalled();
     expect(result).toBe(updateMock);
   });
 
