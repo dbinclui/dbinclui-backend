@@ -44,7 +44,7 @@ export class GuidesController {
 
   async consultGuide(req: Request, res: Response) {
     try {
-      const guides = await this.repository.get(req.body.id);
+      const guides = await this.repository.get(req.params.id);
       res.status(200).json({ data: guides });
     } catch (error) {
       res.status(404).json({message: error});
