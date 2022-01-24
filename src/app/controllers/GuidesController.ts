@@ -44,7 +44,7 @@ export class GuidesController {
 
   async updateGuide(req: Request, res: Response) {
     try {
-      const guides = await this.repository.update(req.body, req.body);
+      const guides = await this.repository.update(req.params.guideId, req.body);
       res.status(200).json({ data: guides });
     } catch (error) {
       res.status(400).json({
