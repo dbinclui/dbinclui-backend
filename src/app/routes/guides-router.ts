@@ -14,4 +14,8 @@ export default [
     GuidesController.registerGuide,
   ),
   router.get('/consult', GuidesController.consultGuide),
+  router.get(
+    '/getGuideWithCategoriesAndContent/:guideId',
+    GuidesController.getWithCategoriesAndContent,
+  ),
 ];
