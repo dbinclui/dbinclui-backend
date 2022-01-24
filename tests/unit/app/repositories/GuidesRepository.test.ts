@@ -125,7 +125,7 @@ describe(GuidesRepository.name, () => {
 
     const result = await instance.getWithCategoriesAndContent(testId);
     expect(GuidesModelMock.find).toBeCalledTimes(1);
-    expect(result).toBe(guidesListMock);
+    expect(result).toBe(guidesListMock[0]);
     expect(mockObjectIdConstructor).toBeCalledWith(testId);
   });
 });

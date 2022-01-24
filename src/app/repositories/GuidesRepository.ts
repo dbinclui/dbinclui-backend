@@ -26,7 +26,9 @@ class GuidesRepository {
   }
 
   async getWithCategoriesAndContent(guideId: string) {
-    return GuidesModel.aggregate([
+    // aggregate() returns an array, but since here we are searching by id we
+    // get the first element of this array
+    const [guide] = await GuidesModel.aggregate([
       {
         $match: { _id: new Types.ObjectId(guideId) },
       },
@@ -62,6 +64,8 @@ class GuidesRepository {
         },
       },
     ]).exec();
+
+    return guide;
   }
 }
 

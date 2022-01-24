@@ -10,7 +10,7 @@ describe(GuidesController.name, () => {
   let instance: GuidesController;
 
   beforeEach(() => {
-    GuidesRepositoryMock.mockClear();
+    jest.clearAllMocks();
     instance = new GuidesController();
   });
 
@@ -99,7 +99,7 @@ describe(GuidesController.name, () => {
       },
     });
     const { res } = getMockRes();
-    GuidesRepositoryMock.prototype.getWithCategoriesAndContent.mockResolvedValue([]);
+    GuidesRepositoryMock.prototype.getWithCategoriesAndContent.mockResolvedValue({} as any);
     await instance.getWithCategoriesAndContent(req, res);
 
     expect(GuidesRepositoryMock).toBeCalled();
@@ -107,7 +107,7 @@ describe(GuidesController.name, () => {
     expect(res.status).toHaveBeenCalledWith(200);
     expect(res.json).toHaveBeenCalledWith(
       expect.objectContaining({
-        data: [],
+        data: {},
       }),
     );
   });
