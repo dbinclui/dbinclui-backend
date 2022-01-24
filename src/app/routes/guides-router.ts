@@ -17,4 +17,5 @@ export default [
     '/getGuideWithCategoriesAndContent/:guideId',
     GuidesController.getWithCategoriesAndContent,
   ),
+  router.post('/update', GuidesController.updateGuide),
 ];

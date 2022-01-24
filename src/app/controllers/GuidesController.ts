@@ -41,6 +41,17 @@ export class GuidesController {
       });
     }
   }
+
+  async updateGuide(req: Request, res: Response) {
+    try {
+      const guides = await this.repository.update(req.body, req.body);
+      res.status(200).json({ data: guides });
+    } catch (error) {
+      res.status(400).json({
+        message: error,
+      });
+    }
+  }
 }
 
 export default bindedInstance(GuidesController);
