@@ -134,4 +134,28 @@ describe(GuidesController.name, () => {
       }),
     );
   });
+
+  it(`When ${GuidesController.prototype.consultGuide.name} is called, it should get the Guides data by id
+  `, async () => {
+    const req = getMockReq({
+      params: { id: '' },
+    });
+    const { res } = getMockRes();
+
+    GuidesRepositoryMock.prototype.get.mockResolvedValue({} as any);
+
+    await instance.consultGuide(req, res);
+
+    expect(GuidesRepositoryMock).toBeCalled();
+    expect(GuidesRepositoryMock.prototype.get).toHaveBeenCalled();
+
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        data: [],
+      }),
+    );
+  });
+
+
 });
