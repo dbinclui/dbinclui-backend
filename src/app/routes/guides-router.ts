@@ -13,4 +13,5 @@ export default [
     validateRequestSchema,
     GuidesController.registerGuide,
   ),
+  router.get('/consult', GuidesController.consultGuide),
 ];
