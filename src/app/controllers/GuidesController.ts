@@ -30,6 +30,14 @@ export class GuidesController {
       });
     }
   }
+
+  async consultGuide(req: Request, res: Response) {
+    try {
+      const guides = await this.repository.get(req.body.id);
+    } catch (error) {
+      res.status(404).json({message: error})
+    }
+  }
 }
 
 export default bindedInstance(GuidesController);
