@@ -152,7 +152,7 @@ describe(GuidesController.name, () => {
     expect(res.status).toHaveBeenCalledWith(200);
     expect(res.json).toHaveBeenCalledWith(
       expect.objectContaining({
-        data: [],
+        data: {},
       }),
     );
   });
