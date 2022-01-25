@@ -11,7 +11,7 @@ class GuidesRepository {
     return GuidesModel.findOneAndUpdate(guide, newGuide).exec();
   }
 
-  async get(guideId: ObjectId) {
+  async get(guideId: ObjectId | string) {
     return GuidesModel.findById(guideId).exec();
   }
 

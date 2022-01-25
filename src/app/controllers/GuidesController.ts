@@ -15,7 +15,7 @@ export class GuidesController {
       const guides = await this.repository.list();
       res.status(200).json({ data: guides });
     } catch (error) {
-      res.status(400).json({
+      res.status(500).json({
         message: error,
       });
     }
@@ -24,9 +24,9 @@ export class GuidesController {
   async registerGuide(req: Request, res: Response) {
     try {
       const guides = await this.repository.create(req.body);
-      res.status(200).json({ data: guides });
+      res.status(201).json({ data: guides });
     } catch (error) {
-      res.status(400).json({
+      res.status(500).json({
         message: error,
       });
     }
@@ -37,9 +37,18 @@ export class GuidesController {
       const guide = await this.repository.getWithCategoriesAndContent(req.params.guideId);
       res.status(200).json({ data: guide });
     } catch (error) {
-      res.status(400).json({
+      res.status(500).json({
         message: error,
       });
+    }
+  }
+
+  async consultGuide(req: Request, res: Response) {
+    try {
+      const guides = await this.repository.get(req.params.id);
+      res.status(200).json({ data: guides });
+    } catch (error) {
+      res.status(500).json({ message: error });
     }
   }
 

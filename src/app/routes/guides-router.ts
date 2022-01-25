@@ -13,6 +13,7 @@ export default [
     validateRequestSchema,
     GuidesController.registerGuide,
   ),
+  router.get('/consult/:id', GuidesController.consultGuide),
   router.get(
     '/getGuideWithCategoriesAndContent/:guideId',
     GuidesController.getWithCategoriesAndContent,
