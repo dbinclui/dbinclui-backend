@@ -17,4 +17,5 @@ export default [
     '/getGuideWithCategoriesAndContent/:guideId',
     GuidesController.getWithCategoriesAndContent,
   ),
+  router.delete('/:id', GuidesController.deleteGuide),
 ];

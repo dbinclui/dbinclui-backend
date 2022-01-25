@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import GuidesRepository from '@repositories/GuidesRepository';
 import bindedInstance from '@utils/bindedInstance';
+import { request } from 'http';
 
 export class GuidesController {
   private repository: GuidesRepository;
@@ -37,6 +38,17 @@ export class GuidesController {
       res.status(200).json({ data: guide });
     } catch (error) {
       res.status(400).json({
+        message: error,
+      });
+    }
+  }
+
+  async deleteGuide(req: Request, res: Response) {
+    try {
+      const guide = await this.repository.delete(req.params.guideId);
+      res.status(200).json({ data: guide });
+    } catch (error) {
+      res.status(500).json({
         message: error,
       });
     }
