@@ -164,7 +164,7 @@ describe(GuidesController.name, () => {
     await instance.updateGuide(req, res);
     expect(GuidesRepositoryMock).toBeCalled();
     expect(GuidesRepositoryMock.prototype.update).toHaveBeenCalled();
-    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.status).toHaveBeenCalledWith(500);
     expect(res.json).toHaveBeenCalledWith(
       expect.objectContaining({
         message: errorMessage,
