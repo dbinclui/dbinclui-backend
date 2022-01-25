@@ -1,6 +1,6 @@
 import { getMockReq, getMockRes } from '@jest-mock/express';
 import { validationResult, body, ValidationChain, Result } from 'express-validator';
-import { registerValidate } from '@middlewares/validator/GuidesValidator';
+import { guidesValidate } from '@middlewares/validator/GuidesValidator';
 import { validateRequestSchema } from '@middlewares/validator/ValidateSchema';
 
 jest.useFakeTimers();
@@ -16,7 +16,7 @@ describe('GuidesValidator Test', () => {
     bodyMock.mockClear();
   });
 
-  it(`${registerValidate.name}: When registerValidate is call should create validation schema`, () => {
+  it(`${guidesValidate.name}: When registerValidate is call should create validation schema`, () => {
     const validatSchemaChainMock = {
       notEmpty: jest.fn().mockImplementation(() => validatSchemaChainMock),
       withMessage: jest.fn().mockImplementation((_) => validatSchemaChainMock),
@@ -24,7 +24,7 @@ describe('GuidesValidator Test', () => {
       isString: jest.fn().mockImplementation(() => validatSchemaChainMock),
     } as unknown as ValidationChain;
     bodyMock.mockImplementation(() => validatSchemaChainMock);
-    registerValidate();
+    guidesValidate();
     expect(validatSchemaChainMock.notEmpty).toBeCalledTimes(2);
     expect(validatSchemaChainMock.withMessage).toBeCalledTimes(3);
     expect(validatSchemaChainMock.withMessage).toHaveBeenNthCalledWith(1, 'O campo está vazio');
