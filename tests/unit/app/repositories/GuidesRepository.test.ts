@@ -58,7 +58,7 @@ describe(GuidesRepository.name, () => {
     }));
     GuidesModelMock.findByIdAndUpdate = findByIdAndUpdateMock;
 
-    const mockObjectId = (new mongoose.Types.ObjectId()).toString();
+    const mockObjectId = new mongoose.Types.ObjectId().toString();
 
     const result = await instance.update(mockObjectId, updateMock);
 
