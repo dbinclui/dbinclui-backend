@@ -10,7 +10,7 @@ describe(GuidesController.name, () => {
   let instance: GuidesController;
 
   beforeEach(() => {
-    GuidesRepositoryMock.mockClear();
+    jest.clearAllMocks();
     instance = new GuidesController();
   });
 
@@ -46,7 +46,7 @@ describe(GuidesController.name, () => {
     await instance.getGuides(req, res);
     expect(GuidesRepositoryMock).toBeCalled();
     expect(GuidesRepositoryMock.prototype.list).toHaveBeenCalled();
-    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.status).toHaveBeenCalledWith(500);
     expect(res.json).toHaveBeenCalledWith(
       expect.objectContaining({
         message: errorMessage,
@@ -64,7 +64,7 @@ describe(GuidesController.name, () => {
 
     expect(GuidesRepositoryMock).toBeCalled();
     expect(GuidesRepositoryMock.prototype.create).toHaveBeenCalled();
-    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.status).toHaveBeenCalledWith(201);
     expect(res.json).toHaveBeenCalledWith(
       expect.objectContaining({
         data: [],
@@ -83,10 +83,76 @@ describe(GuidesController.name, () => {
     await instance.registerGuide(req, res);
     expect(GuidesRepositoryMock).toBeCalled();
     expect(GuidesRepositoryMock.prototype.create).toHaveBeenCalled();
-    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.status).toHaveBeenCalledWith(500);
     expect(res.json).toHaveBeenCalledWith(
       expect.objectContaining({
         message: errorMessage,
+      }),
+    );
+  });
+
+  it(`When ${GuidesController.prototype.getWithCategoriesAndContent.name} is called, it should get the guides data
+  `, async () => {
+    const req = getMockReq({
+      params: {
+        guideId: '123456789123',
+      },
+    });
+    const { res } = getMockRes();
+    GuidesRepositoryMock.prototype.getWithCategoriesAndContent.mockResolvedValue({} as any);
+    await instance.getWithCategoriesAndContent(req, res);
+
+    expect(GuidesRepositoryMock).toBeCalled();
+    expect(GuidesRepositoryMock.prototype.getWithCategoriesAndContent).toHaveBeenCalled();
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        data: {},
+      }),
+    );
+  });
+
+  it(`When ${GuidesController.prototype.getWithCategoriesAndContent.name} is called and throws a new error, it should handle the errors
+  `, async () => {
+    const req = getMockReq({
+      params: {
+        guideId: '123456789123',
+      },
+    });
+    const { res } = getMockRes();
+    const errorMessage = 'Error';
+    GuidesRepositoryMock.prototype.getWithCategoriesAndContent.mockImplementationOnce(async () =>
+      Promise.reject(errorMessage),
+    );
+    await instance.getWithCategoriesAndContent(req, res);
+    expect(GuidesRepositoryMock).toBeCalled();
+    expect(GuidesRepositoryMock.prototype.getWithCategoriesAndContent).toHaveBeenCalled();
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        message: errorMessage,
+      }),
+    );
+  });
+
+  it(`When ${GuidesController.prototype.consultGuide.name} is called, it should get the Guides data by id
+  `, async () => {
+    const req = getMockReq({
+      params: { id: '' },
+    });
+    const { res } = getMockRes();
+
+    GuidesRepositoryMock.prototype.get.mockResolvedValue({} as any);
+
+    await instance.consultGuide(req, res);
+
+    expect(GuidesRepositoryMock).toBeCalled();
+    expect(GuidesRepositoryMock.prototype.get).toHaveBeenCalled();
+
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        data: {},
       }),
     );
   });
