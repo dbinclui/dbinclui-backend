@@ -63,7 +63,7 @@ describe(GuidesRepository.name, () => {
     const result = await instance.update(mockObjectId, updateMock);
 
     expect(GuidesModelMock.findByIdAndUpdate).toBeCalledTimes(1);
-    expect(GuidesModelMock.findByIdAndUpdate).toBeCalledWith(mockObjectId, updateMock);
+    expect(GuidesModelMock.findByIdAndUpdate).toBeCalledWith(mockObjectId, updateMock, { returnOriginal: false });
     expect(findByIdAndUpdateMock).toBeCalled();
     expect(result).toBe(updateMock);
   });
