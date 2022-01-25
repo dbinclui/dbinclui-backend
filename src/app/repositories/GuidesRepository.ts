@@ -7,8 +7,8 @@ class GuidesRepository {
     return GuidesModel.create(guide);
   }
 
-  async update(guide: Guides, newGuide: Guides) {
-    return GuidesModel.findOneAndUpdate(guide, newGuide).exec();
+  async update(id: string, guide: Guides) {
+    return GuidesModel.findByIdAndUpdate(id, guide, { returnOriginal: false }).exec();
   }
 
   async get(guideId: ObjectId | string) {
