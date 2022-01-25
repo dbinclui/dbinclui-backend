@@ -47,10 +47,9 @@ export class GuidesController {
       const guides = await this.repository.get(req.params.id);
       res.status(200).json({ data: guides });
     } catch (error) {
-      res.status(500).json({message: error});
+      res.status(500).json({ message: error });
     }
   }
 }
-
 
 export default bindedInstance(GuidesController);

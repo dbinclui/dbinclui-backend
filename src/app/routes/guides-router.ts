@@ -9,8 +9,8 @@ export default [
   router.get('/list', GuidesController.getGuides),
   router.post(
     '/register',
-     registerValidate(),
-     validateRequestSchema,
+    registerValidate(),
+    validateRequestSchema,
     GuidesController.registerGuide,
   ),
   router.get('/consult/:id', GuidesController.consultGuide),

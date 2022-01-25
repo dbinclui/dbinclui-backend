@@ -156,6 +156,4 @@ describe(GuidesController.name, () => {
       }),
     );
   });
-
-
 });
