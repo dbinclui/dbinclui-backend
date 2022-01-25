@@ -12,7 +12,7 @@ export class GuidesController {
   async getGuides(req: Request, res: Response) {
     try {
       const guides = await this.repository.list();
-      res.status(201).json({ data: guides });
+      res.status(200).json({ data: guides });
     } catch (error) {
       res.status(500).json({
         message: error,
@@ -34,7 +34,7 @@ export class GuidesController {
   async getWithCategoriesAndContent(req: Request, res: Response) {
     try {
       const guide = await this.repository.getWithCategoriesAndContent(req.params.guideId);
-      res.status(201).json({ data: guide });
+      res.status(200).json({ data: guide });
     } catch (error) {
       res.status(500).json({
         message: error,
@@ -45,7 +45,7 @@ export class GuidesController {
   async consultGuide(req: Request, res: Response) {
     try {
       const guides = await this.repository.get(req.params.id);
-      res.status(201).json({ data: guides });
+      res.status(200).json({ data: guides });
     } catch (error) {
       res.status(500).json({ message: error });
     }

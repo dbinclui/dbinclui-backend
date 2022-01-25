@@ -27,7 +27,7 @@ describe(GuidesController.name, () => {
 
     expect(GuidesRepositoryMock).toBeCalled();
     expect(GuidesRepositoryMock.prototype.list).toHaveBeenCalled();
-    expect(res.status).toHaveBeenCalledWith(201);
+    expect(res.status).toHaveBeenCalledWith(200);
     expect(res.json).toHaveBeenCalledWith(
       expect.objectContaining({
         data: [],
@@ -104,7 +104,7 @@ describe(GuidesController.name, () => {
 
     expect(GuidesRepositoryMock).toBeCalled();
     expect(GuidesRepositoryMock.prototype.getWithCategoriesAndContent).toHaveBeenCalled();
-    expect(res.status).toHaveBeenCalledWith(201);
+    expect(res.status).toHaveBeenCalledWith(200);
     expect(res.json).toHaveBeenCalledWith(
       expect.objectContaining({
         data: {},
@@ -149,7 +149,7 @@ describe(GuidesController.name, () => {
     expect(GuidesRepositoryMock).toBeCalled();
     expect(GuidesRepositoryMock.prototype.get).toHaveBeenCalled();
 
-    expect(res.status).toHaveBeenCalledWith(201);
+    expect(res.status).toHaveBeenCalledWith(200);
     expect(res.json).toHaveBeenCalledWith(
       expect.objectContaining({
         data: {},
