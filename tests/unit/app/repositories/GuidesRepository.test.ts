@@ -1,7 +1,7 @@
 import GuidesRepository from '@repositories/GuidesRepository';
 import { Guides } from '@entities/guides';
 import { GuidesModel } from '@models/guides';
-import { ObjectId, Types } from 'mongoose';
+import mongoose, { ObjectId, Types } from 'mongoose';
 
 jest.mock('mongoose', () => {
   const originalModule = jest.requireActual('mongoose');
@@ -95,10 +95,11 @@ describe(GuidesRepository.name, () => {
     }));
 
     GuidesModelMock.findByIdAndDelete = findByIdAndDeleteMock;
+    const mockObjectId = new mongoose.Types.ObjectId().toString();
 
-    const result = await instance.delete({} as ObjectId);
+    const result = await instance.delete(mockObjectId);
     expect(GuidesModelMock.findByIdAndDelete).toBeCalledTimes(1);
-    expect(GuidesModelMock.findByIdAndDelete).toBeCalledWith(searchMock);
+    expect(GuidesModelMock.findByIdAndDelete).toBeCalledWith(mockObjectId);
     expect(findByIdAndDeleteMock).toBeCalled();
     expect(result).toBe(searchMock);
   });
