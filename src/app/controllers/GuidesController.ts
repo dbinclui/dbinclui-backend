@@ -54,7 +54,7 @@ export class GuidesController {
 
   async deleteGuide(req: Request, res: Response) {
     try {
-      const guide = await this.repository.delete(req.params.guideId);
+      const guide = await this.repository.delete(req.params.id);
       res.status(200).json({ data: guide });
     } catch (error) {
       res.status(500).json({
