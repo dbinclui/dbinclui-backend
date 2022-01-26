@@ -14,5 +14,10 @@ export default [
     CategoriesController.registerCategory,
   ),
   router.get('/getByGuide/:id', CategoriesController.getCategoriesByGuide),
-  router.put('/:id', categoryValidate(), validateRequestSchema, CategoriesController.updateCategory),
+  router.put(
+    '/:id',
+    categoryValidate(),
+    validateRequestSchema,
+    CategoriesController.updateCategory,
+  ),
 ];

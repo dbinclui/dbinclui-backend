@@ -8,7 +8,7 @@ class CategoriesRepository {
   }
 
   async update(id: string, category: Categories) {
-    return CategoriesModel.findByIdAndUpdate(id, category, {returnOriginal:false}).exec();
+    return CategoriesModel.findByIdAndUpdate(id, category, { returnOriginal: false }).exec();
   }
 
   async getById(id: ObjectId | string) {

@@ -1,4 +1,4 @@
-import  mongoose, { ObjectId } from 'mongoose';
+import mongoose, { ObjectId } from 'mongoose';
 import CategoriesRepository from '@repositories/CategoriesRepository';
 import { Categories } from '@entities/categories';
 import { Guides } from '@entities/guides';
@@ -48,12 +48,12 @@ describe(CategoriesRepository.name, () => {
       exec: async () => updateMock,
     }));
     CategoriesModelMock.findByIdAndUpdate = findByIdAndUpdateMock;
-    
+
     const mockObjectId = new mongoose.Types.ObjectId().toString();
     const result = await instance.update(mockObjectId, updateMock);
 
-    expect(CategoriesModelMock. findByIdAndUpdate).toBeCalledTimes(1);
-    expect(CategoriesModelMock. findByIdAndUpdate).toBeCalledWith(mockObjectId, updateMock, {
+    expect(CategoriesModelMock.findByIdAndUpdate).toBeCalledTimes(1);
+    expect(CategoriesModelMock.findByIdAndUpdate).toBeCalledWith(mockObjectId, updateMock, {
       returnOriginal: false,
     });
 
