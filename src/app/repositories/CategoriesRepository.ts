@@ -7,8 +7,8 @@ class CategoriesRepository {
     return CategoriesModel.create(category);
   }
 
-  async update(category: Categories, newGuide: Categories) {
-    return CategoriesModel.findOneAndUpdate(category, newGuide).exec();
+  async update(id: string, category: Categories) {
+    return CategoriesModel.findByIdAndUpdate(id, category, {returnOriginal:false}).exec();
   }
 
   async getById(id: ObjectId | string) {
