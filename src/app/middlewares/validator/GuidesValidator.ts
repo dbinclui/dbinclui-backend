@@ -2,7 +2,7 @@ import { body } from 'express-validator';
 import CategoriesRepository from '@repositories/CategoriesRepository';
 import DigitalContentRepository from '@repositories/DigitalContentsRepository';
 
-const registerValidate = () => [
+const guidesValidate = () => [
   body('title')
     .notEmpty()
     .withMessage('O campo está vazio')
@@ -18,15 +18,15 @@ async function validateGuideforDelete(guideId: string) {
 
   try {
     const resultCategory = await categoryRepository.getByGuideId(guideId);
-    try { 
+    try {
       const resultDigitalContent = await digitalContentRepository.getByGuide(guideId);
-       return (resultCategory.length === 0 && resultDigitalContent.length === 0);
+      return resultCategory.length === 0 && resultDigitalContent.length === 0;
     } catch (error) {
       return { message: error };
     }
   } catch (error) {
     return { message: error };
-  } 
+  }
 }
 
-export { registerValidate,  validateGuideforDelete };
+export { guidesValidate, validateGuideforDelete };

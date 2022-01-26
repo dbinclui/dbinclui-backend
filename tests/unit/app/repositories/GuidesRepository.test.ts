@@ -53,16 +53,20 @@ describe(GuidesRepository.name, () => {
       content: 'teste content',
     };
 
-    const findOneAndUpdateMock = jest.fn().mockImplementation(() => ({
+    const findByIdAndUpdateMock = jest.fn().mockImplementation(() => ({
       exec: async () => updateMock,
     }));
-    GuidesModelMock.findOneAndUpdate = findOneAndUpdateMock;
+    GuidesModelMock.findByIdAndUpdate = findByIdAndUpdateMock;
 
-    const result = await instance.update(guideTest, updateMock);
+    const mockObjectId = new mongoose.Types.ObjectId().toString();
 
-    expect(GuidesModelMock.findOneAndUpdate).toBeCalledTimes(1);
-    expect(GuidesModelMock.findOneAndUpdate).toBeCalledWith(guideTest, updateMock);
-    expect(findOneAndUpdateMock).toBeCalled();
+    const result = await instance.update(mockObjectId, updateMock);
+
+    expect(GuidesModelMock.findByIdAndUpdate).toBeCalledTimes(1);
+    expect(GuidesModelMock.findByIdAndUpdate).toBeCalledWith(mockObjectId, updateMock, {
+      returnOriginal: false,
+    });
+    expect(findByIdAndUpdateMock).toBeCalled();
     expect(result).toBe(updateMock);
   });
 
