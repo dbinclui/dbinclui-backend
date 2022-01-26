@@ -13,9 +13,6 @@ export default [
     '/getGuideWithCategoriesAndContent/:guideId',
     GuidesController.getWithCategoriesAndContent,
   ),
-<<<<<<< HEAD
   router.delete('/:id', GuidesController.deleteGuide),
-=======
   router.put('/:id', guidesValidate(), validateRequestSchema, GuidesController.updateGuide),
->>>>>>> dff3af275bd881d768756b1d989f9caef5ec9833
 ];
