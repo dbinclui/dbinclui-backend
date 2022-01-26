@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import GuidesRepository from '@repositories/GuidesRepository';
 import bindedInstance from '@utils/bindedInstance';
-import { request } from 'http';
+import { validateGuideforDelete } from '@middlewares/validator/GuidesValidator';
 
 export class GuidesController {
   private repository: GuidesRepository;
@@ -54,13 +54,23 @@ export class GuidesController {
 
   async deleteGuide(req: Request, res: Response) {
     try {
-      const guide = await this.repository.delete(req.params.id);
-      res.status(200).json({ data: guide });
+      const validate = await validateGuideforDelete(req.params.id);
+      if (validate) {
+        try {
+          const guide = await this.repository.delete(req.params.id);
+          res.status(200).json({ data: guide });
+        } catch (error) {
+          res.status(500).json({
+            message: error,
+          });
+        }
+      } else {
+        res.status(401).json({ message: 'A guia informada possui categorias ou conteúdos digitais.' });
+      }
     } catch (error) {
-      res.status(500).json({
-        message: error,
-      });
+      res.status(500).json({ message: error });
     }
+    
   }
 }
 
