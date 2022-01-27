@@ -72,34 +72,53 @@ describe('GuidesValidator Test', () => {
 
   it(`${validateGuideforDelete.name}: Quando validateGuideforDelete for chamado, deve validar se é possível a deleção do guia`, async () => {
     const mockObjectId = new mongoose.Types.ObjectId().toString();
-    const searchMock = {
-      _id: {} as string,
-    };
-    const getByGuideIdMock = jest.fn().mockImplementation(() => ({
-      exec: async () => searchMock,
-    }));
-    // Não é bom utilizar any
-    try {
-      const resultCategoryMock = await CategoriesRepositoryMock.prototype.getByGuideId(
-        mockObjectId,
-      );
-      const resultDigitalContentMock = await DigitalContentRepositoryMock.prototype.getByGuide(
-        mockObjectId,
-      );
-      expect(resultCategoryMock).toHaveLength(0);
-      expect(resultDigitalContentMock).toHaveLength(0);
-      const result = resultCategoryMock.length === 0 && resultDigitalContentMock.length === 0;
-      expect(result).toEqual(true);
-    } catch (error) {
-      expect(error).toMatch('error');
-    }
+
+    const resultCategoryMock = await CategoriesRepositoryMock.prototype.getByGuideId(mockObjectId);
+    const resultDigitalContentMock = await DigitalContentRepositoryMock.prototype.getByGuide(
+      mockObjectId,
+    );
+    expect(resultCategoryMock).toHaveLength(0);
+    expect(resultDigitalContentMock).toHaveLength(0);
+    const result = resultCategoryMock.length === 0 && resultDigitalContentMock.length === 0;
+    expect(result).toEqual(true);
 
     expect(CategoriesRepositoryMock.prototype.getByGuideId).toBeCalled();
     expect(CategoriesRepositoryMock.prototype.getByGuideId).toHaveBeenCalled();
-    expect(DigitalContentRepositoryMock).toBeCalled();
+    expect(DigitalContentRepositoryMock.prototype.getByGuide).toBeCalled();
     expect(DigitalContentRepositoryMock.prototype.getByGuide).toHaveBeenCalled();
   });
 });
+
+/* it(`${validateGuideforDelete.name}: Quando validateGuideforDelete for chamado, deve validar se é possível a deleção do guia`, async () => {
+  const mockObjectId = new mongoose.Types.ObjectId().toString();
+  const searchMock = {
+    _id: {} as string,
+  };
+
+  const categoryRepositoryMock = new CategoriesRepositoryMock();
+  const digitalContentRepositoryMock = new DigitalContentRepositoryMock();
+
+  try {
+    const resultCategoryMock = await CategoriesRepositoryMock.prototype.getByGuideId(
+      mockObjectId,
+    );
+    const resultDigitalContentMock = await DigitalContentRepositoryMock.prototype.getByGuide(
+      mockObjectId,
+    );
+    expect(resultCategoryMock).toHaveLength(0);
+    expect(resultDigitalContentMock).toHaveLength(0);
+    const result = resultCategoryMock.length === 0 && resultDigitalContentMock.length === 0;
+    expect(result).toEqual(true);
+  } catch (error) {
+    expect(error).toMatch('error');
+  }
+
+  expect(CategoriesRepositoryMock.prototype.getByGuideId).toBeCalled();
+  expect(CategoriesRepositoryMock.prototype.getByGuideId).toHaveBeenCalled();
+  expect(DigitalContentRepositoryMock).toBeCalled();
+  expect(DigitalContentRepositoryMock.prototype.getByGuide).toHaveBeenCalled();
+});
+}); */
 
 /*
 it(`When ${GuidesController.prototype.registerGuide.name} is called, it should post the guides data

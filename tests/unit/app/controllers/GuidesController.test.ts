@@ -230,7 +230,6 @@ describe(GuidesController.name, () => {
     GuidesRepositoryMock.prototype.getWithCategoriesAndContent.mockImplementationOnce(async () =>
       Promise.reject(errorMessage),
     );
-    // Aqui
     await instance.deleteGuide(req, res);
     expect(GuidesRepositoryMock).toBeCalled();
     expect(GuidesRepositoryMock.prototype.getWithCategoriesAndContent).toHaveBeenCalled();

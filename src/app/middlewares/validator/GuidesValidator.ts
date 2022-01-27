@@ -18,12 +18,8 @@ async function validateGuideforDelete(guideId: string) {
 
   try {
     const resultCategory = await categoryRepository.getByGuideId(guideId);
-    try {
-      const resultDigitalContent = await digitalContentRepository.getByGuide(guideId);
-      return resultCategory.length === 0 && resultDigitalContent.length === 0;
-    } catch (error) {
-      return { message: error };
-    }
+    const resultDigitalContent = await digitalContentRepository.getByGuide(guideId);
+    return resultCategory.length === 0 && resultDigitalContent.length === 0;
   } catch (error) {
     return { message: error };
   }
