@@ -1,5 +1,5 @@
 import { body, ValidationChain } from 'express-validator';
-import { registerValidate } from '@middlewares/validator/CategoriesValidator';
+import { categoryValidate } from '@middlewares/validator/CategoriesValidator';
 
 jest.useFakeTimers();
 jest.mock('express-validator');
@@ -11,7 +11,7 @@ describe('CategoriesValidator Test', () => {
     bodyMock.mockClear();
   });
 
-  it(`${registerValidate.name}: When registerValidate is call should create validation schema`, () => {
+  it(`${categoryValidate.name}: When registerValidate is call should create validation schema`, () => {
     const validatSchemaChainMock = {
       notEmpty: jest.fn().mockImplementation(() => validatSchemaChainMock),
       withMessage: jest.fn().mockImplementation((_) => validatSchemaChainMock),
@@ -19,7 +19,7 @@ describe('CategoriesValidator Test', () => {
     } as unknown as ValidationChain;
     bodyMock.mockImplementation(() => validatSchemaChainMock);
 
-    registerValidate();
+    categoryValidate();
 
     expect(validatSchemaChainMock.notEmpty).toBeCalledTimes(3);
     expect(validatSchemaChainMock.withMessage).toBeCalledTimes(3);
