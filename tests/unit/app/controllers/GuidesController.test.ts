@@ -193,4 +193,30 @@ describe(GuidesController.name, () => {
       }),
     );
   });
+
+  it(`When ${GuidesController.prototype.consultGuide.name} is called and throws a new error, it should handle the errors
+  `, async () => {
+    const req = getMockReq({
+      params: { id: '' },
+    });
+    const { res } = getMockRes();
+
+    const errorMessage = 'Error';
+
+    GuidesRepositoryMock.prototype.get.mockImplementationOnce(async () =>
+      Promise.reject(errorMessage),
+    );
+
+    await instance.consultGuide(req, res);
+
+    expect(GuidesRepositoryMock).toBeCalled();
+    expect(GuidesRepositoryMock.prototype.get).toHaveBeenCalled();
+
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        message: errorMessage,
+      }),
+    );
+  });
 });
