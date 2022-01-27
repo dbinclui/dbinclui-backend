@@ -139,4 +139,26 @@ describe(CategoriesController.name, () => {
       }),
     );
   });
+
+  it(`When ${CategoriesController.prototype.consultCategories.name} is called, it should get the Categories data by id
+  `, async () => {
+    const req = getMockReq({
+      params: { id: '' },
+    });
+    const { res } = getMockRes();
+
+    CategoriesRepositoryMock.prototype.getById.mockResolvedValue({} as any);
+
+    await instance.consultCategories(req, res);
+
+    expect(CategoriesRepositoryMock).toBeCalled();
+    expect(CategoriesRepositoryMock.prototype.getById).toHaveBeenCalled();
+
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        data: {},
+      }),
+    );
+  });
 });
