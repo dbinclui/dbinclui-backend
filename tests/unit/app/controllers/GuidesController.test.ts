@@ -1,6 +1,7 @@
 import { getMockReq, getMockRes } from '@jest-mock/express';
 import { GuidesController } from '@controllers/GuidesController';
 import GuidesRepository from '@repositories/GuidesRepository';
+import mongoose, { ObjectId, Types } from 'mongoose';
 
 jest.mock('@repositories/GuidesRepository');
 
@@ -190,6 +191,53 @@ describe(GuidesController.name, () => {
     expect(res.json).toHaveBeenCalledWith(
       expect.objectContaining({
         data: {},
+      }),
+    );
+  });
+
+  it(`When ${GuidesController.prototype.deleteGuide.name} is called, it should delete guide
+  `, async () => {
+    const mockObjectId = new mongoose.Types.ObjectId().toString();
+    const req = getMockReq({
+      params: {
+        guideId: mockObjectId,
+      },
+    });
+    const { res } = getMockRes();
+    // Mostrar a diferença aqui, ainda não testa validate
+    GuidesRepositoryMock.prototype.delete.mockResolvedValue({} as any);
+    await instance.deleteGuide(req, res);
+
+    expect(GuidesRepositoryMock).toBeCalled();
+    expect(GuidesRepositoryMock.prototype.getWithCategoriesAndContent).toHaveBeenCalled();
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        data: {},
+      }),
+    );
+  });
+
+  it(`When ${GuidesController.prototype.deleteGuide.name} is called and throws a new error, it should handle the errors
+  `, async () => {
+    const req = getMockReq({
+      params: {
+        guideId: '123456789123',
+      },
+    });
+    const { res } = getMockRes();
+    const errorMessage = 'Error';
+    GuidesRepositoryMock.prototype.getWithCategoriesAndContent.mockImplementationOnce(async () =>
+      Promise.reject(errorMessage),
+    );
+    // Aqui
+    await instance.deleteGuide(req, res);
+    expect(GuidesRepositoryMock).toBeCalled();
+    expect(GuidesRepositoryMock.prototype.getWithCategoriesAndContent).toHaveBeenCalled();
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        message: errorMessage,
       }),
     );
   });
