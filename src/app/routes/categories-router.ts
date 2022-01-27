@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { registerValidate } from '@middlewares/validator/CategoriesValidator';
+import { categoryValidate } from '@middlewares/validator/CategoriesValidator';
 import CategoriesController from '@controllers/CategoriesController';
 import { validateRequestSchema } from '@middlewares/validator/ValidateSchema';
 
@@ -9,9 +9,15 @@ export default [
   router.get('/list', CategoriesController.getCategories),
   router.post(
     '/register',
-    registerValidate(),
+    categoryValidate(),
     validateRequestSchema,
     CategoriesController.registerCategory,
   ),
   router.get('/getByGuide/:id', CategoriesController.getCategoriesByGuide),
+  router.put(
+    '/:id',
+    categoryValidate(),
+    validateRequestSchema,
+    CategoriesController.updateCategory,
+  ),
 ];

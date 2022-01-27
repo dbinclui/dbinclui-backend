@@ -1,4 +1,4 @@
-import { ObjectId } from 'mongoose';
+import mongoose, { ObjectId } from 'mongoose';
 import CategoriesRepository from '@repositories/CategoriesRepository';
 import { Categories } from '@entities/categories';
 import { Guides } from '@entities/guides';
@@ -44,16 +44,20 @@ describe(CategoriesRepository.name, () => {
   quando o método for chamado deve ser feita a lógica de atualização`, async () => {
     const [categoryMock, updateMock] = categoriesListMock;
 
-    const findOneAndUpdateMock = jest.fn().mockImplementation(() => ({
+    const findByIdAndUpdateMock = jest.fn().mockImplementation(() => ({
       exec: async () => updateMock,
     }));
-    CategoriesModelMock.findOneAndUpdate = findOneAndUpdateMock;
+    CategoriesModelMock.findByIdAndUpdate = findByIdAndUpdateMock;
 
-    const result = await instance.update(categoryMock, updateMock);
+    const mockObjectId = new mongoose.Types.ObjectId().toString();
+    const result = await instance.update(mockObjectId, updateMock);
 
-    expect(CategoriesModelMock.findOneAndUpdate).toBeCalledTimes(1);
-    expect(CategoriesModelMock.findOneAndUpdate).toBeCalledWith(categoryMock, updateMock);
+    expect(CategoriesModelMock.findByIdAndUpdate).toBeCalledTimes(1);
+    expect(CategoriesModelMock.findByIdAndUpdate).toBeCalledWith(mockObjectId, updateMock, {
+      returnOriginal: false,
+    });
 
+    expect(findByIdAndUpdateMock).toBeCalled();
     expect(result).toBe(updateMock);
   });
 
