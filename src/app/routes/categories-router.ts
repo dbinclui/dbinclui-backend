@@ -14,4 +14,5 @@ export default [
     CategoriesController.registerCategory,
   ),
   router.get('/getByGuide/:id', CategoriesController.getCategoriesByGuide),
+  router.get('/consult/:id', CategoriesController.consultCategories),
 ];
