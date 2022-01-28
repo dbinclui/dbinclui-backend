@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import guidesRouter from '@routes/guides-router';
 import categoriesRouter from '@routes/categories-router';
-import digitalContentsRouter from '@routes/Digital-contents-router';
+import digitalContentsRouter from '@routes/digital-contents-router';
 
 const router = Router();
 
