@@ -65,14 +65,21 @@ export class GuidesController {
 
   async deleteGuide(req: Request, res: Response) {
     try {
-      const validate = await validateGuideforDelete(req.params.id);
-      if (validate) {
-        const guide = await this.repository.delete(req.params.id);
-        res.status(200).json({ data: guide });
+      const guide = await this.repository.get(req.params.id);
+      if (guide !== null) {
+        const validate = await validateGuideforDelete(req.params.id);
+        if (validate) {
+          const deletedGuide = await this.repository.delete(req.params.id);
+          res.status(200).json({ data: deletedGuide });
+        } else {
+          res
+            .status(401)
+            .json({ message: 'A guia informada possui categorias ou conteúdos digitais.' });
+        }
       } else {
         res
-          .status(401)
-          .json({ message: 'A guia informada possui categorias ou conteúdos digitais.' });
+        .status(401)
+        .json({ message: 'A guia informada não existe.' });
       }
     } catch (error) {
       res.status(500).json({
