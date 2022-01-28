@@ -203,11 +203,11 @@ describe(DigitalContentsRepository.name, () => {
 
     DigitalContentsModelMock.find = findByIdMock;
 
-    const id = {} as ObjectId
+    const id = {} as ObjectId;
     const result = await instance.getByGuide(id!);
 
     expect(DigitalContentsModelMock.find).toBeCalledTimes(1);
-    expect(DigitalContentsModelMock.find).toBeCalledWith({guide: id});
+    expect(DigitalContentsModelMock.find).toBeCalledWith({ guide: id });
 
     expect(result).toBe(searchMock);
   });

@@ -77,9 +77,7 @@ export class GuidesController {
             .json({ message: 'A guia informada possui categorias ou conteúdos digitais.' });
         }
       } else {
-        res
-        .status(422)
-        .json({ message: 'A guia informada não existe.' });
+        res.status(422).json({ message: 'A guia informada não existe.' });
       }
     } catch (error) {
       res.status(500).json({
