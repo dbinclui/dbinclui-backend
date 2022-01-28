@@ -210,12 +210,11 @@ describe(GuidesController.name, () => {
 
     const errorMessage = 'A guia informada possui categorias ou conteúdos digitais.';
 
-    await instance.deleteGuide(req, res);
     GuidesRepositoryMock.prototype.delete.mockResolvedValue({} as any);
-    await validateGuideforDeleteMock(req.params.id);
+    validateGuideforDeleteMock.mockResolvedValue(false);
+    await instance.deleteGuide(req, res);
 
     expect(GuidesRepositoryMock).toBeCalled();
-    expect(validateGuideforDeleteMock.mockResolvedValue(true)).toBeCalled();
     expect(res.status).toHaveBeenCalledWith(422);
     expect(res.json).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -234,6 +233,7 @@ describe(GuidesController.name, () => {
     GuidesRepositoryMock.prototype.delete.mockImplementationOnce(async () =>
       Promise.reject(errorMessage),
     );
+    validateGuideforDeleteMock.mockResolvedValue(true);
     await instance.deleteGuide(req, res);
 
     expect(GuidesRepositoryMock).toBeCalled();
@@ -253,13 +253,33 @@ describe(GuidesController.name, () => {
     });
     const { res } = getMockRes();
 
+    validateGuideforDeleteMock.mockResolvedValue(true);
     await instance.deleteGuide(req, res);
-    await validateGuideforDeleteMock(req.params.id);
-  
+
     expect(res.status).toHaveBeenCalledWith(200);
     expect(res.json).toHaveBeenCalledWith(
       expect.objectContaining({
         data: {},
+      }),
+    );
+  });
+  it(`When ${GuidesController.prototype.deleteGuide.name} is called and the guide doesn't exist, it should return a 422 error
+  `, async () => {
+    const req = getMockReq({
+      params: { id: '' },
+    });
+    const { res } = getMockRes();
+
+    const errorMessage = 'A guia informada não existe.';
+
+    GuidesRepositoryMock.prototype.get.mockResolvedValue(null);
+    await instance.deleteGuide(req, res);
+
+    expect(GuidesRepositoryMock).toBeCalled();
+    expect(res.status).toHaveBeenCalledWith(422);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        message: errorMessage,
       }),
     );
   });
