@@ -42,6 +42,15 @@ export class CategoriesController {
     }
   }
 
+  async consultCategories(req: Request, res: Response) {
+    try {
+      const categories = await this.repository.getById(req.params.id);
+      res.status(200).json({ data: categories });
+    } catch (error) {
+      res.status(500).json({ message: error });
+    }
+  }
+
   async registerCategory(req: Request, res: Response) {
     try {
       const categories = await this.repository.create(req.body);
