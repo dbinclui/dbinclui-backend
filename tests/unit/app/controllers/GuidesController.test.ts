@@ -3,10 +3,15 @@ import { GuidesController } from '@controllers/GuidesController';
 import GuidesRepository from '@repositories/GuidesRepository';
 import mongoose, { ObjectId, Types } from 'mongoose';
 import { validateGuideforDelete } from '@middlewares/validator/GuidesValidator';
+import { Guides } from '@entities/guides';
 
 jest.mock('@repositories/GuidesRepository');
+jest.mock('@middlewares/validator/GuidesValidator');
 
 const GuidesRepositoryMock = GuidesRepository as jest.MockedClass<typeof GuidesRepository>;
+const validateGuideforDeleteMock = validateGuideforDelete as jest.MockedFunction<
+  typeof validateGuideforDelete
+>;
 
 describe(GuidesController.name, () => {
   let instance: GuidesController;
@@ -196,22 +201,26 @@ describe(GuidesController.name, () => {
     );
   });
 
-  it(`When ${GuidesController.prototype.deleteGuide.name} is called, it should delete guide
+  it(`When ${GuidesController.prototype.deleteGuide.name} is called and throws a new error, it should handle the errors
   `, async () => {
     const req = getMockReq({
       params: { id: '' },
     });
     const { res } = getMockRes();
 
-    GuidesRepositoryMock.prototype.delete.mockResolvedValue({} as any);
+    const errorMessage = 'A guia informada possui categorias ou conteúdos digitais.';
+
     await instance.deleteGuide(req, res);
+    GuidesRepositoryMock.prototype.delete.mockResolvedValue({} as any);
+    await validateGuideforDeleteMock(req.params.id);
+    validateGuideforDeleteMock.mockResolvedValue(true);
 
     expect(GuidesRepositoryMock).toBeCalled();
-    expect(GuidesRepositoryMock.prototype.delete).toHaveBeenCalled();
-    expect(res.status).toHaveBeenCalledWith(200);
+    expect(validateGuideforDeleteMock.mockResolvedValue(true)).toBeCalled();
+    expect(res.status).toHaveBeenCalledWith(401);
     expect(res.json).toHaveBeenCalledWith(
       expect.objectContaining({
-        data: {},
+        message: errorMessage,
       }),
     );
   });
@@ -227,6 +236,7 @@ describe(GuidesController.name, () => {
       Promise.reject(errorMessage),
     );
     await instance.deleteGuide(req, res);
+
     expect(GuidesRepositoryMock).toBeCalled();
     expect(GuidesRepositoryMock.prototype.delete).toHaveBeenCalled();
     expect(res.status).toHaveBeenCalledWith(500);
@@ -237,23 +247,23 @@ describe(GuidesController.name, () => {
     );
   });
 
-  it(`When ${GuidesController.prototype.deleteGuide.name} is called and throws a new error, it should handle the errors
+  it(`When ${GuidesController.prototype.deleteGuide.name}  is called, it should delete guide
   `, async () => {
     const req = getMockReq({
       params: { id: '' },
     });
     const { res } = getMockRes();
-    const errorMessage = 'A guia informada possui categorias ou conteúdos digitais.';
-    GuidesRepositoryMock.prototype.delete.mockImplementationOnce(async () =>
-      Promise.reject(errorMessage),
-    );
+
     await instance.deleteGuide(req, res);
-    await validateGuideforDelete(req.params.id);
-    expect(GuidesRepositoryMock).toBeCalled();
-    expect(res.status).toHaveBeenCalledWith(401);
+    await validateGuideforDeleteMock(req.params.id);
+    validateGuideforDeleteMock.mockResolvedValue(false);
+
+    expect(validateGuideforDeleteMock.mockResolvedValue(false));
+    expect(res.status).toHaveBeenCalledWith(200);
+
     expect(res.json).toHaveBeenCalledWith(
       expect.objectContaining({
-        message: errorMessage,
+        data: {},
       }),
     );
   });

@@ -67,21 +67,18 @@ export class GuidesController {
     try {
       const validate = await validateGuideforDelete(req.params.id);
       if (validate) {
-        try {
-          const guide = await this.repository.delete(req.params.id);
-          res.status(200).json({ data: guide });
-        } catch (error) {
-          res.status(500).json({
-            message: error,
-          });
-        }
+        const guide = await this.repository.delete(req.params.id);
+        res.status(200).json({ data: guide });
       } else {
-        res.status(401).json({ message: 'A guia informada possui categorias ou conteúdos digitais.' });
+        res
+          .status(401)
+          .json({ message: 'A guia informada possui categorias ou conteúdos digitais.' });
       }
     } catch (error) {
-      res.status(500).json({ message: error });
+      res.status(500).json({
+        message: error,
+      });
     }
-    
   }
 }
 
