@@ -73,12 +73,12 @@ export class GuidesController {
           res.status(200).json({ data: deletedGuide });
         } else {
           res
-            .status(401)
+            .status(422)
             .json({ message: 'A guia informada possui categorias ou conteúdos digitais.' });
         }
       } else {
         res
-        .status(401)
+        .status(422)
         .json({ message: 'A guia informada não existe.' });
       }
     } catch (error) {
