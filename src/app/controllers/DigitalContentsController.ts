@@ -39,7 +39,8 @@ export class DigitalContentsController {
 
       if (!guide) return res.status(404).json({ message: 'Esse guia não existe' });
 
-      if (req.body.category && !category) return res.status(404).json({ message: 'Essa categoria não existe' });
+      if (req.body.category && !category)
+        return res.status(404).json({ message: 'Essa categoria não existe' });
 
       const { title, shortDescription } = req.body;
 
