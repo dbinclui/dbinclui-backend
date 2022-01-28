@@ -39,6 +39,8 @@ export class DigitalContentsController {
 
       if (!guide) return res.status(404).json({ message: 'Esse guia não existe' });
 
+      if (req.body.category && !category) return res.status(404).json({ message: 'Essa categoria não existe' });
+
       const { title, shortDescription } = req.body;
 
       const newDigitalContent: DigitalContents = {
@@ -53,7 +55,7 @@ export class DigitalContentsController {
       };
 
       const createdDigitalContent = await this.repository.create(newDigitalContent);
-      return res.status(200).json({ data: createdDigitalContent });
+      return res.status(201).json({ data: createdDigitalContent });
     } catch (error) {
       return res.status(500).json({
         message: error,
