@@ -8,7 +8,7 @@ const router = Router();
 export default [
   router.get('/list', GuidesController.getGuides),
   router.post('/register', guidesValidate(), validateRequestSchema, GuidesController.registerGuide),
-  router.get('/consult/:id', GuidesController.consultGuide),
+  router.get('/:id', GuidesController.consultGuide),
   router.get(
     '/getGuideWithCategoriesAndContent/:guideId',
     GuidesController.getWithCategoriesAndContent,

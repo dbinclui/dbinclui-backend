@@ -63,6 +63,17 @@ export class DigitalContentsController {
       });
     }
   }
+
+  async consultDigitalContent(req: Request, res: Response) {
+    try {
+      const digitalContent = await this.repository.getById(req.params.id);
+      res.status(200).json({ data: digitalContent });
+    } catch (error) {
+      res.status(500).json({ message: error });
+    }
+  }
+
+
 }
 
 const instance = bindedInstance(DigitalContentsController);
