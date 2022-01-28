@@ -42,7 +42,7 @@ describe('GuidesValidator Test', () => {
 
   it(`${validateRequestSchema.name}: 
   when the body is invalid should return response with status and error content`, () => {
-    const status = 405;
+    const status = 400;
     const errorsMessage = ['Invalide title', 'Invalid content'];
     const req = getMockReq();
     const isEmpty = jest.fn();
