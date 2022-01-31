@@ -15,10 +15,8 @@ class GuidesRepository {
     return GuidesModel.findById(guideId).exec();
   }
 
-  async delete(guideId: ObjectId) {
-    return GuidesModel.findOneAndDelete({
-      _id: guideId,
-    }).exec();
+  async delete(guideId: string) {
+    return GuidesModel.findByIdAndDelete(guideId).exec();
   }
 
   async list() {

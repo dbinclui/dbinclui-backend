@@ -8,10 +8,10 @@ import digitalContentRepository from '@repositories/DigitalContentsRepository';
 const router = Router();
 
 export default [
-  router.get('/list', DigitalContentsController.getDigitalContents),
   router.get('/:id', DigitalContentsController.consultDigitalContent),
+  router.get('/', DigitalContentsController.getDigitalContents),
   router.post(
-    '/register',
+    '/',
     upload.array('files'),
     registerValidate(),
     validateRequestSchema,
