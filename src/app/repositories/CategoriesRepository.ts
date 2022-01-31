@@ -12,23 +12,23 @@ class CategoriesRepository {
   }
 
   async getById(id: ObjectId | string) {
-    return CategoriesModel.findById(id).exec();
+    return CategoriesModel.findById(id).populate('guide').exec();
   }
 
   async getByTitle(title: string) {
-    return CategoriesModel.findOne({ title }).exec();
+    return CategoriesModel.findOne({ title }).populate('guide').exec();
   }
 
   async getByDescription(shortDescription: string) {
-    return CategoriesModel.findOne({ shortDescription }).exec();
+    return CategoriesModel.findOne({ shortDescription }).populate('guide').exec();
   }
 
   async getByTitleAndDescription(title: string, shortDescription: string) {
-    return CategoriesModel.findOne({ title, shortDescription }).exec();
+    return CategoriesModel.findOne({ title, shortDescription }).populate('guide').exec();
   }
 
   async getByGuideId(id: ObjectId | string) {
-    return CategoriesModel.find({ guide: id }).exec();
+    return CategoriesModel.find({ guide: id }).populate('guide').exec();
   }
 
   async delete(category: Categories) {
@@ -42,7 +42,7 @@ class CategoriesRepository {
   }
 
   async list() {
-    return CategoriesModel.find().exec();
+    return CategoriesModel.find().populate('guide').exec();
   }
 }
 

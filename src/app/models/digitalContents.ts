@@ -5,7 +5,7 @@ const DigitalContentSchema = new Schema<DigitalContents>({
   title: { type: String, required: true },
   shortDescription: { type: String, required: true },
   guide: { type: Schema.Types.ObjectId, ref: 'Guides', required: true },
-  category: { type: Schema.Types.ObjectId, ref: 'Category' },
+  category: { type: Schema.Types.ObjectId, ref: 'Categories' },
   filePaths: [{ type: String, required: true }],
 });
 

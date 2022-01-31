@@ -7,9 +7,9 @@ import upload from '@middlewares/upload/Multer';
 const router = Router();
 
 export default [
-  router.get('/list', DigitalContentsController.getDigitalContents),
+  router.get('/', DigitalContentsController.getDigitalContents),
   router.post(
-    '/register',
+    '/',
     upload.array('files'),
     registerValidate(),
     validateRequestSchema,
