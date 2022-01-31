@@ -20,11 +20,17 @@ class digitalContentRepository {
   }
 
   async getByDescription(shortDescription: string) {
-    return DigitalContentsModel.find({ shortDescription }).populate('guide').populate('category').exec();
+    return DigitalContentsModel.find({ shortDescription })
+      .populate('guide')
+      .populate('category')
+      .exec();
   }
 
   async getByTitleAndDescription(title: string, shortDescription: string) {
-    return DigitalContentsModel.find({ title, shortDescription }).populate('guide').populate('category').exec();
+    return DigitalContentsModel.find({ title, shortDescription })
+      .populate('guide')
+      .populate('category')
+      .exec();
   }
 
   async getByGuide(id: ObjectId | string) {
