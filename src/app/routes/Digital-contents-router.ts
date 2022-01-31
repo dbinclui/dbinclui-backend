@@ -15,4 +15,5 @@ export default [
     validateRequestSchema,
     DigitalContentsController.registerDigitalContent,
   ),
+  router.put('/:id'),
 ];
