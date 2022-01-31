@@ -66,7 +66,9 @@ describe(CategoriesRepository.name, () => {
     const [searchMock] = categoriesListMock;
 
     const findByIdMock = jest.fn().mockImplementation(() => ({
-      exec: async () => searchMock,
+      populate: () => ({
+        exec: async () => searchMock,
+      }),
     }));
 
     CategoriesModelMock.findById = findByIdMock;
@@ -85,7 +87,9 @@ describe(CategoriesRepository.name, () => {
     const [searchMock] = categoriesListMock;
 
     const findOneMock = jest.fn().mockImplementation(() => ({
-      exec: async () => searchMock,
+      populate: () => ({
+        exec: async () => searchMock,
+      }),
     }));
 
     CategoriesModelMock.findOne = findOneMock;
@@ -103,7 +107,9 @@ describe(CategoriesRepository.name, () => {
     const [searchMock] = categoriesListMock;
 
     const findOneMock = jest.fn().mockImplementation(() => ({
-      exec: async () => searchMock,
+      populate: () => ({
+        exec: async () => searchMock,
+      }),
     }));
 
     CategoriesModelMock.findOne = findOneMock;
@@ -123,7 +129,9 @@ describe(CategoriesRepository.name, () => {
     const [searchMock] = categoriesListMock;
 
     const findOneMock = jest.fn().mockImplementation(() => ({
-      exec: async () => searchMock,
+      populate: () => ({
+        exec: async () => searchMock,
+      }),
     }));
 
     CategoriesModelMock.findOne = findOneMock;
@@ -147,7 +155,9 @@ describe(CategoriesRepository.name, () => {
     const [searchMock] = categoriesListMock;
 
     const findMock = jest.fn().mockImplementation(() => ({
-      exec: async () => [searchMock],
+      populate: () => ({
+        exec: async () => [searchMock],
+      }),
     }));
 
     CategoriesModelMock.find = findMock;
@@ -201,7 +211,9 @@ describe(CategoriesRepository.name, () => {
   it(`${CategoriesRepository.prototype.list.name}: 
   quando o método for chamado deve ser feita a listagem dos dados`, async () => {
     const findMock = jest.fn().mockImplementation(() => ({
-      exec: async () => categoriesListMock,
+      populate: () => ({
+        exec: async () => categoriesListMock,
+      }),
     }));
     CategoriesModelMock.find = findMock;
 
