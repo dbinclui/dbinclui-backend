@@ -7,8 +7,8 @@ class digitalContentRepository {
     return DigitalContentsModel.create(digitalContent);
   }
 
-  async update(digitalContent: DigitalContents, newDigitalContent: DigitalContents) {
-    return DigitalContentsModel.findOneAndUpdate(digitalContent, newDigitalContent).exec();
+  async update(id: string, digitalContent: DigitalContents) {
+    return DigitalContentsModel.findByIdAndUpdate(id, digitalContent).exec();
   }
 
   async getById(id: ObjectId) {
