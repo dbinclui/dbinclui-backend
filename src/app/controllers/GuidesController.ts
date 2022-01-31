@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import GuidesRepository from '@repositories/GuidesRepository';
 import bindedInstance from '@utils/bindedInstance';
+import { validateGuideforDelete } from '@middlewares/validator/GuidesValidator';
 
 export class GuidesController {
   private repository: GuidesRepository;
@@ -59,6 +60,29 @@ export class GuidesController {
       res.status(200).json({ data: guides });
     } catch (error) {
       res.status(500).json({ message: error });
+    }
+  }
+
+  async deleteGuide(req: Request, res: Response) {
+    try {
+      const guide = await this.repository.get(req.params.id);
+      if (guide !== null) {
+        const validate = await validateGuideforDelete(req.params.id);
+        if (validate) {
+          const deletedGuide = await this.repository.delete(req.params.id);
+          res.status(200).json({ data: deletedGuide });
+        } else {
+          res
+            .status(422)
+            .json({ message: 'A guia informada possui categorias ou conteúdos digitais.' });
+        }
+      } else {
+        res.status(422).json({ message: 'A guia informada não existe.' });
+      }
+    } catch (error) {
+      res.status(500).json({
+        message: error,
+      });
     }
   }
 }

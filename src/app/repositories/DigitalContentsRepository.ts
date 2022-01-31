@@ -27,8 +27,8 @@ class digitalContentRepository {
     return DigitalContentsModel.find({ title, shortDescription }).exec();
   }
 
-  async getByGuide(id: ObjectId) {
-    return DigitalContentsModel.findById(id).exec();
+  async getByGuide(id: ObjectId | string) {
+    return DigitalContentsModel.find({ guide: id }).exec();
   }
 
   async getByCategory(id: ObjectId) {

@@ -1,5 +1,6 @@
-import { NextFunction, Request, Response } from 'express';
-import { body, validationResult } from 'express-validator';
+import { body } from 'express-validator';
+import CategoriesRepository from '@repositories/CategoriesRepository';
+import DigitalContentRepository from '@repositories/DigitalContentsRepository';
 
 const guidesValidate = () => [
   body('title')
@@ -11,4 +12,17 @@ const guidesValidate = () => [
   body('content').notEmpty().withMessage('O campo está vazio').isString(),
 ];
 
-export { guidesValidate };
+async function validateGuideforDelete(guideId: string) {
+  const categoryRepository = new CategoriesRepository();
+  const digitalContentRepository = new DigitalContentRepository();
+
+  try {
+    const resultCategory = await categoryRepository.getByGuideId(guideId);
+    const resultDigitalContent = await digitalContentRepository.getByGuide(guideId);
+    return resultCategory.length === 0 && resultDigitalContent.length === 0;
+  } catch (error) {
+    return { message: error };
+  }
+}
+
+export { guidesValidate, validateGuideforDelete };

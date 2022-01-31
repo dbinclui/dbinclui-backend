@@ -10,5 +10,6 @@ export default [
   router.post('/', guidesValidate(), validateRequestSchema, GuidesController.registerGuide),
   router.get('/:id', GuidesController.consultGuide),
   router.get('/categoriesAndContent/:guideId', GuidesController.getWithCategoriesAndContent),
+  router.delete('/:id', GuidesController.deleteGuide),
   router.put('/:id', guidesValidate(), validateRequestSchema, GuidesController.updateGuide),
 ];

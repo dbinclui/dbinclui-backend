@@ -48,7 +48,7 @@ describe(CategoriesController.name, () => {
     await instance.getCategories(req, res);
     expect(CategoriesRepositoryMock).toBeCalled();
     expect(CategoriesRepositoryMock.prototype.list).toHaveBeenCalled();
-    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.status).toHaveBeenCalledWith(500);
     expect(res.json).toHaveBeenCalledWith(
       expect.objectContaining({
         message: errorMessage,
@@ -113,7 +113,7 @@ describe(CategoriesController.name, () => {
 
     expect(CategoriesRepositoryMock).toBeCalled();
     expect(CategoriesRepositoryMock.prototype.create).toHaveBeenCalled();
-    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.status).toHaveBeenCalledWith(201);
     expect(res.json).toHaveBeenCalledWith(
       expect.objectContaining({
         data: [],
@@ -132,7 +132,7 @@ describe(CategoriesController.name, () => {
     await instance.registerCategory(req, res);
     expect(CategoriesRepositoryMock).toBeCalled();
     expect(CategoriesRepositoryMock.prototype.create).toHaveBeenCalled();
-    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.status).toHaveBeenCalledWith(500);
     expect(res.json).toHaveBeenCalledWith(
       expect.objectContaining({
         message: errorMessage,

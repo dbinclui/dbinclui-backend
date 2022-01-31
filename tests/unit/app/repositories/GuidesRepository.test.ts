@@ -92,18 +92,19 @@ describe(GuidesRepository.name, () => {
   it(`${GuidesRepository.prototype.delete.name}: 
   quando o método for chamado deve ser feita a lógica de deletar o registro`, async () => {
     const searchMock = {
-      _id: {} as ObjectId,
+      _id: {} as string,
     };
-    const findOneAndDeleteMock = jest.fn().mockImplementation(() => ({
+    const findByIdAndDeleteMock = jest.fn().mockImplementation(() => ({
       exec: async () => searchMock,
     }));
 
-    GuidesModelMock.findOneAndDelete = findOneAndDeleteMock;
+    GuidesModelMock.findByIdAndDelete = findByIdAndDeleteMock;
+    const mockObjectId = new mongoose.Types.ObjectId().toString();
 
-    const result = await instance.delete({} as ObjectId);
-    expect(GuidesModelMock.findOneAndDelete).toBeCalledTimes(1);
-    expect(GuidesModelMock.findOneAndDelete).toBeCalledWith(searchMock);
-    expect(findOneAndDeleteMock).toBeCalled();
+    const result = await instance.delete(mockObjectId);
+    expect(GuidesModelMock.findByIdAndDelete).toBeCalledTimes(1);
+    expect(GuidesModelMock.findByIdAndDelete).toBeCalledWith(mockObjectId);
+    expect(findByIdAndDeleteMock).toBeCalled();
     expect(result).toBe(searchMock);
   });
 
