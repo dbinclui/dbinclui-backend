@@ -6,14 +6,14 @@ import { validateRequestSchema } from '@middlewares/validator/ValidateSchema';
 const router = Router();
 
 export default [
-  router.get('/list', CategoriesController.getCategories),
+  router.get('/', CategoriesController.getCategories),
   router.post(
-    '/register',
+    '/',
     categoryValidate(),
     validateRequestSchema,
     CategoriesController.registerCategory,
   ),
-  router.get('/getByGuide/:id', CategoriesController.getCategoriesByGuide),
+  router.get('/guide/:id', CategoriesController.getCategoriesByGuide),
   router.get('/:id', CategoriesController.consultCategories),
   router.put(
     '/:id',
