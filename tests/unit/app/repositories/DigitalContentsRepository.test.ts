@@ -69,7 +69,11 @@ describe(DigitalContentsRepository.name, () => {
     const [searchMock] = digitalContentsListMock;
 
     const findByIdMock = jest.fn().mockImplementation(() => ({
-      exec: async () => searchMock,
+      populate: () => ({
+        populate: () => ({
+          exec: async () => searchMock,
+        }),
+      }),
     }));
 
     DigitalContentsModelMock.findById = findByIdMock;
@@ -88,7 +92,11 @@ describe(DigitalContentsRepository.name, () => {
     const [searchMock] = digitalContentsListMock;
 
     const findMock = jest.fn().mockImplementation(() => ({
-      exec: async () => searchMock,
+      populate: () => ({
+        populate: () => ({
+          exec: async () => searchMock,
+        }),
+      }),
     }));
 
     DigitalContentsModelMock.find = findMock;
@@ -106,7 +114,11 @@ describe(DigitalContentsRepository.name, () => {
     const [searchMock] = digitalContentsListMock;
 
     const findMock = jest.fn().mockImplementation(() => ({
-      exec: async () => searchMock,
+      populate: () => ({
+        populate: () => ({
+          exec: async () => searchMock,
+        }),
+      }),
     }));
 
     DigitalContentsModelMock.find = findMock;
@@ -126,7 +138,11 @@ describe(DigitalContentsRepository.name, () => {
     const [searchMock] = digitalContentsListMock;
 
     const findMock = jest.fn().mockImplementation(() => ({
-      exec: async () => searchMock,
+      populate: () => ({
+        populate: () => ({
+          exec: async () => searchMock,
+        }),
+      }),
     }));
 
     DigitalContentsModelMock.find = findMock;
@@ -183,7 +199,11 @@ describe(DigitalContentsRepository.name, () => {
   it(`${DigitalContentsRepository.prototype.list.name}: 
   quando o método for chamado deve ser feita a listagem dos dados`, async () => {
     const findMock = jest.fn().mockImplementation(() => ({
-      exec: async () => digitalContentsListMock,
+      populate: () => ({
+        populate: () => ({
+          exec: async () => digitalContentsListMock,
+        }),
+      }),
     }));
     DigitalContentsModelMock.find = findMock;
 
@@ -198,7 +218,11 @@ describe(DigitalContentsRepository.name, () => {
     const [searchMock] = digitalContentsListMock;
 
     const findByIdMock = jest.fn().mockImplementation(() => ({
-      exec: async () => searchMock,
+      populate: () => ({
+        populate: () => ({
+          exec: async () => searchMock,
+        }),
+      }),
     }));
 
     DigitalContentsModelMock.find = findByIdMock;
@@ -217,7 +241,11 @@ describe(DigitalContentsRepository.name, () => {
     const [searchMock] = digitalContentsListMock;
 
     const findByIdMock = jest.fn().mockImplementation(() => ({
-      exec: async () => searchMock,
+      populate: () => ({
+        populate: () => ({
+          exec: async () => searchMock,
+        }),
+      }),''
     }));
 
     DigitalContentsModelMock.findById = findByIdMock;

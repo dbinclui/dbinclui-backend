@@ -12,27 +12,27 @@ class digitalContentRepository {
   }
 
   async getById(id: ObjectId) {
-    return DigitalContentsModel.findById(id).exec();
+    return DigitalContentsModel.findById(id).populate('guide').populate('category').exec();
   }
 
   async getByTitle(title: string) {
-    return DigitalContentsModel.find({ title }).exec();
+    return DigitalContentsModel.find({ title }).populate('guide').populate('category').exec();
   }
 
   async getByDescription(shortDescription: string) {
-    return DigitalContentsModel.find({ shortDescription }).exec();
+    return DigitalContentsModel.find({ shortDescription }).populate('guide').populate('category').exec();
   }
 
   async getByTitleAndDescription(title: string, shortDescription: string) {
-    return DigitalContentsModel.find({ title, shortDescription }).exec();
+    return DigitalContentsModel.find({ title, shortDescription }).populate('guide').populate('category').exec();
   }
 
   async getByGuide(id: ObjectId | string) {
-    return DigitalContentsModel.find({ guide: id }).exec();
+    return DigitalContentsModel.find({ guide: id }).populate('guide').populate('category').exec();
   }
 
   async getByCategory(id: ObjectId) {
-    return DigitalContentsModel.findById(id).exec();
+    return DigitalContentsModel.findById(id).populate('guide').populate('category').exec();
   }
 
   async delete(digitalContent: DigitalContents) {
@@ -46,7 +46,7 @@ class digitalContentRepository {
   }
 
   async list() {
-    return DigitalContentsModel.find().exec();
+    return DigitalContentsModel.find().populate('guide').populate('category').exec();
   }
 }
 
