@@ -245,7 +245,7 @@ describe(DigitalContentsRepository.name, () => {
         populate: () => ({
           exec: async () => searchMock,
         }),
-      }),''
+      }),
     }));
 
     DigitalContentsModelMock.findById = findByIdMock;

@@ -67,7 +67,7 @@ describe(CategoriesRepository.name, () => {
 
     const findByIdMock = jest.fn().mockImplementation(() => ({
       populate: () => ({
-        exec: async() => searchMock
+        exec: async () => searchMock,
       }),
     }));
 
@@ -88,7 +88,7 @@ describe(CategoriesRepository.name, () => {
 
     const findOneMock = jest.fn().mockImplementation(() => ({
       populate: () => ({
-        exec: async() => searchMock
+        exec: async () => searchMock,
       }),
     }));
 
@@ -108,7 +108,7 @@ describe(CategoriesRepository.name, () => {
 
     const findOneMock = jest.fn().mockImplementation(() => ({
       populate: () => ({
-        exec: async() => searchMock
+        exec: async () => searchMock,
       }),
     }));
 
@@ -130,7 +130,7 @@ describe(CategoriesRepository.name, () => {
 
     const findOneMock = jest.fn().mockImplementation(() => ({
       populate: () => ({
-        exec: async() => searchMock
+        exec: async () => searchMock,
       }),
     }));
 
@@ -156,7 +156,7 @@ describe(CategoriesRepository.name, () => {
 
     const findMock = jest.fn().mockImplementation(() => ({
       populate: () => ({
-        exec: async() => [searchMock]
+        exec: async () => [searchMock],
       }),
     }));
 
@@ -212,7 +212,7 @@ describe(CategoriesRepository.name, () => {
   quando o método for chamado deve ser feita a listagem dos dados`, async () => {
     const findMock = jest.fn().mockImplementation(() => ({
       populate: () => ({
-        exec: async() => categoriesListMock
+        exec: async () => categoriesListMock,
       }),
     }));
     CategoriesModelMock.find = findMock;
