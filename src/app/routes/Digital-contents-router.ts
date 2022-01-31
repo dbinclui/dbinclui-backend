@@ -15,5 +15,11 @@ export default [
     validateRequestSchema,
     DigitalContentsController.registerDigitalContent,
   ),
-  router.put('/:id'),
+  router.put(
+    '/:id',
+    upload.array('files'),
+    registerValidate(),
+    validateRequestSchema,
+    DigitalContentsController.updateDigitalContent,
+  ),
 ];
