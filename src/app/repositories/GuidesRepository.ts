@@ -33,7 +33,7 @@ class GuidesRepository {
       {
         $lookup: {
           from: 'categories',
-          let: { guideId: '_id' },
+          let: { guideId: '$_id' },
           as: 'categories',
           pipeline: [
             {
@@ -46,7 +46,7 @@ class GuidesRepository {
             {
               $lookup: {
                 from: 'digitalContent',
-                let: { categoryId: '_id' },
+                let: { categoryId: '$_id' },
                 pipeline: [
                   {
                     $match: {
@@ -65,7 +65,7 @@ class GuidesRepository {
       {
         $lookup: {
           from: 'digitalContent',
-          let: { guideId: '_id' },
+          let: { guideId: '$_id' },
           as: 'digitalContents',
           pipeline: [
             {
