@@ -11,7 +11,7 @@ class digitalContentRepository {
     return DigitalContentsModel.findOneAndUpdate(digitalContent, newDigitalContent).exec();
   }
 
-  async getById(id: ObjectId) {
+  async getById(id: ObjectId | string) {
     return DigitalContentsModel.findById(id).populate('guide').populate('category').exec();
   }
 
