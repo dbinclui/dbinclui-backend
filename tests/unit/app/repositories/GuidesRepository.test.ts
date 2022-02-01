@@ -1,14 +1,23 @@
 import GuidesRepository from '@repositories/GuidesRepository';
 import { Guides } from '@entities/guides';
 import { GuidesModel } from '@models/guides';
-import { Mongoose } from 'mongoose';
+import mongoose, { ObjectId, Types } from 'mongoose';
 
-jest.useFakeTimers();
+jest.mock('mongoose', () => {
+  const originalModule = jest.requireActual('mongoose');
+
+  return {
+    ...originalModule,
+    Types: {
+      ObjectId: jest.fn(),
+    },
+  };
+});
 
 jest.mock('@models/guides');
 
 const GuidesModelMock = GuidesModel as jest.MockedClass<typeof GuidesModel>;
-const mockObjectId = new Mongoose.prototype.ObjectId();
+const mockObjectIdConstructor = Types.ObjectId as jest.MockedClass<typeof Types.ObjectId>;
 
 describe(GuidesRepository.name, () => {
   let instance: GuidesRepository;
@@ -44,23 +53,27 @@ describe(GuidesRepository.name, () => {
       content: 'teste content',
     };
 
-    const findOneAndUpdateMock = jest.fn().mockImplementation(() => ({
+    const findByIdAndUpdateMock = jest.fn().mockImplementation(() => ({
       exec: async () => updateMock,
     }));
-    GuidesModelMock.findOneAndUpdate = findOneAndUpdateMock;
+    GuidesModelMock.findByIdAndUpdate = findByIdAndUpdateMock;
 
-    const result = await instance.update(guideTest, updateMock);
+    const mockObjectId = new mongoose.Types.ObjectId().toString();
 
-    expect(GuidesModelMock.findOneAndUpdate).toBeCalledTimes(1);
-    expect(GuidesModelMock.findOneAndUpdate).toBeCalledWith(guideTest, updateMock);
-    expect(findOneAndUpdateMock).toBeCalled();
+    const result = await instance.update(mockObjectId, updateMock);
+
+    expect(GuidesModelMock.findByIdAndUpdate).toBeCalledTimes(1);
+    expect(GuidesModelMock.findByIdAndUpdate).toBeCalledWith(mockObjectId, updateMock, {
+      returnOriginal: false,
+    });
+    expect(findByIdAndUpdateMock).toBeCalled();
     expect(result).toBe(updateMock);
   });
 
   it(`${GuidesRepository.prototype.get.name}: 
   quando o método for chamado deve ser feita a lógica de procurar os dados`, async () => {
     const searchMock = {
-      _id: mockObjectId,
+      _id: {} as ObjectId,
     };
     const findByIdMock = jest.fn().mockImplementation(() => ({
       exec: async () => searchMock,
@@ -68,10 +81,10 @@ describe(GuidesRepository.name, () => {
 
     GuidesModelMock.findById = findByIdMock;
 
-    const result = await instance.get(mockObjectId);
+    const result = await instance.get({} as ObjectId);
 
     expect(GuidesModelMock.findById).toBeCalledTimes(1);
-    expect(GuidesModelMock.findById).toBeCalledWith(mockObjectId);
+    expect(GuidesModelMock.findById).toBeCalledWith({} as ObjectId);
     expect(findByIdMock).toBeCalled();
     expect(result).toBe(searchMock);
   });
@@ -79,18 +92,19 @@ describe(GuidesRepository.name, () => {
   it(`${GuidesRepository.prototype.delete.name}: 
   quando o método for chamado deve ser feita a lógica de deletar o registro`, async () => {
     const searchMock = {
-      _id: mockObjectId,
+      _id: {} as string,
     };
-    const findOneAndDeleteMock = jest.fn().mockImplementation(() => ({
+    const findByIdAndDeleteMock = jest.fn().mockImplementation(() => ({
       exec: async () => searchMock,
     }));
 
-    GuidesModelMock.findOneAndDelete = findOneAndDeleteMock;
+    GuidesModelMock.findByIdAndDelete = findByIdAndDeleteMock;
+    const mockObjectId = new mongoose.Types.ObjectId().toString();
 
     const result = await instance.delete(mockObjectId);
-    expect(GuidesModelMock.findOneAndDelete).toBeCalledTimes(1);
-    expect(GuidesModelMock.findOneAndDelete).toBeCalledWith(searchMock);
-    expect(findOneAndDeleteMock).toBeCalled();
+    expect(GuidesModelMock.findByIdAndDelete).toBeCalledTimes(1);
+    expect(GuidesModelMock.findByIdAndDelete).toBeCalledWith(mockObjectId);
+    expect(findByIdAndDeleteMock).toBeCalled();
     expect(result).toBe(searchMock);
   });
 
@@ -104,5 +118,19 @@ describe(GuidesRepository.name, () => {
     const result = await instance.list();
     expect(GuidesModelMock.find).toBeCalledTimes(1);
     expect(result).toBe(guidesListMock);
+  });
+
+  it(`${GuidesRepository.prototype.getWithCategoriesAndContent.name}: 
+  quando o método for chamado deve ser feita a busca do guide específico 
+  com as categorias e conteúdos digitais relacionados`, async () => {
+    const testId = '123456789123';
+    GuidesModelMock.aggregate = jest.fn().mockImplementation(() => ({
+      exec: async () => guidesListMock,
+    }));
+
+    const result = await instance.getWithCategoriesAndContent(testId);
+    expect(GuidesModelMock.find).toBeCalledTimes(1);
+    expect(result).toBe(guidesListMock[0]);
+    expect(mockObjectIdConstructor).toBeCalledWith(testId);
   });
 });

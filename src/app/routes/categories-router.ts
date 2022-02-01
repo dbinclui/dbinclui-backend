@@ -1,17 +1,24 @@
 import { Router } from 'express';
-import { registerValidate } from '@middlewares/validator/CategoriesValidator';
+import { categoryValidate } from '@middlewares/validator/CategoriesValidator';
 import CategoriesController from '@controllers/CategoriesController';
 import { validateRequestSchema } from '@middlewares/validator/ValidateSchema';
 
 const router = Router();
 
 export default [
-  router.get('/list', CategoriesController.getCategories),
+  router.get('/', CategoriesController.getCategories),
   router.post(
-    '/register',
-    registerValidate(),
+    '/',
+    categoryValidate(),
     validateRequestSchema,
     CategoriesController.registerCategory,
   ),
-  router.get('/getByGuide/:id', CategoriesController.getCategoriesByGuide),
+  router.get('/guide/:id', CategoriesController.getCategoriesByGuide),
+  router.get('/:id', CategoriesController.consultCategories),
+  router.put(
+    '/:id',
+    categoryValidate(),
+    validateRequestSchema,
+    CategoriesController.updateCategory,
+  ),
 ];
