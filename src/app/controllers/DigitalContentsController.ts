@@ -47,16 +47,31 @@ export class DigitalContentsController {
 
       const { title, shortDescription } = req.body;
 
-      const newDigitalContent: DigitalContents = {
-        title,
-        guide,
-        category,
-        shortDescription,
-        filePaths: (req.files! as Express.Multer.File[]).reduce(
-          (paths: string[], file) => [...paths, file.path],
-          [],
-        ),
-      };
+      // condição para novo conteúdo digital, com ou sem mídia nova
+      /* Não atende o caso de uqererem editar somente um conteúdo e manter os outros,
+       teria que ver a posição do array dp path excluido para executar a deleção e 
+       criar um novo e por no mesmo lugar no array */
+      let newDigitalContent: DigitalContents;
+      if (req.files === null || req.files === undefined) {
+        newDigitalContent = {
+          title,
+          guide,
+          category,
+          shortDescription,
+        };
+      } else {
+        newDigitalContent = {
+          title,
+          guide,
+          category,
+          shortDescription,
+          filePaths: (req.files! as Express.Multer.File[]).reduce(
+            (paths: string[], file) => [...paths, file.path],
+            [],
+          ),
+        };
+      }
+
       const digitalContent = await this.repository.update(req.params.id, newDigitalContent);
       return res.status(200).json({ data: digitalContent });
     } catch (error) {
