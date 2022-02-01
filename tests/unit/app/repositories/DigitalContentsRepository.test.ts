@@ -259,4 +259,23 @@ describe(DigitalContentsRepository.name, () => {
 
     expect(result).toBe(searchMock);
   });
+
+  it(`${DigitalContentsRepository.prototype.get.name}: 
+  quando o método for chamado deve ser feita a lógica de procurar os dados`, async () => {
+    const searchMock = {
+      _id: {} as ObjectId,
+    };
+    const findByIdMock = jest.fn().mockImplementation(() => ({
+      exec: async () => searchMock,
+    }));
+
+    DigitalContentsModelMock.findById = findByIdMock;
+
+    const result = await instance.get({} as ObjectId);
+
+    expect(DigitalContentsModelMock.findById).toBeCalledTimes(1);
+    expect(DigitalContentsModelMock.findById).toBeCalledWith({} as ObjectId);
+    expect(findByIdMock).toBeCalled();
+    expect(result).toBe(searchMock);
+  });
 });
