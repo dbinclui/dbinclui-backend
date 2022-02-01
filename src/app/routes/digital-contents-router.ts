@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { registerValidate } from '@middlewares/validator/DigitalContentValidator';
+import { registerValidate, updateValidate } from '@middlewares/validator/DigitalContentValidator';
 import DigitalContentsController from '@controllers/DigitalContentsController';
 import { validateRequestSchema } from '@middlewares/validator/ValidateSchema';
 import upload from '@middlewares/upload/Multer';
@@ -18,7 +18,7 @@ export default [
   router.put(
     '/:id',
     upload.array('files'),
-    registerValidate(),
+    updateValidate(),
     validateRequestSchema,
     DigitalContentsController.updateDigitalContent,
   ),

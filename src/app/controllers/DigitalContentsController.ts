@@ -35,7 +35,7 @@ export class DigitalContentsController {
         ? await this.categoriesRepository.getById(req.body.category)
         : undefined;
 
-      const getDigitalContent = await this.guidesRepository.get(req.params.id);
+      const getDigitalContent = await this.repository.get(req.params.id);
       if (!getDigitalContent)
         return res.status(404).json({ message: 'Esse conteúdo digital não existe' });
 
@@ -47,17 +47,14 @@ export class DigitalContentsController {
 
       const { title, shortDescription } = req.body;
 
-      // condição para novo conteúdo digital, com ou sem mídia nova
-      /* Não atende o caso de uqererem editar somente um conteúdo e manter os outros,
-       teria que ver a posição do array dp path excluido para executar a deleção e 
-       criar um novo e por no mesmo lugar no array */
       let newDigitalContent: DigitalContents;
-      if (req.files === null || req.files === undefined) {
+      if (req.files?.length === 0) {
         newDigitalContent = {
           title,
           guide,
           category,
           shortDescription,
+          filePaths: getDigitalContent.filePaths,
         };
       } else {
         newDigitalContent = {

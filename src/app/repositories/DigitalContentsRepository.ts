@@ -8,7 +8,13 @@ class digitalContentRepository {
   }
 
   async update(id: string, digitalContent: DigitalContents) {
-    return DigitalContentsModel.findByIdAndUpdate(id, digitalContent).exec();
+    return DigitalContentsModel.findByIdAndUpdate(id, digitalContent, {
+      returnOriginal: false,
+    }).exec();
+  }
+
+  async get(guideId: ObjectId | string) {
+    return DigitalContentsModel.findById(guideId).exec();
   }
 
   async getById(id: ObjectId) {
