@@ -33,15 +33,29 @@ class GuidesRepository {
       {
         $lookup: {
           from: 'categories',
-          localField: '_id',
-          foreignField: 'guide',
+          let: { guideId: '_id' },
           as: 'categories',
           pipeline: [
             {
+              $match: {
+                $expr: {
+                  $eq: ['$$guideId', '$guide'],
+                },
+              },
+            },
+            {
               $lookup: {
                 from: 'digitalContent',
-                localField: '_id',
-                foreignField: 'category',
+                let: { categoryId: '_id' },
+                pipeline: [
+                  {
+                    $match: {
+                      $expr: {
+                        $eq: ['$$categoryId', '$category'],
+                      },
+                    },
+                  },
+                ],
                 as: 'digitalContents',
               },
             },
@@ -51,10 +65,16 @@ class GuidesRepository {
       {
         $lookup: {
           from: 'digitalContent',
-          localField: '_id',
-          foreignField: 'guide',
+          let: { guideId: '_id' },
           as: 'digitalContents',
           pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $eq: ['$$guideId', '$guide'],
+                },
+              },
+            },
             {
               $match: { category: undefined },
             },
