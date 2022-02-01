@@ -72,8 +72,6 @@ export class DigitalContentsController {
       res.status(500).json({ message: error });
     }
   }
-
-
 }
 
 const instance = bindedInstance(DigitalContentsController);
