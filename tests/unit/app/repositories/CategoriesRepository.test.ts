@@ -1,4 +1,4 @@
-import { ObjectId } from 'mongoose';
+import mongoose, { ObjectId } from 'mongoose';
 import CategoriesRepository from '@repositories/CategoriesRepository';
 import { Categories } from '@entities/categories';
 import { Guides } from '@entities/guides';
@@ -44,16 +44,20 @@ describe(CategoriesRepository.name, () => {
   quando o método for chamado deve ser feita a lógica de atualização`, async () => {
     const [categoryMock, updateMock] = categoriesListMock;
 
-    const findOneAndUpdateMock = jest.fn().mockImplementation(() => ({
+    const findByIdAndUpdateMock = jest.fn().mockImplementation(() => ({
       exec: async () => updateMock,
     }));
-    CategoriesModelMock.findOneAndUpdate = findOneAndUpdateMock;
+    CategoriesModelMock.findByIdAndUpdate = findByIdAndUpdateMock;
 
-    const result = await instance.update(categoryMock, updateMock);
+    const mockObjectId = new mongoose.Types.ObjectId().toString();
+    const result = await instance.update(mockObjectId, updateMock);
 
-    expect(CategoriesModelMock.findOneAndUpdate).toBeCalledTimes(1);
-    expect(CategoriesModelMock.findOneAndUpdate).toBeCalledWith(categoryMock, updateMock);
+    expect(CategoriesModelMock.findByIdAndUpdate).toBeCalledTimes(1);
+    expect(CategoriesModelMock.findByIdAndUpdate).toBeCalledWith(mockObjectId, updateMock, {
+      returnOriginal: false,
+    });
 
+    expect(findByIdAndUpdateMock).toBeCalled();
     expect(result).toBe(updateMock);
   });
 
@@ -62,7 +66,9 @@ describe(CategoriesRepository.name, () => {
     const [searchMock] = categoriesListMock;
 
     const findByIdMock = jest.fn().mockImplementation(() => ({
-      exec: async () => searchMock,
+      populate: () => ({
+        exec: async () => searchMock,
+      }),
     }));
 
     CategoriesModelMock.findById = findByIdMock;
@@ -81,7 +87,9 @@ describe(CategoriesRepository.name, () => {
     const [searchMock] = categoriesListMock;
 
     const findOneMock = jest.fn().mockImplementation(() => ({
-      exec: async () => searchMock,
+      populate: () => ({
+        exec: async () => searchMock,
+      }),
     }));
 
     CategoriesModelMock.findOne = findOneMock;
@@ -99,7 +107,9 @@ describe(CategoriesRepository.name, () => {
     const [searchMock] = categoriesListMock;
 
     const findOneMock = jest.fn().mockImplementation(() => ({
-      exec: async () => searchMock,
+      populate: () => ({
+        exec: async () => searchMock,
+      }),
     }));
 
     CategoriesModelMock.findOne = findOneMock;
@@ -119,7 +129,9 @@ describe(CategoriesRepository.name, () => {
     const [searchMock] = categoriesListMock;
 
     const findOneMock = jest.fn().mockImplementation(() => ({
-      exec: async () => searchMock,
+      populate: () => ({
+        exec: async () => searchMock,
+      }),
     }));
 
     CategoriesModelMock.findOne = findOneMock;
@@ -143,7 +155,9 @@ describe(CategoriesRepository.name, () => {
     const [searchMock] = categoriesListMock;
 
     const findMock = jest.fn().mockImplementation(() => ({
-      exec: async () => [searchMock],
+      populate: () => ({
+        exec: async () => [searchMock],
+      }),
     }));
 
     CategoriesModelMock.find = findMock;
@@ -197,7 +211,9 @@ describe(CategoriesRepository.name, () => {
   it(`${CategoriesRepository.prototype.list.name}: 
   quando o método for chamado deve ser feita a listagem dos dados`, async () => {
     const findMock = jest.fn().mockImplementation(() => ({
-      exec: async () => categoriesListMock,
+      populate: () => ({
+        exec: async () => categoriesListMock,
+      }),
     }));
     CategoriesModelMock.find = findMock;
 
