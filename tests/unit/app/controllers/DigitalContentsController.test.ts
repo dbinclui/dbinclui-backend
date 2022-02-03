@@ -115,7 +115,7 @@ describe(DigitalContentsController.name, () => {
       createdDigitalContent,
     );
 
-    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.status).toHaveBeenCalledWith(201);
     expect(res.json).toHaveBeenCalledWith(
       expect.objectContaining({
         data: createdDigitalContent,
@@ -178,6 +178,54 @@ describe(DigitalContentsController.name, () => {
     expect(CategoriesRepositoryMock.prototype.getById).toHaveBeenCalledWith(req.body.category);
     expect(GuidesRepositoryMock.prototype.get).toHaveBeenCalledWith(req.body.guide);
     expect(DigitalContentsRepositoryMock.prototype.create).toHaveBeenCalled();
+
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        message: errorMessage,
+      }),
+    );
+  });
+
+  it(`When ${DigitalContentsController.prototype.consultDigitalContent.name} is called, it should get the Guide by id
+  `, async () => {
+    const req = getMockReq({
+      params: { id: '' },
+    });
+    const { res } = getMockRes();
+
+    DigitalContentsRepositoryMock.prototype.getById.mockResolvedValue({} as any);
+
+    await instance.consultDigitalContent(req, res);
+
+    expect(DigitalContentsRepositoryMock).toBeCalled();
+    expect(DigitalContentsRepositoryMock.prototype.getById).toHaveBeenCalled();
+
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        data: {},
+      }),
+    );
+  });
+
+  it(`When ${DigitalContentsController.prototype.consultDigitalContent.name} is called and throws a new error, it should handle the errors
+  `, async () => {
+    const req = getMockReq({
+      params: { id: '' },
+    });
+    const { res } = getMockRes();
+
+    const errorMessage = 'Error';
+
+    DigitalContentsRepositoryMock.prototype.getById.mockImplementationOnce(async () =>
+      Promise.reject(errorMessage),
+    );
+
+    await instance.consultDigitalContent(req, res);
+
+    expect(DigitalContentsRepositoryMock).toBeCalled();
+    expect(DigitalContentsRepositoryMock.prototype.getById).toHaveBeenCalled();
 
     expect(res.status).toHaveBeenCalledWith(500);
     expect(res.json).toHaveBeenCalledWith(
