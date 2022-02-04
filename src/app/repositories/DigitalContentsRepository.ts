@@ -38,7 +38,7 @@ class digitalContentRepository {
   }
 
   async getByCategory(id: ObjectId) {
-    return DigitalContentsModel.findById(id).populate('guide').populate('category').exec();
+    return DigitalContentsModel.find({ category: id }).populate('guide').populate('category').exec();
   }
 
   async delete(digitalContent: DigitalContents) {
