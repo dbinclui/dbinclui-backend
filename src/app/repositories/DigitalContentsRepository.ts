@@ -2,7 +2,7 @@ import { DigitalContents } from '@entities/digitalContents';
 import { DigitalContentsModel } from '@models/digitalContents';
 import { ObjectId } from 'mongoose';
 
-class digitalContentRepository {
+class DigitalContentRepository {
   async create(digitalContent: DigitalContents) {
     return DigitalContentsModel.create(digitalContent);
   }
@@ -56,4 +56,4 @@ class digitalContentRepository {
   }
 }
 
-export default digitalContentRepository;
+export default DigitalContentRepository;
