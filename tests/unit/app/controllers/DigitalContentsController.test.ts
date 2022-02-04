@@ -5,6 +5,8 @@ import DigitalContentsRepository from '@repositories/DigitalContentsRepository';
 import CategoriesRepository from '@repositories/CategoriesRepository';
 import GuidesRepository from '@repositories/GuidesRepository';
 import mongoose, { ObjectId, Types } from 'mongoose';
+import { param } from 'express-validator';
+import { DigitalContents } from '@entities/digitalContents';
 
 jest.mock('@repositories/DigitalContentsRepository');
 jest.mock('@repositories/CategoriesRepository');
@@ -255,8 +257,10 @@ describe(DigitalContentsController.name, () => {
         title: 'titulo',
         shortDescription: 'descricao',
       },
+      params: {
+        id: 'id-teste',
+      },
     });
-    const mockObjectId = new mongoose.Types.ObjectId().toString();
 
     // placeholder values to help jest identify each object, and to test if they are indeed manipulated correctly
     const mockGuide: any = { name: 'guide' };
@@ -264,19 +268,7 @@ describe(DigitalContentsController.name, () => {
     const mockTitle: any = { name: 'title' };
     const mockShortDescription: any = { name: 'shortDescription' };
 
-    const updatedDigitalContent: any = {
-      title: mockTitle,
-      guide: mockGuide,
-      category: mockCategory,
-      shortDescription: mockShortDescription,
-      filePaths: (req.files! as Express.Multer.File[]).reduce(
-        (paths: string[], file) => [...paths, file.path],
-        [],
-      ),
-    };
-
     const newUpdatedDigitalContent: any = {
-      mockObjectId,
       ...req.body,
       category: mockCategory,
       guide: mockGuide,
@@ -295,14 +287,14 @@ describe(DigitalContentsController.name, () => {
     expect(CategoriesRepositoryMock.prototype.getById).toHaveBeenCalledWith(req.body.category);
     expect(GuidesRepositoryMock.prototype.get).toHaveBeenCalledWith(req.body.guide);
     expect(DigitalContentsRepositoryMock.prototype.update).toHaveBeenCalledWith(
-      mockObjectId,
-      updatedDigitalContent,
+      req.params.id,
+      newUpdatedDigitalContent,
     );
 
-    expect(res.status).toHaveBeenCalledWith(201);
+    expect(res.status).toHaveBeenCalledWith(200);
     expect(res.json).toHaveBeenCalledWith(
       expect.objectContaining({
-        data: updatedDigitalContent,
+        data: newUpdatedDigitalContent,
       }),
     );
   });
@@ -366,6 +358,73 @@ describe(DigitalContentsController.name, () => {
     expect(DigitalContentsRepositoryMock.prototype.update).toHaveBeenCalled();
 
     expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        message: errorMessage,
+      }),
+    );
+  });
+
+  it(`When ${DigitalContentsController.prototype.updateDigitalContent.name} is called and an invalid digital content Id is provided, the error should be handled
+  `, async () => {
+    const { res } = getMockRes();
+    const req = getMockReq({
+      files: [{ path: 'path-teste' }],
+      body: {
+        category: 'id-teste',
+        guide: 'id-teste',
+        title: 'titulo',
+        shortDescription: 'descricao',
+      },
+      params: {
+        id: 'id-teste',
+      },
+    });
+
+    const errorMessage = 'Esse conteúdo digital não existe';
+
+    DigitalContentsRepositoryMock.prototype.get.mockResolvedValue(null);
+    GuidesRepositoryMock.prototype.get.mockResolvedValue({} as any);
+    CategoriesRepositoryMock.prototype.getById.mockRejectedValue({} as any);
+
+    await instance.updateDigitalContent(req, res);
+    expect(DigitalContentsRepositoryMock.prototype.update).not.toHaveBeenCalled();
+
+    expect(res.status).toHaveBeenCalledWith(404);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        message: errorMessage,
+      }),
+    );
+  });
+
+  it(`When ${DigitalContentsController.prototype.updateDigitalContent.name} is called and an invalid category Id is provided, the error should be handled
+  `, async () => {
+    const { res } = getMockRes();
+    const req = getMockReq({
+      files: [{ path: 'path-teste' }],
+      body: {
+        category: 'id-teste',
+        guide: 'id-teste',
+        title: 'titulo',
+        shortDescription: 'descricao',
+      },
+      params: {
+        id: 'id-teste',
+      },
+    });
+
+    const errorMessage = 'Essa categoria não existe';
+
+    DigitalContentsRepositoryMock.prototype.get.mockResolvedValue({} as any);
+    GuidesRepositoryMock.prototype.get.mockResolvedValue({} as any);
+    CategoriesRepositoryMock.prototype.getById.mockRejectedValue(undefined);
+
+    await instance.updateDigitalContent(req, res);
+    expect(CategoriesRepositoryMock.prototype.getById).toHaveBeenCalledWith(req.body.category);
+    expect(DigitalContentsRepositoryMock.prototype.update).not.toHaveBeenCalled();
+
+    expect(res.status).toHaveBeenCalledWith(404);
     expect(res.json).toHaveBeenCalledWith(
       expect.objectContaining({
         message: errorMessage,
