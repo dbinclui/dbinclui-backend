@@ -4,9 +4,6 @@ import { DigitalContentsController } from '@controllers/DigitalContentsControlle
 import DigitalContentsRepository from '@repositories/DigitalContentsRepository';
 import CategoriesRepository from '@repositories/CategoriesRepository';
 import GuidesRepository from '@repositories/GuidesRepository';
-import mongoose, { ObjectId, Types } from 'mongoose';
-import { param } from 'express-validator';
-import { DigitalContents } from '@entities/digitalContents';
 
 jest.mock('@repositories/DigitalContentsRepository');
 jest.mock('@repositories/CategoriesRepository');
@@ -388,40 +385,6 @@ describe(DigitalContentsController.name, () => {
     CategoriesRepositoryMock.prototype.getById.mockRejectedValue({} as any);
 
     await instance.updateDigitalContent(req, res);
-    expect(DigitalContentsRepositoryMock.prototype.update).not.toHaveBeenCalled();
-
-    expect(res.status).toHaveBeenCalledWith(404);
-    expect(res.json).toHaveBeenCalledWith(
-      expect.objectContaining({
-        message: errorMessage,
-      }),
-    );
-  });
-
-  it(`When ${DigitalContentsController.prototype.updateDigitalContent.name} is called and an invalid category Id is provided, the error should be handled
-  `, async () => {
-    const { res } = getMockRes();
-    const req = getMockReq({
-      files: [{ path: 'path-teste' }],
-      body: {
-        category: 'id-teste',
-        guide: 'id-teste',
-        title: 'titulo',
-        shortDescription: 'descricao',
-      },
-      params: {
-        id: 'id-teste',
-      },
-    });
-
-    const errorMessage = 'Essa categoria não existe';
-
-    DigitalContentsRepositoryMock.prototype.get.mockResolvedValue({} as any);
-    GuidesRepositoryMock.prototype.get.mockResolvedValue({} as any);
-    CategoriesRepositoryMock.prototype.getById.mockRejectedValue(undefined);
-
-    await instance.updateDigitalContent(req, res);
-    expect(CategoriesRepositoryMock.prototype.getById).toHaveBeenCalledWith(req.body.category);
     expect(DigitalContentsRepositoryMock.prototype.update).not.toHaveBeenCalled();
 
     expect(res.status).toHaveBeenCalledWith(404);
