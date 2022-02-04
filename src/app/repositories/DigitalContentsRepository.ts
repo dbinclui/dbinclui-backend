@@ -37,7 +37,7 @@ class DigitalContentRepository {
     return DigitalContentsModel.find({ guide: id }).populate('guide').populate('category').exec();
   }
 
-  async getByCategory(id: ObjectId) {
+  async getByCategory(id: ObjectId | string) {
     return DigitalContentsModel.find({ category: id }).populate('guide').populate('category').exec();
   }
 
