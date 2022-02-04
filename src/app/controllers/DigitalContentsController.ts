@@ -31,19 +31,18 @@ export class DigitalContentsController {
 
   async updateDigitalContent(req: Request, res: Response) {
     try {
-      const category = req.body.category
-        ? await this.categoriesRepository.getById(req.body.category)
-        : undefined;
-
       const getDigitalContent = await this.repository.get(req.params.id);
       if (!getDigitalContent)
         return res.status(404).json({ message: 'Esse conteúdo digital não existe' });
 
-      const guide = await this.guidesRepository.get(req.body.guide);
-      if (!guide) return res.status(404).json({ message: 'Esse guia não existe' });
-
+      const category = req.body.category
+        ? await this.categoriesRepository.getById(req.body.category)
+        : undefined;
       if (req.body.category && !category)
         return res.status(404).json({ message: 'Essa categoria não existe' });
+
+      const guide = await this.guidesRepository.get(req.body.guide);
+      if (!guide) return res.status(404).json({ message: 'Esse guia não existe' });
 
       const { title, shortDescription } = req.body;
 
