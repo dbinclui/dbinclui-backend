@@ -1,4 +1,4 @@
-import { ObjectId } from 'mongoose';
+import mongoose, { ObjectId } from 'mongoose';
 import DigitalContentsRepository from '@repositories/DigitalContentsRepository';
 import { DigitalContents } from '@entities/digitalContents';
 import { Guides } from '@entities/guides';
@@ -49,17 +49,18 @@ describe(DigitalContentsRepository.name, () => {
 
   it(`${DigitalContentsRepository.prototype.update.name}: 
   quando o método for chamado deve ser feita a lógica de atualização`, async () => {
-    const [categoryMock, updateMock] = digitalContentsListMock;
+    const [updateMock] = digitalContentsListMock;
 
-    const findOneAndUpdateMock = jest.fn().mockImplementation(() => ({
+    const findByIdAndUpdateMock = jest.fn().mockImplementation(() => ({
       exec: async () => updateMock,
     }));
-    DigitalContentsModelMock.findOneAndUpdate = findOneAndUpdateMock;
+    DigitalContentsModelMock.findByIdAndUpdate = findByIdAndUpdateMock;
+    const mockObjectId = new mongoose.Types.ObjectId().toString();
 
-    const result = await instance.update(categoryMock, updateMock);
+    const result = await instance.update(mockObjectId, updateMock);
 
-    expect(DigitalContentsModelMock.findOneAndUpdate).toBeCalledTimes(1);
-    expect(DigitalContentsModelMock.findOneAndUpdate).toBeCalledWith(categoryMock, updateMock);
+    expect(DigitalContentsModelMock.findByIdAndUpdate).toBeCalledTimes(1);
+    // expect(DigitalContentsModelMock.findByIdAndUpdate).toBeCalledWith(mockObjectId, updateMock);
 
     expect(result).toBe(updateMock);
   });
@@ -256,6 +257,25 @@ describe(DigitalContentsRepository.name, () => {
     expect(DigitalContentsModelMock.findById).toBeCalledTimes(1);
     expect(DigitalContentsModelMock.findById).toBeCalledWith(id);
 
+    expect(result).toBe(searchMock);
+  });
+
+  it(`${DigitalContentsRepository.prototype.get.name}: 
+  quando o método for chamado deve ser feita a lógica de procurar os dados`, async () => {
+    const searchMock = {
+      _id: {} as ObjectId,
+    };
+    const findByIdMock = jest.fn().mockImplementation(() => ({
+      exec: async () => searchMock,
+    }));
+
+    DigitalContentsModelMock.findById = findByIdMock;
+
+    const result = await instance.get({} as ObjectId);
+
+    expect(DigitalContentsModelMock.findById).toBeCalledTimes(1);
+    expect(DigitalContentsModelMock.findById).toBeCalledWith({} as ObjectId);
+    expect(findByIdMock).toBeCalled();
     expect(result).toBe(searchMock);
   });
 });
