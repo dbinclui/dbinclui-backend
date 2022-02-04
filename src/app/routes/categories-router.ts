@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { categoryValidate } from '@middlewares/validator/CategoriesValidator';
 import CategoriesController from '@controllers/CategoriesController';
 import { validateRequestSchema } from '@middlewares/validator/ValidateSchema';
+import CategoriesRepository from '@repositories/CategoriesRepository';
 
 const router = Router();
 
@@ -21,4 +22,5 @@ export default [
     validateRequestSchema,
     CategoriesController.updateCategory,
   ),
+  router.delete('/:id', CategoriesController.deleteCategory),
 ];
