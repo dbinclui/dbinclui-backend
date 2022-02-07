@@ -4,17 +4,19 @@ import CategoriesRepository from '@repositories/CategoriesRepository';
 import { validateCategoriesforDelete } from '@middlewares/validator/CategoriesValidator';
 import DigitalContentsRepository from '@repositories/DigitalContentsRepository';
 
-
 jest.mock('@repositories/CategoriesRepository');
 jest.mock('@middlewares/validator/CategoriesValidator');
-jest.mock('@repositories/DigitalContentsRepository')
+jest.mock('@repositories/DigitalContentsRepository');
 
 const CategoriesRepositoryMock = CategoriesRepository as jest.MockedClass<
-  typeof CategoriesRepository>;
+  typeof CategoriesRepository
+>;
 const validateCategoriesforDeleteMock = validateCategoriesforDelete as jest.MockedFunction<
-  typeof validateCategoriesforDelete>;
+  typeof validateCategoriesforDelete
+>;
 const DigitalContentRepositoryMock = DigitalContentsRepository as jest.MockedClass<
-  typeof DigitalContentsRepository>;
+  typeof DigitalContentsRepository
+>;
 
 describe(CategoriesController.name, () => {
   let instance: CategoriesController;
@@ -240,7 +242,7 @@ describe(CategoriesController.name, () => {
     });
     const { res } = getMockRes();
 
-    CategoriesRepositoryMock.prototype.deleteById.mockResolvedValue({} as any)
+    CategoriesRepositoryMock.prototype.deleteById.mockResolvedValue({} as any);
 
     validateCategoriesforDeleteMock.mockResolvedValue(true);
     await instance.deleteCategory(req, res);
@@ -252,5 +254,4 @@ describe(CategoriesController.name, () => {
       }),
     );
   });
-
 });

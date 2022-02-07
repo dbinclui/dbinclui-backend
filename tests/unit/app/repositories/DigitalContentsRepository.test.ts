@@ -255,7 +255,7 @@ describe(DigitalContentsRepository.name, () => {
     const result = await instance.getByCategory(id!);
 
     expect(DigitalContentsModelMock.find).toBeCalledTimes(1);
-    expect(DigitalContentsModelMock.find).toBeCalledWith({category: id});
+    expect(DigitalContentsModelMock.find).toBeCalledWith({ category: id });
 
     expect(result).toBe(searchMock);
   });
