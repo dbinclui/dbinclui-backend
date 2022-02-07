@@ -24,4 +24,5 @@ export default [
     validateRequestSchema,
     DigitalContentsController.updateDigitalContent,
   ),
+  router.delete('/:id', DigitalContentsController.deleteDigitalContent),
 ];

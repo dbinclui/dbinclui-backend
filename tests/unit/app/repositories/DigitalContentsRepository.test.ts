@@ -20,7 +20,7 @@ describe(DigitalContentsRepository.name, () => {
       shortDescription: 'shortDescription',
       guide: {} as Guides,
       category: {} as Categories,
-      filePaths: ['arquivo.txt'],
+      filePaths: [{filePath: 'arquivo.txt', publicId: 'arquivo.txt'}],
     },
     {
       _id: {} as ObjectId,
@@ -28,7 +28,7 @@ describe(DigitalContentsRepository.name, () => {
       shortDescription: 'shortDescription 2',
       guide: {} as Guides,
       category: {} as Categories,
-      filePaths: ['arquivo2.txt'],
+      filePaths: [{filePath: 'arquivo.txt', publicId: 'arquivo.txt'}],
     },
   ];
 
@@ -257,25 +257,6 @@ describe(DigitalContentsRepository.name, () => {
     expect(DigitalContentsModelMock.findById).toBeCalledTimes(1);
     expect(DigitalContentsModelMock.findById).toBeCalledWith(id);
 
-    expect(result).toBe(searchMock);
-  });
-
-  it(`${DigitalContentsRepository.prototype.get.name}: 
-  quando o método for chamado deve ser feita a lógica de procurar os dados`, async () => {
-    const searchMock = {
-      _id: {} as ObjectId,
-    };
-    const findByIdMock = jest.fn().mockImplementation(() => ({
-      exec: async () => searchMock,
-    }));
-
-    DigitalContentsModelMock.findById = findByIdMock;
-
-    const result = await instance.get({} as ObjectId);
-
-    expect(DigitalContentsModelMock.findById).toBeCalledTimes(1);
-    expect(DigitalContentsModelMock.findById).toBeCalledWith({} as ObjectId);
-    expect(findByIdMock).toBeCalled();
     expect(result).toBe(searchMock);
   });
 });

@@ -4,7 +4,9 @@ import { DigitalContentsController } from '@controllers/DigitalContentsControlle
 import DigitalContentsRepository from '@repositories/DigitalContentsRepository';
 import CategoriesRepository from '@repositories/CategoriesRepository';
 import GuidesRepository from '@repositories/GuidesRepository';
+import { v2 as cloudinary } from 'cloudinary';
 
+jest.mock('cloudinary');
 jest.mock('@repositories/DigitalContentsRepository');
 jest.mock('@repositories/CategoriesRepository');
 jest.mock('@repositories/GuidesRepository');
@@ -90,7 +92,7 @@ describe(DigitalContentsController.name, () => {
   `, async () => {
     const { res } = getMockRes();
     const req = getMockReq({
-      files: [{ path: 'path-teste' }],
+      files: [{ path: 'path-teste', filename: 'filename-test' }],
       body: {
         category: 'id-teste',
         guide: 'id-teste',
@@ -108,7 +110,13 @@ describe(DigitalContentsController.name, () => {
       category: mockCategory,
       guide: mockGuide,
       filePaths: (req.files! as Express.Multer.File[]).reduce(
-        (paths: string[], file) => [...paths, file.path],
+        (fileDetails: any, file) => [
+          ...fileDetails,
+          {
+            filePath: file.path,
+            publicId: file.filename,
+          },
+        ],
         [],
       ),
     };
@@ -168,7 +176,7 @@ describe(DigitalContentsController.name, () => {
   `, async () => {
     const { res } = getMockRes();
     const req = getMockReq({
-      files: [{ path: 'path-teste' }],
+      files: [{ path: 'path-teste', filename: 'filename-test' }],
       body: {
         category: 'id-teste',
         guide: 'id-teste',
@@ -247,7 +255,7 @@ describe(DigitalContentsController.name, () => {
   `, async () => {
     const { res } = getMockRes();
     const req = getMockReq({
-      files: [{ path: 'path-teste' }],
+      files: [{ path: 'path-teste', filename: 'filename-test' }],
       body: {
         category: 'id-teste',
         guide: 'id-teste',
@@ -270,12 +278,18 @@ describe(DigitalContentsController.name, () => {
       category: mockCategory,
       guide: mockGuide,
       filePaths: (req.files! as Express.Multer.File[]).reduce(
-        (paths: string[], file) => [...paths, file.path],
+        (fileDetails: any, file) => [
+          ...fileDetails,
+          {
+            filePath: file.path,
+            publicId: file.filename,
+          },
+        ],
         [],
       ),
     };
 
-    DigitalContentsRepositoryMock.prototype.get.mockResolvedValue({} as any);
+    DigitalContentsRepositoryMock.prototype.getById.mockResolvedValue({} as any);
     GuidesRepositoryMock.prototype.get.mockResolvedValue(mockGuide);
     CategoriesRepositoryMock.prototype.getById.mockResolvedValue(mockCategory);
     DigitalContentsRepositoryMock.prototype.update.mockResolvedValue(newUpdatedDigitalContent);
@@ -311,7 +325,7 @@ describe(DigitalContentsController.name, () => {
 
     const errorMessage = 'Esse guia não existe';
 
-    DigitalContentsRepositoryMock.prototype.get.mockResolvedValue({} as any);
+    DigitalContentsRepositoryMock.prototype.getById.mockResolvedValue({} as any);
     GuidesRepositoryMock.prototype.get.mockResolvedValue(null);
 
     await instance.updateDigitalContent(req, res);
@@ -332,7 +346,7 @@ describe(DigitalContentsController.name, () => {
   `, async () => {
     const { res } = getMockRes();
     const req = getMockReq({
-      files: [{ path: 'path-teste' }],
+      files: [{ path: 'path-teste', filename: 'filename-test' }],
       body: {
         category: 'id-teste',
         guide: 'id-teste',
@@ -342,7 +356,7 @@ describe(DigitalContentsController.name, () => {
     });
 
     const errorMessage = 'Error';
-    DigitalContentsRepositoryMock.prototype.get.mockResolvedValue({} as any);
+    DigitalContentsRepositoryMock.prototype.getById.mockResolvedValue({} as any);
     DigitalContentsRepositoryMock.prototype.update.mockImplementationOnce(async () =>
       Promise.reject(errorMessage),
     );
@@ -362,7 +376,8 @@ describe(DigitalContentsController.name, () => {
     );
   });
 
-  it(`When ${DigitalContentsController.prototype.updateDigitalContent.name} is called and an invalid digital content Id is provided, the error should be handled
+  it(`When ${DigitalContentsController.prototype.updateDigitalContent.name} 
+  is called and an invalid digital content Id is provided, the error should be handled
   `, async () => {
     const { res } = getMockRes();
     const req = getMockReq({
@@ -380,7 +395,7 @@ describe(DigitalContentsController.name, () => {
 
     const errorMessage = 'Esse conteúdo digital não existe';
 
-    DigitalContentsRepositoryMock.prototype.get.mockResolvedValue(null);
+    DigitalContentsRepositoryMock.prototype.getById.mockResolvedValue(null as any);
     GuidesRepositoryMock.prototype.get.mockResolvedValue({} as any);
     CategoriesRepositoryMock.prototype.getById.mockRejectedValue({} as any);
 
@@ -391,6 +406,34 @@ describe(DigitalContentsController.name, () => {
     expect(res.json).toHaveBeenCalledWith(
       expect.objectContaining({
         message: errorMessage,
+      }),
+    );
+  });
+
+  it(`When ${DigitalContentsController.prototype.deleteDigitalContent.name} 
+  is called, it should delete the passed Digital Content`, async () => {
+    const req = getMockReq({
+      params: {
+        id: 'id-teste',
+      },
+    });
+    const { res } = getMockRes()
+
+    DigitalContentsRepositoryMock.prototype.getById.mockResolvedValue({
+      filePaths: []
+    } as any);
+    DigitalContentsRepositoryMock.prototype.deleteById.mockResolvedValue({} as any);
+    (cloudinary.api.delete_resources as jest.MockedFunction<typeof cloudinary.api.delete_resources>).mockResolvedValue({} as any)
+    
+
+    await instance.deleteDigitalContent(req, res);
+
+    expect(cloudinary.api.delete_resources).toHaveBeenCalled();
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        dbResponse: {},
+        cldResponse: {},
       }),
     );
   });

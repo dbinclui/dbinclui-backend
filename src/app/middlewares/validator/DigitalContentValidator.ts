@@ -1,4 +1,5 @@
 import { body, check } from 'express-validator';
+import DigitalContentRepository from '@repositories/DigitalContentsRepository';
 
 const registerValidate = () => [
   body('title').notEmpty().withMessage('O campo está vazio').isString(),
