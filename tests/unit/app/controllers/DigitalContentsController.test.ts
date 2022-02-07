@@ -423,7 +423,7 @@ describe(DigitalContentsController.name, () => {
       filePaths: [
         {
           publicId: '123',
-        }
+        },
       ],
     } as any);
     DigitalContentsRepositoryMock.prototype.deleteById.mockResolvedValue({} as any);

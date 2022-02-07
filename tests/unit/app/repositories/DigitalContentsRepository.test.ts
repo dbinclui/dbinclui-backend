@@ -20,7 +20,7 @@ describe(DigitalContentsRepository.name, () => {
       shortDescription: 'shortDescription',
       guide: {} as Guides,
       category: {} as Categories,
-      filePaths: [{filePath: 'arquivo.txt', publicId: 'arquivo.txt'}],
+      filePaths: [{ filePath: 'arquivo.txt', publicId: 'arquivo.txt' }],
     },
     {
       _id: {} as ObjectId,
@@ -28,7 +28,7 @@ describe(DigitalContentsRepository.name, () => {
       shortDescription: 'shortDescription 2',
       guide: {} as Guides,
       category: {} as Categories,
-      filePaths: [{filePath: 'arquivo.txt', publicId: 'arquivo.txt'}],
+      filePaths: [{ filePath: 'arquivo.txt', publicId: 'arquivo.txt' }],
     },
   ];
 

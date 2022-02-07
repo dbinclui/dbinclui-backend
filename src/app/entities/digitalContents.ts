@@ -9,7 +9,7 @@ export interface DigitalContents {
   title: string;
   shortDescription: string;
   filePaths: {
-    filePath: string,
-    publicId: string,
+    filePath: string;
+    publicId: string;
   }[];
 }
