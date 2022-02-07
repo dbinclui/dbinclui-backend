@@ -417,14 +417,19 @@ describe(DigitalContentsController.name, () => {
         id: 'id-teste',
       },
     });
-    const { res } = getMockRes()
+    const { res } = getMockRes();
 
     DigitalContentsRepositoryMock.prototype.getById.mockResolvedValue({
-      filePaths: []
+      filePaths: [
+        {
+          publicId: '123',
+        }
+      ],
     } as any);
     DigitalContentsRepositoryMock.prototype.deleteById.mockResolvedValue({} as any);
-    (cloudinary.api.delete_resources as jest.MockedFunction<typeof cloudinary.api.delete_resources>).mockResolvedValue({} as any)
-    
+    (
+      cloudinary.api.delete_resources as jest.MockedFunction<typeof cloudinary.api.delete_resources>
+    ).mockResolvedValue({} as any);
 
     await instance.deleteDigitalContent(req, res);
 
@@ -434,6 +439,48 @@ describe(DigitalContentsController.name, () => {
       expect.objectContaining({
         dbResponse: {},
         cldResponse: {},
+      }),
+    );
+  });
+
+  it(`When ${DigitalContentsController.prototype.deleteDigitalContent.name} 
+  is called with a wrong id, it should handle the exception`, async () => {
+    const req = getMockReq({
+      params: {
+        id: 'id-teste',
+      },
+    });
+    const { res } = getMockRes();
+
+    DigitalContentsRepositoryMock.prototype.getById.mockResolvedValue(null as any);
+
+    await instance.deleteDigitalContent(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(404);
+    expect(res.json).toHaveBeenCalledWith('Conteúdo Digital não encontrado!');
+  });
+
+  it(`When ${DigitalContentsController.prototype.deleteDigitalContent.name} 
+  is called, it should delete the passed Digital Content`, async () => {
+    const req = getMockReq({
+      params: {
+        id: 'id-teste',
+      },
+    });
+    const { res } = getMockRes();
+    const errorMessage = 'erro';
+
+    DigitalContentsRepositoryMock.prototype.getById.mockResolvedValue({
+      filePaths: [],
+    } as any);
+    DigitalContentsRepositoryMock.prototype.deleteById.mockRejectedValue(errorMessage);
+
+    await instance.deleteDigitalContent(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        message: errorMessage,
       }),
     );
   });

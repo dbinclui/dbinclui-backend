@@ -138,20 +138,19 @@ export class DigitalContentsController {
     try {
       const digitalContent = await this.repository.getById(req.params.id);
 
-      if (!digitalContent) return res.status(404).send('Conteúdo Digital não encontrado!');
+      if (!digitalContent) return res.status(404).json('Conteúdo Digital não encontrado!');
 
       const publicIds = digitalContent.filePaths.map((filePath) => filePath.publicId);
 
-      const deleteFiles = await cloudinary.api.delete_resources(publicIds);
-
       const deleteDigitalContent = await this.repository.deleteById(req.params.id);
+
+      const deleteFiles = await cloudinary.api.delete_resources(publicIds);
 
       return res.status(200).json({
         dbResponse: deleteDigitalContent,
         cldResponse: deleteFiles,
       });
     } catch (error) {
-      console.log(error);
       return res.status(500).json({ message: error });
     }
   }
