@@ -4,6 +4,7 @@ import CategoriesRepository from '@repositories/CategoriesRepository';
 import GuidesRepository from '@repositories/GuidesRepository';
 import DigitalContentRepository from '@repositories/DigitalContentsRepository';
 import bindedInstance from '@utils/bindedInstance';
+import { v2 as cloudinary } from 'cloudinary';
 
 export class DigitalContentsController {
   private repository: DigitalContentRepository;
@@ -31,7 +32,7 @@ export class DigitalContentsController {
 
   async updateDigitalContent(req: Request, res: Response) {
     try {
-      const getDigitalContent = await this.repository.get(req.params.id);
+      const getDigitalContent = await this.repository.getById(req.params.id);
       if (!getDigitalContent)
         return res.status(404).json({ message: 'Esse conteúdo digital não existe' });
 
@@ -62,7 +63,13 @@ export class DigitalContentsController {
           category,
           shortDescription,
           filePaths: (req.files! as Express.Multer.File[]).reduce(
-            (paths: string[], file) => [...paths, file.path],
+            (fileDetails: any, file) => [
+              ...fileDetails,
+              {
+                filePath: file.path,
+                publicId: file.filename,
+              },
+            ],
             [],
           ),
         };
@@ -98,7 +105,13 @@ export class DigitalContentsController {
         category,
         shortDescription,
         filePaths: (req.files! as Express.Multer.File[]).reduce(
-          (paths: string[], file) => [...paths, file.path],
+          (fileDetails: any, file) => [
+            ...fileDetails,
+            {
+              filePath: file.path,
+              publicId: file.filename,
+            },
+          ],
           [],
         ),
       };
@@ -118,6 +131,27 @@ export class DigitalContentsController {
       res.status(200).json({ data: digitalContent });
     } catch (error) {
       res.status(500).json({ message: error });
+    }
+  }
+
+  async deleteDigitalContent(req: Request, res: Response) {
+    try {
+      const digitalContent = await this.repository.getById(req.params.id);
+
+      if (!digitalContent) return res.status(404).json('Conteúdo Digital não encontrado!');
+
+      const publicIds = digitalContent.filePaths.map((filePath) => filePath.publicId);
+
+      const deleteDigitalContent = await this.repository.deleteById(req.params.id);
+
+      const deleteFiles = await cloudinary.api.delete_resources(publicIds);
+
+      return res.status(200).json({
+        dbResponse: deleteDigitalContent,
+        cldResponse: deleteFiles,
+      });
+    } catch (error) {
+      return res.status(500).json({ message: error });
     }
   }
 }

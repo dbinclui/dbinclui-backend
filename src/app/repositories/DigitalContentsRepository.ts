@@ -13,10 +13,6 @@ class DigitalContentRepository {
     }).exec();
   }
 
-  async get(guideId: ObjectId | string) {
-    return DigitalContentsModel.findById(guideId).exec();
-  }
-
   async getById(id: ObjectId | string) {
     return DigitalContentsModel.findById(id).populate('guide').populate('category').exec();
   }
@@ -54,7 +50,7 @@ class DigitalContentRepository {
     return DigitalContentsModel.findOneAndDelete(digitalContent).exec();
   }
 
-  async deleteById(id: ObjectId) {
+  async deleteById(id: ObjectId | string) {
     return DigitalContentsModel.findOneAndDelete({
       _id: id,
     }).exec();
