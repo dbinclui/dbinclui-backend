@@ -218,7 +218,7 @@ describe(DigitalContentsRepository.name, () => {
   quando o método for chamado deve ser feita a lógica de procurar os dados pela Guia`, async () => {
     const [searchMock] = digitalContentsListMock;
 
-    const findByIdMock = jest.fn().mockImplementation(() => ({
+    const findMock = jest.fn().mockImplementation(() => ({
       populate: () => ({
         populate: () => ({
           exec: async () => searchMock,
@@ -226,7 +226,7 @@ describe(DigitalContentsRepository.name, () => {
       }),
     }));
 
-    DigitalContentsModelMock.find = findByIdMock;
+    DigitalContentsModelMock.find = findMock;
 
     const id = {} as ObjectId;
     const result = await instance.getByGuide(id!);
@@ -241,7 +241,7 @@ describe(DigitalContentsRepository.name, () => {
   quando o método for chamado deve ser feita a lógica de procurar os dados pela Categoria`, async () => {
     const [searchMock] = digitalContentsListMock;
 
-    const findByIdMock = jest.fn().mockImplementation(() => ({
+    const findMock = jest.fn().mockImplementation(() => ({
       populate: () => ({
         populate: () => ({
           exec: async () => searchMock,
@@ -249,13 +249,13 @@ describe(DigitalContentsRepository.name, () => {
       }),
     }));
 
-    DigitalContentsModelMock.findById = findByIdMock;
+    DigitalContentsModelMock.find = findMock;
 
     const { _id: id } = searchMock;
     const result = await instance.getByCategory(id!);
 
-    expect(DigitalContentsModelMock.findById).toBeCalledTimes(1);
-    expect(DigitalContentsModelMock.findById).toBeCalledWith(id);
+    expect(DigitalContentsModelMock.find).toBeCalledTimes(1);
+    expect(DigitalContentsModelMock.find).toBeCalledWith({ category: id });
 
     expect(result).toBe(searchMock);
   });

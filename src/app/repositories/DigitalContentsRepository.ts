@@ -2,7 +2,7 @@ import { DigitalContents } from '@entities/digitalContents';
 import { DigitalContentsModel } from '@models/digitalContents';
 import { ObjectId } from 'mongoose';
 
-class digitalContentRepository {
+class DigitalContentRepository {
   async create(digitalContent: DigitalContents) {
     return DigitalContentsModel.create(digitalContent);
   }
@@ -43,8 +43,11 @@ class digitalContentRepository {
     return DigitalContentsModel.find({ guide: id }).populate('guide').populate('category').exec();
   }
 
-  async getByCategory(id: ObjectId) {
-    return DigitalContentsModel.findById(id).populate('guide').populate('category').exec();
+  async getByCategory(id: ObjectId | string) {
+    return DigitalContentsModel.find({ category: id })
+      .populate('guide')
+      .populate('category')
+      .exec();
   }
 
   async delete(digitalContent: DigitalContents) {
@@ -62,4 +65,4 @@ class digitalContentRepository {
   }
 }
 
-export default digitalContentRepository;
+export default DigitalContentRepository;
