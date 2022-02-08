@@ -1,11 +1,21 @@
 import { getMockReq, getMockRes } from '@jest-mock/express';
 import { CategoriesController } from '@controllers/CategoriesController';
 import CategoriesRepository from '@repositories/CategoriesRepository';
+import { validateCategoriesforDelete } from '@middlewares/validator/CategoriesValidator';
+import DigitalContentsRepository from '@repositories/DigitalContentsRepository';
 
 jest.mock('@repositories/CategoriesRepository');
+jest.mock('@middlewares/validator/CategoriesValidator');
+jest.mock('@repositories/DigitalContentsRepository');
 
 const CategoriesRepositoryMock = CategoriesRepository as jest.MockedClass<
   typeof CategoriesRepository
+>;
+const validateCategoriesforDeleteMock = validateCategoriesforDelete as jest.MockedFunction<
+  typeof validateCategoriesforDelete
+>;
+const DigitalContentRepositoryMock = DigitalContentsRepository as jest.MockedClass<
+  typeof DigitalContentsRepository
 >;
 
 describe(CategoriesController.name, () => {
@@ -221,6 +231,26 @@ describe(CategoriesController.name, () => {
     expect(res.json).toHaveBeenCalledWith(
       expect.objectContaining({
         message: errorMessage,
+      }),
+    );
+  });
+
+  it(`When ${CategoriesController.prototype.deleteCategory.name}  is called, it should delete category
+  `, async () => {
+    const req = getMockReq({
+      params: { id: '' },
+    });
+    const { res } = getMockRes();
+
+    CategoriesRepositoryMock.prototype.deleteById.mockResolvedValue({} as any);
+
+    validateCategoriesforDeleteMock.mockResolvedValue(true);
+    await instance.deleteCategory(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        data: {},
       }),
     );
   });
