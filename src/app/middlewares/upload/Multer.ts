@@ -29,7 +29,7 @@ const upload = multer({
 
   storage,
   limits: {
-    fileSize: 5000000,
+    fileSize: 5242880,
   },
 });
 
