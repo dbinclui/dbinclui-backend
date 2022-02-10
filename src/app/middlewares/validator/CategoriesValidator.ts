@@ -1,3 +1,4 @@
+import DigitalContentRepository from '@repositories/DigitalContentsRepository';
 import { body } from 'express-validator';
 
 const categoryValidate = () => [
@@ -7,4 +8,14 @@ const categoryValidate = () => [
   body('guide').notEmpty().withMessage('O campo está vazio').isString(),
 ];
 
-export { categoryValidate };
+async function validateCategoriesforDelete(categoriesId: string) {
+  const digitalContentRepository = new DigitalContentRepository();
+  try {
+    const resultDigitalContent = await digitalContentRepository.getByCategory(categoriesId);
+    return resultDigitalContent.length === 0;
+  } catch (error) {
+    return { message: error };
+  }
+}
+
+export { categoryValidate, validateCategoriesforDelete };

@@ -1,10 +1,33 @@
 import { body, ValidationChain } from 'express-validator';
-import { categoryValidate } from '@middlewares/validator/CategoriesValidator';
+import {
+  categoryValidate,
+  validateCategoriesforDelete,
+} from '@middlewares/validator/CategoriesValidator';
+import CategoriesRepository from '@repositories/CategoriesRepository';
+import DigitalContentRepository from '@repositories/DigitalContentsRepository';
+import mongoose from 'mongoose';
 
 jest.useFakeTimers();
 jest.mock('express-validator');
-
+jest.mock('@repositories/CategoriesRepository');
+jest.mock('@repositories/DigitalContentsRepository');
 const bodyMock = body as jest.MockedFunction<typeof body>;
+jest.mock('mongoose', () => {
+  const originalModule = jest.requireActual('mongoose');
+
+  return {
+    ...originalModule,
+    Types: {
+      ObjectId: jest.fn(),
+    },
+  };
+});
+const CategoriesRepositoryMock = CategoriesRepository as jest.MockedClass<
+  typeof CategoriesRepository
+>;
+const DigitalContentRepositoryMock = DigitalContentRepository as jest.MockedClass<
+  typeof DigitalContentRepository
+>;
 
 describe('CategoriesValidator Test', () => {
   beforeEach(() => {
@@ -32,5 +55,33 @@ describe('CategoriesValidator Test', () => {
     expect(bodyMock).toBeCalledWith('title');
     expect(bodyMock).toBeCalledWith('shortDescription');
     expect(bodyMock).toBeCalledWith('guide');
+  });
+
+  it(`${validateCategoriesforDelete.name}: Quando validateCategoriesforDelete for chamado, deve validar se é possível a deleção da categoria`, async () => {
+    const mockObjectId = new mongoose.Types.ObjectId().toString();
+
+    DigitalContentRepositoryMock.prototype.getByCategory.mockResolvedValue([]);
+
+    const result = await validateCategoriesforDelete(mockObjectId);
+    expect(result).toBe(true);
+
+    expect(DigitalContentRepositoryMock.prototype.getByCategory).toBeCalled();
+  });
+
+  it(`When ${validateCategoriesforDelete.name} is called and throws a new error, it should handle the errors
+  `, async () => {
+    expect.assertions(1);
+    const mockObjectId = new mongoose.Types.ObjectId().toString();
+
+    DigitalContentRepositoryMock.prototype.getByCategory.mockRejectedValue([]);
+
+    try {
+      await validateCategoriesforDelete(mockObjectId);
+    } catch (error) {
+      expect(error).toEqual({
+        message: error,
+      });
+    }
+    expect(DigitalContentRepositoryMock).toBeCalled();
   });
 });

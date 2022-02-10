@@ -1,5 +1,5 @@
 import { body, check, ValidationChain } from 'express-validator';
-import { registerValidate } from '@middlewares/validator/DigitalContentValidator';
+import { registerValidate, updateValidate } from '@middlewares/validator/DigitalContentValidator';
 
 jest.useFakeTimers();
 jest.mock('express-validator');
@@ -49,5 +49,31 @@ describe('DigitalContentValidator Test', () => {
     expect(bodyMock).toBeCalledWith('guide');
 
     expect(checkMock).toBeCalledWith('files');
+  });
+
+  it(`${updateValidate.name}: When updateValidate is called should create validation schema`, () => {
+    const validatSchemaChainMock = {
+      notEmpty: jest.fn().mockImplementation(() => validatSchemaChainMock),
+      withMessage: jest.fn().mockImplementation((_) => validatSchemaChainMock),
+      isString: jest.fn().mockImplementation(() => validatSchemaChainMock),
+    } as unknown as ValidationChain;
+
+    bodyMock.mockImplementation(() => validatSchemaChainMock);
+    checkMock.mockImplementation(() => validatSchemaChainMock);
+
+    updateValidate();
+
+    expect(validatSchemaChainMock.notEmpty).toBeCalledTimes(3);
+
+    expect(validatSchemaChainMock.withMessage).toBeCalledTimes(3);
+    expect(validatSchemaChainMock.withMessage).toHaveBeenNthCalledWith(1, 'O campo está vazio');
+    expect(validatSchemaChainMock.withMessage).toHaveBeenNthCalledWith(2, 'O campo está vazio');
+    expect(validatSchemaChainMock.withMessage).toHaveBeenNthCalledWith(3, 'O campo está vazio');
+
+    expect(validatSchemaChainMock.isString).toBeCalledTimes(3);
+
+    expect(bodyMock).toBeCalledWith('title');
+    expect(bodyMock).toBeCalledWith('shortDescription');
+    expect(bodyMock).toBeCalledWith('guide');
   });
 });

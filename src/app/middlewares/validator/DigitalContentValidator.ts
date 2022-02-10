@@ -1,4 +1,5 @@
 import { body, check } from 'express-validator';
+import DigitalContentRepository from '@repositories/DigitalContentsRepository';
 
 const registerValidate = () => [
   body('title').notEmpty().withMessage('O campo está vazio').isString(),
@@ -21,4 +22,10 @@ const registerValidate = () => [
     .withMessage('Arquivo não suportado. Envie apenas vídeo ou imagem.'),
 ];
 
-export { registerValidate };
+const updateValidate = () => [
+  body('title').notEmpty().withMessage('O campo está vazio').isString(),
+  body('shortDescription').notEmpty().withMessage('O campo está vazio').isString(),
+  body('guide').notEmpty().withMessage('O campo está vazio').isString(),
+];
+
+export { registerValidate, updateValidate };
